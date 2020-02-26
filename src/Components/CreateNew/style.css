@@ -1,0 +1,28 @@
+form {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
+}
+.newItem {
+  text-align: center;
+}
+.newItem .MuiFormControl-root,
+.newItem .MuiButtonBase-root {
+  margin: 15px 0;
+}
+
+.MuiCardContent-root {
+  position: relative;
+  padding: 20px !important;
+}
+.closeBtn {
+  position: absolute;
+  right: 0;
+
+  margin: 5px;
+  top: 0;
+}
+.closeBtn a {
+  color: gray;
+}

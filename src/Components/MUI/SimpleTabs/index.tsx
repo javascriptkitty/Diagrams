@@ -8,7 +8,7 @@ import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
 
 import { Button, Menu, MenuItem } from "@material-ui/core";
-import SimpleMenu from "../../MUI/Menu/menu";
+import SimpleMenu from "../Menu/index";
 import "./style.css";
 interface TabPanelProps {
   children?: React.ReactNode;
