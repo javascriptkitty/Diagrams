@@ -94,7 +94,7 @@ export default class TemplateEditorComponent extends React.Component {
           20,
           100,
           100,
-          "shape=vowl-owl-class;movable=0;deletable=0; "
+          "shape=ellipse;movable=0;deletable=0; "
         );
         shape1.value.id = "te1";
         shape1.value.geometry = {

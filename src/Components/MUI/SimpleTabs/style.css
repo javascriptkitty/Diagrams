@@ -1,0 +1,16 @@
+.MuiTabs-scroller {
+  display: flex;
+  justify-content: center !important;
+  padding: 0 !important;
+}
+.MuiTabs-flexContainer {
+  padding: 0 !important;
+}
+.MuiButtonBase-root {
+  width: 100% !important;
+}
+.addButton {
+  padding: 5px;
+  display: flex;
+  justify-content: flex-end;
+}
