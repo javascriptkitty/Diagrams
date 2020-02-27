@@ -6,18 +6,34 @@ import "./style.css";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 
-const CreateNew = () => {
+const CreateNew = (props: any) => {
+  let type: string;
+  let url: string;
+  const id: number = 1;
+  if (props.match.params.type == "classifiers-entity") {
+    type = "классификатор сущности";
+    url = "classifiers";
+  } else if (props.match.params.type == "classifiers-relation") {
+    type = "классификатор связи";
+    url = "classifiers";
+  } else if (props.match.params.type == "classifiers-value") {
+    type = "классификатор значения";
+    url = "classifiers";
+  } else {
+    type = "индикатор";
+    url = "indicators";
+  }
   return (
-    <Grid container item xs={8} lg={10}>
+    <Grid container item xs={10} lg={8}>
       <Card>
         <CardContent>
           <div className="closeBtn">
-            <Link to="/" aria-label="delete">
+            <Link to="/">
               <CloseIcon />
             </Link>
           </div>
           <div className="newItem">
-            <h1>New</h1>
+            <h1>Новый {type} </h1>
             <form>
               <TextField
                 id="outlined-basic"
@@ -26,8 +42,9 @@ const CreateNew = () => {
                 helperText="Максимальная длина 45 символом"
               />
               <TextField id="outlined-multiline-static" label="Описание" multiline rows="4" variant="outlined" />
-              <Button variant="contained" color="primary" href="#contained-buttons">
-                Создать
+              <Button variant="contained" color="primary">
+                {" "}
+                <Link to={`/${url}/${id}`}> Создать</Link>
               </Button>
             </form>
           </div>

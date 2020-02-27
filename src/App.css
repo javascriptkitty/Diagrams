@@ -10,3 +10,7 @@
 .MuiGrid-item {
   margin: auto !important;
 }
+a {
+  text-decoration: none;
+  color: inherit;
+}

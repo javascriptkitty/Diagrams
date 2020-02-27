@@ -7,7 +7,6 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
 
-import { Button, Menu, MenuItem } from "@material-ui/core";
 import SimpleMenu from "../Menu/index";
 import "./style.css";
 interface TabPanelProps {
@@ -47,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-export default function SimpleTabs() {
+export default function SimpleTabs(props: TabPanelProps) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -64,7 +63,7 @@ export default function SimpleTabs() {
         </Tabs>
       </AppBar>
       <div className="addButton">
-        <SimpleMenu />
+        <SimpleMenu value={value} />
       </div>
       <Paper className={classes.root}>
         <TabPanel value={value} index={0}>
