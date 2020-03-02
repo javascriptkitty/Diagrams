@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import { TitleBlock, DiagramEntity } from "../model";
+import { TitleBlock, DiagramEntity, DiagramAggregate, DiagramInfo, DiagramValue } from "../model";
 import { mxgraph } from "mxgraph";
-import Toolbar from "../Toolbar/index";
 import { Grid } from "@material-ui/core";
 
 declare var require: any;
@@ -13,19 +12,37 @@ const mx: typeof mxgraph = require("mxgraph")({
 
 const { mxGraph, mxClient, mxUtils, mxEvent, mxConstants, mxToolbar } = mx;
 
-export default class EditorComponent extends React.Component {
-  constructor(props: any) {
+export interface DiagramElementListener {
+  onVertexSelected(diagramInfo: DiagramInfo, element: mxCell): void;
+
+  onEdgeSelected(diagramInfo: DiagramInfo, element: mxCell): void;
+
+  onCellDeselected(): void;
+}
+
+interface EditorProps {
+  diagramInfo: DiagramInfo;
+}
+
+interface EditorState {
+  type: string;
+  isClassifier: Boolean;
+}
+
+export default class EditorComponent extends React.Component<EditorProps, EditorState> {
+  constructor(props: EditorProps) {
     super(props);
-    this.state = {};
+    this.state = { type: "", isClassifier: false };
     this.LoadGraph = this.LoadGraph.bind(this);
   }
 
   componentDidMount() {
     this.LoadGraph();
+    // this.configureMouseHandler(this.diagramInfo, this.graph)
   }
 
   LoadGraph() {
-    var container = ReactDOM.findDOMNode(this.refs.divGraph);
+    const container = ReactDOM.findDOMNode(this.refs.divGraph);
     console.log(container);
 
     // Checks if the browser is supported
@@ -76,35 +93,83 @@ export default class EditorComponent extends React.Component {
         var node = doc.createElement("Node");
         node.setAttribute("ComponentID", "[P01]");
 
-        var border = graph.insertVertex(
-          parent,
-          null,
-          new TitleBlock(),
-          150,
-          70,
-          390,
-          140,
-          "rounded=1;strokeColor=black;fillColor=white;movable=0;deletable=0;noLabel=1;"
-        );
+        let border;
+        let shape1;
 
-        const shape1 = graph.insertVertex(
-          border,
-          null,
-          new DiagramEntity(),
-          30,
-          20,
-          100,
-          100,
-          "shape=ellipse;movable=0;deletable=0; "
-        );
-        shape1.value.id = "te1";
-        shape1.value.geometry = {
-          x: shape1.geometry.x,
-          y: shape1.geometry.y,
-          width: shape1.geometry.width,
-          height: shape1.geometry.height,
-          parent: "border"
-        };
+        border = this.state.isClassifier
+          ? (border = graph.insertVertex(
+              parent,
+              null,
+              new TitleBlock(),
+              150,
+              70,
+              390,
+              140,
+              "rounded=1;strokeColor=black;fillColor=white;movable=0;deletable=0;noLabel=1;"
+            ))
+          : null;
+
+        shape1 = this.state.isClassifier
+          ? graph.insertVertex(
+              border,
+              null,
+              new DiagramEntity(),
+              30,
+              20,
+              100,
+              100,
+              "shape=ellipse;movable=0;deletable=0; "
+            )
+          : null;
+
+        if (this.state.isClassifier) {
+          border.value.id = "tb";
+          border.value.geometry = {
+            x: border.geometry.x,
+            y: border.geometry.y,
+            width: border.geometry.width,
+            height: border.geometry.height,
+            parent: undefined
+          };
+
+          shape1.value.id = "te1";
+          shape1.value.geometry = {
+            x: shape1.geometry.x,
+            y: shape1.geometry.y,
+            width: shape1.geometry.width,
+            height: shape1.geometry.height,
+            parent: "border"
+          };
+        }
+
+        let shape2;
+        shape2 =
+          this.state.type == "RELATION_CLASSIFIER"
+            ? graph.insertVertex(
+                border,
+                null,
+                new DiagramValue(),
+                240,
+                55,
+                DatatypeShape.DEFAULT_WIDTH,
+                DatatypeShape.DEFAULT_HEIGHT,
+                "shape=vowl-datatype;movable=0;deletable=0;"
+              )
+            : null;
+        // shape1.type = "title-entity";
+        if (shape2) {
+          // shape2.type = "title-value";
+          shape2.value.id = "tv1";
+          shape2.value.geometry = {
+            x: shape2.geometry.x,
+            y: shape2.geometry.y,
+            width: shape2.geometry.width,
+            height: shape2.geometry.height,
+            parent: "border"
+          };
+
+          graph.insertEdge(border, "var", null, shape1, shape2);
+        }
       } finally {
         //data
         // Updates the display
@@ -113,18 +178,131 @@ export default class EditorComponent extends React.Component {
     }
   }
 
-  createVertex(style: string, x: number, y: number, width: number, height: number, type: string): mxCell {
-    const vertex = new mxCell(null, new mxGeometry(x, y, width, height), style);
+  configureKeyHandler(graph: mxGraph, listener: DiagramElementListener): void {
+    const handler = new mxKeyHandler(graph);
 
-    vertex.setVertex(true);
-    vertex.type = type;
+    /**
+     * Deletes selected cells on `Delete`.
+     */
+    handler.bindKey(46, () => {
+      if (graph.isEnabled()) {
+        listener.onCellDeselected();
 
-    vertex.geometry.relative = false;
+        graph.removeCells(null, true);
+      }
+    });
+  }
 
-    return vertex;
+  configureMouseHandler(diagramInfo: DiagramInfo, graph: mxGraph, listener: DiagramElementListener): void {
+    //if (!graphMouseConfigured) {
+
+    graph.addMouseListener({
+      mouseDown(sender: any, evt: mxMouseEvent) {
+        const cell = evt.getCell();
+
+        if (cell == null) {
+          listener.onCellDeselected();
+        } else if (cell.isVertex()) {
+          listener.onVertexSelected(diagramInfo, cell);
+        } else if (cell.isEdge()) {
+          listener.onEdgeSelected(diagramInfo, cell);
+        }
+      },
+      mouseMove(sender: any, evt: mxMouseEvent) {},
+
+      mouseUp(sender: any, evt: mxMouseEvent) {}
+    });
+    //@ts-ignore
+    graph.addListener(mxEvent.CELLS_ADDED, function(sender, evt) {
+      if (evt.properties.parent.children.length > 1 && !(evt.properties.parent.value instanceof TitleBlock)) {
+        const cellsGeo = graph.getChildCells(graph.getDefaultParent(), true, false).map((cell: mxCell) => {
+          return cell.getGeometry();
+        });
+
+        const vertexGeo = evt.properties.cells[0].getGeometry();
+        for (let i = 0; i < cellsGeo.length; i++) {
+          const cell = cellsGeo[i];
+          if (
+            ((vertexGeo.x < cell.x && vertexGeo.x + vertexGeo.width > cell.x) ||
+              (vertexGeo.x > cell.x && vertexGeo.x < cell.x + cell.width)) &&
+            ((vertexGeo.y < cell.y && vertexGeo.y + vertexGeo.height > cell.y) ||
+              (vertexGeo.y > cell.y && vertexGeo.y < cell.y + cell.height))
+          ) {
+            graph.removeCells([evt.properties.cells[0]], true);
+          }
+        }
+      }
+    });
+    //@ts-ignore
+    graph.addListener(mxEvent.ADD_CELLS, function(sender, evt) {
+      if (evt.properties.parent.value instanceof TitleBlock && evt.properties.parent.children.length > 1) {
+        debugger;
+        const borderGeo = evt.properties.parent.getGeometry();
+        const vertexGeo = evt.properties.cells[0].getGeometry();
+        const d = 30;
+        const borderXmin = borderGeo.x + d;
+        const borderXmax = borderGeo.x + borderGeo.width - d;
+        const borderYmin = borderGeo.y + d;
+        const borderYmax = borderGeo.y + borderGeo.height - d;
+        const vertexXmin = vertexGeo.x + borderGeo.x;
+        const vertexXmax = vertexGeo.x + vertexGeo.width + borderGeo.x;
+        const vertexYmin = vertexGeo.y + borderGeo.y;
+        const vertexYmax = vertexGeo.y + vertexGeo.height + borderGeo.y;
+        if (vertexXmax >= borderXmax && vertexXmax <= borderGeo.x + borderGeo.width) {
+          borderGeo.width = borderGeo.width + d;
+        }
+        if (vertexYmax > borderYmax && vertexYmax < borderGeo.y + borderGeo.height) {
+          borderGeo.height = borderGeo.height + d;
+        }
+        if (vertexXmin < borderXmin && vertexXmin > borderGeo.x) {
+          borderGeo.x = borderGeo.x - d;
+          borderGeo.width = borderGeo.width + d;
+          // mxVertexHandler.prototype.moveChildren(evt.properties.parent, 20, 0);
+        }
+        if (vertexYmin > borderGeo.y && vertexYmin < borderYmin) {
+          borderGeo.y = vertexYmin - d;
+          borderGeo.height = borderGeo.height + d;
+        }
+      }
+    });
+    //@ts-ignore
+    graph.addListener(mxEvent.RESIZE_END, function(sender, evt) {});
+  }
+
+  onCellValueChanged(event: { cell: mxCell; value: any }): void {
+    // const model = this.graph.getModel();
+    // model.beginUpdate();
+    // model.setValue(event.cell, event.value);
+    // if (event.cell.edges) {
+    //   for (let i = 0; i < event.cell.edges.length; i++) {
+    //     const cell = event.cell.edges[i].target;
+    //     if (cell.type == "title-entity" && cell.parent.value.type == "border-relation") {
+    //       event.cell.edges[i].target.value.restriction = event.value.restriction;
+    //       model.setValue(event.cell.edges[i].target, event.cell.edges[i].target.value);
+    //     }
+    //   }
+    // }
+    // model.endUpdate();
   }
 
   render() {
+    let type: string;
+
+    // if (this.props.match.params.type === "classifiers-entity") {
+    //   type = "ENTITY_CLASSIFIER";
+    // } else if (this.props.match.params.type === "classifiers-relation") {
+    //   type = "RELATION_CLASSIFIER";
+    // } else if (this.props.match.params.type === "classifiers-value") {
+    //   type = "VALUE_CLASSIFIER";
+    // } else {
+    //   type = "INDICATOR";
+    // }
+    this.setState({ type });
+    debugger;
+    if (this.state.type === "ENTITY_CLASSIFIER" || this.state.type === "RELATION_CLASSIFIER") {
+      this.setState({ isClassifier: true });
+      console.log(this.state.type);
+    }
     return (
       <Grid container item xs={10} lg={8}>
         <div className="graphContainer" ref="divGraph" id="divGraph" />

@@ -484,56 +484,56 @@ export class DiagramRelation {
 //   VALUE_CLASSIFIER = "VALUE_CLASSIFIER"
 // }
 
-// @JsonConverter
-// export class VisualQueryTypeConverter implements JsonCustomConvert<VisualQueryType> {
-//   deserialize(data: string): VisualQueryType {
-//     return VisualQueryType[data];
-//   }
-
-//   serialize(data: VisualQueryType): string {
-//     return VisualQueryType[data];
-//   }
+//@JsonConverter
+//export class VisualQueryTypeConverter implements JsonCustomConvert<VisualQueryType> {
+// deserialize(data: string): VisualQueryType {
+//   return VisualQueryType[data];
 // }
 
-// @JsonObject("DiagramInfo")
-// export class DiagramInfo {
-//   @JsonProperty("_id", String)
-//   _id: string = undefined;
-//   @JsonProperty("_rev", String)
-//   _rev: string = undefined;
-
-//   @JsonProperty("type", VisualQueryTypeConverter)
-//   type: VisualQueryType = undefined;
-
-//   @JsonProperty("label", String)
-//   label?: string = undefined;
-
-//   @JsonProperty("description", String, true)
-//   description?: string = null;
-
-//   @JsonProperty("modifiedAt", String)
-//   modifiedAt: string = new Date().toISOString();
-
-//   @JsonProperty("projectId", String, true)
-//   projectId?: string = null;
-
-//   @JsonProperty("libraryDiagram", Boolean, true)
-//   libraryDiagram?: boolean = false;
-
-//   constructor(
-//     type?: VisualQueryType,
-//     label?: string,
-//     description?: string,
-//     projectId?: string,
-//     libraryDiagram?: boolean
-//   ) {
-//     this.type = type || null;
-//     this.label = label || null;
-//     this.description = description || null;
-//     this.projectId = projectId || null;
-//     this.libraryDiagram = libraryDiagram || false;
-//   }
+// serialize(data: VisualQueryType): string {
+//   return VisualQueryType[data];
 // }
+//}
+
+@JsonObject("DiagramInfo")
+export class DiagramInfo {
+  @JsonProperty("_id", String)
+  _id: string = undefined;
+  @JsonProperty("_rev", String)
+  _rev: string = undefined;
+
+  @JsonProperty("type", String)
+  type: string = undefined;
+
+  @JsonProperty("label", String)
+  label?: string = undefined;
+
+  @JsonProperty("description", String, true)
+  description?: string = null;
+
+  @JsonProperty("modifiedAt", String, true)
+  modifiedAt?: string = new Date().toISOString();
+
+  @JsonProperty("projectId", String, true)
+  projectId?: string = null;
+
+  @JsonProperty("libraryDiagram", Boolean, true)
+  libraryDiagram?: boolean = false;
+
+  constructor(diagramInfo: {
+    type?: string;
+    label?: string;
+    description?: string;
+    projectId?: string;
+    libraryDiagram?: boolean;
+  }) {
+    this.type = diagramInfo.type || null;
+    this.label = diagramInfo.label || null;
+    this.description = diagramInfo.description || null;
+    this.projectId = diagramInfo.projectId || null;
+    this.libraryDiagram = diagramInfo.libraryDiagram || false;
+  }
+}
 
 // @JsonObject("ClassifierParameter")
 // export class ClassifierParameter {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import { TitleBlock, DiagramEntity } from "../model";
+import { TitleBlock, DiagramEntity, DiagramInfo, DiagramValue } from "../model";
 import { mxgraph } from "mxgraph";
 import Toolbar from "../Toolbar/index";
 import EditorComponent from "../Editor/index";
@@ -22,34 +22,33 @@ interface TemplateProps {
 }
 
 interface TemplateState {
-  title: string;
-  description: string;
-  type: string;
+  diagramInfo: DiagramInfo;
 }
 
 export default class TemplateEditor extends React.Component<TemplateProps, TemplateState> {
   constructor(props: TemplateProps) {
     super(props);
     this.state = {
-      title: "",
-      description: "",
-      type: ""
+      diagramInfo: { _id: "", _rev: "", label: "", description: "", type: undefined }
     };
   }
-  componentDidMount() {
+  componentDid() {
     const { info } = this.props.location.state;
-    console.log(info);
+    debugger;
     if (info) {
-      this.setState({ title: info.title, description: info.description, type: info.type });
+      this.setState({
+        diagramInfo: { _id: "", _rev: "", label: info.label, description: info.description, type: info.type }
+      });
     }
   }
 
   render() {
+    debugger;
     return (
       <div className="editorContainer">
-        <Info title={this.state.title} description={this.state.description} />
+        <Info label={this.state.diagramInfo.label} description={this.state.diagramInfo.description} />
         <Toolbar {...this.props} />
-        <EditorComponent />
+        <EditorComponent diagramInfo={this.state.diagramInfo} />
 
         <Restriction />
       </div>

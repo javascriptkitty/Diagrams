@@ -14,7 +14,9 @@ interface CreateProps {
 interface CreateState {
   type: string;
   description: string;
-  title: string;
+  label: string;
+  _id: string;
+  _rev: string;
 }
 
 export default class CreateNew extends React.Component<CreateProps, CreateState> {
@@ -23,16 +25,18 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
     this.state = {
       type: "",
       description: "",
-      title: ""
+      label: "",
+      _id: "",
+      _rev: ""
     };
 
-    this.onChangeTitle = this.onChangeTitle.bind(this);
+    this.onChangeLabel = this.onChangeLabel.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
   }
 
-  onChangeTitle(e: any) {
+  onChangeLabel(e: any) {
     this.setState({
-      title: e.target.value
+      label: e.target.value
     });
   }
 
@@ -46,25 +50,27 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
     debugger;
     e.preventDefault();
     const info = {
-      title: this.state.title,
+      label: this.state.label,
       description: this.state.description,
-      type: this.state.type
+      type: this.state.type,
+      _id: this.state._id,
+      _rev: this.state._rev
     };
 
     //   axios.post("/api/", info).then(res => {
     //     // debugger;;
-    //     this.setState({ infoId: res.data.id });
+    //     this.setState({ _id: res.data._id, _rev:res.data._rev });
     //   });
   }
   componentDidMount() {
-    debugger;
     let type: string;
+    debugger;
     if (this.props.match.params.type === "classifiers-entity") {
-      type = "CLASSIFIER_ENTITY";
+      type = "ENTITY_CLASSIFIER";
     } else if (this.props.match.params.type === "classifiers-relation") {
-      type = "CLASSIFIER_RELATION";
+      type = "RELATION_CLASSIFIER";
     } else if (this.props.match.params.type === "classifiers-value") {
-      type = "CLASSIFIER_VALUE";
+      type = "VALUE_CLASSIFIER";
     } else {
       type = "INDICATOR";
     }
@@ -108,8 +114,8 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
                   label="Название"
                   variant="outlined"
                   helperText="Максимальная длина 45 символом"
-                  value={this.state.title}
-                  onChange={this.onChangeTitle}
+                  value={this.state.label}
+                  onChange={this.onChangeLabel}
                 />
                 <TextField
                   id="outlined-multiline-static"

@@ -5,7 +5,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import SaveIcon from "@material-ui/icons/Save";
 import RemoveRedEyeIcon from "@material-ui/icons/RemoveRedEye";
 interface InfoProps {
-  title: string;
+  label: string;
   description: string;
 }
 
@@ -29,7 +29,7 @@ export default class Info extends React.Component<InfoProps, InfoState> {
         <div className="infoContainer">
           <Card>
             <CardContent>
-              <h3>{this.props.title}</h3>
+              <h3>{this.props.label}</h3>
               <p>{this.props.description}</p>
               <div>
                 <Button variant="contained" color="default" startIcon={<RemoveRedEyeIcon />}>

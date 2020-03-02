@@ -1,6 +1,6 @@
 import React, { Component, createRef } from "react";
 import { createVertex } from "../mxgraphUtils";
-import { DiagramEntity, DiagramValue } from "../model";
+import { DiagramEntity, DiagramValue, DiagramAggregate } from "../model";
 import { mxgraph } from "mxgraph";
 import { Grid } from "@material-ui/core";
 
@@ -10,10 +10,11 @@ const mx: typeof mxgraph = require("mxgraph")({
   mxBasePath: "mxgraph"
 });
 
-const { mxGraph, mxClient, mxUtils, mxEvent, mxConstants, mxToolbar } = mx;
+const { mxUtils, mxToolbar } = mx;
 
-function configureToolbar(graph: mxGraph, container: any) {
+function configureToolbar(graph: mxGraph, container: any, type: string) {
   const toolbar = new mxToolbar(container);
+
   //@ts-ignore
   toolbar.enabled = false;
   createToolbarItem(
@@ -40,6 +41,22 @@ function configureToolbar(graph: mxGraph, container: any) {
     30,
     "notEntity"
   );
+
+  const aggregateEl =
+    type === "ENTITY_CLASSIFIER"
+      ? createToolbarItem(
+          graph,
+          //@ts-ignore
+          toolbar,
+          (id: string) => new DiagramAggregate("a" + id),
+          "агрегирующий блок",
+          "../../assets/images/vowl-owl-aggregate.png",
+          "shape=rhombus;strokeColor=black",
+          100,
+          100,
+          "Aggregate"
+        )
+      : null;
 }
 
 function createToolbarItem(
@@ -65,7 +82,6 @@ function createToolbarItem(
     vertex.setValue(value.call(null, valueId));
     graph.addCell(vertex);
     graph.setSelectionCell(vertex);
-    console.log(graph);
   };
   const img = toolbar.addMode(title, icon, (evt, cell) => {
     const pt = graph.getPointForEvent(evt);
@@ -87,6 +103,7 @@ interface ToolbarProps {
   width: number;
   height: number;
   type: string;
+  location: any;
 }
 
 export default class Toolbar extends React.Component<ToolbarProps> {
@@ -99,13 +116,16 @@ export default class Toolbar extends React.Component<ToolbarProps> {
   componentDidMount() {
     const { graph } = this.props;
     const containerElement = this.containerRef.current;
-    configureToolbar(graph, containerElement);
+
+    configureToolbar(graph, containerElement, this.props.location.state.info.type);
   }
 
   render() {
     return (
       <Grid container item xs={2} lg={2}>
-        <h3>Элементы</h3> <div ref={this.containerRef} className="toolbarContainer" />{" "}
+        <div style={{ margin: "15px" }}>
+          <h3>Элементы</h3> <div ref={this.containerRef} className="toolbarContainer" />{" "}
+        </div>
       </Grid>
     );
   }
