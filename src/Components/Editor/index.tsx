@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { TitleBlock, DiagramEntity } from "../model";
 import { mxgraph } from "mxgraph";
+import Toolbar from "../Toolbar/index";
+import { Grid } from "@material-ui/core";
 
 declare var require: any;
 
@@ -9,9 +11,9 @@ const mx: typeof mxgraph = require("mxgraph")({
   mxBasePath: "mxgraph"
 });
 
-const { mxGraph, mxClient, mxUtils, mxEvent, mxConstants } = mx;
+const { mxGraph, mxClient, mxUtils, mxEvent, mxConstants, mxToolbar } = mx;
 
-export default class TemplateEditorComponent extends React.Component {
+export default class EditorComponent extends React.Component {
   constructor(props: any) {
     super(props);
     this.state = {};
@@ -25,7 +27,6 @@ export default class TemplateEditorComponent extends React.Component {
   LoadGraph() {
     var container = ReactDOM.findDOMNode(this.refs.divGraph);
     console.log(container);
-    var zoomPanel = ReactDOM.findDOMNode(this.refs.divZoom);
 
     // Checks if the browser is supported
     if (!mxClient.isBrowserSupported()) {
@@ -111,7 +112,23 @@ export default class TemplateEditorComponent extends React.Component {
       }
     }
   }
+
+  createVertex(style: string, x: number, y: number, width: number, height: number, type: string): mxCell {
+    const vertex = new mxCell(null, new mxGeometry(x, y, width, height), style);
+
+    vertex.setVertex(true);
+    vertex.type = type;
+
+    vertex.geometry.relative = false;
+
+    return vertex;
+  }
+
   render() {
-    return <div className="graph-container" ref="divGraph" id="divGraph" />;
+    return (
+      <Grid container item xs={10} lg={8}>
+        <div className="graphContainer" ref="divGraph" id="divGraph" />
+      </Grid>
+    );
   }
 }

@@ -1,0 +1,16 @@
+.editorContainer {
+  display: flex;
+}
+.toolbarContainer {
+  border: 1px solid lightgray;
+  background-color: whitesmoke;
+  border-radius: 3px;
+  text-align: center;
+  padding: 20px 10px;
+}
+.toolbarContainer img {
+  margin: 5px;
+}
+.infoContainer button {
+  margin: 5px 0;
+}
