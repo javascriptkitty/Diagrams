@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { TitleBlock, DiagramEntity, DiagramAggregate, DiagramInfo, DiagramValue } from "../model";
 import { mxgraph } from "mxgraph";
 import { Grid } from "@material-ui/core";
+import Toolbar from "../Toolbar";
 
 declare var require: any;
 
@@ -10,7 +11,7 @@ const mx: typeof mxgraph = require("mxgraph")({
   mxBasePath: "mxgraph"
 });
 
-const { mxGraph, mxClient, mxUtils, mxEvent, mxConstants, mxToolbar } = mx;
+const { mxGraph, mxClient, mxUtils, mxEvent, mxConstants, mxToolbar, mxCell } = mx;
 
 export interface DiagramElementListener {
   onVertexSelected(diagramInfo: DiagramInfo, element: mxCell): void;
@@ -22,26 +23,31 @@ export interface DiagramElementListener {
 
 interface EditorProps {
   diagramInfo: DiagramInfo;
+  location: any;
 }
 
 interface EditorState {
-  type: string;
-  isClassifier: Boolean;
+  type?: string;
+  isClassifier?: Boolean;
+  graph: mxgraph.mxGraph;
+  cell: mxgraph.mxCell;
 }
 
 export default class EditorComponent extends React.Component<EditorProps, EditorState> {
+  graph: mxgraph.mxGraph;
+
   constructor(props: EditorProps) {
     super(props);
-    this.state = { type: "", isClassifier: false };
-    this.LoadGraph = this.LoadGraph.bind(this);
+    this.state = { type: "", isClassifier: false, graph: null, cell: null };
+    this.loadGraph = this.loadGraph.bind(this);
   }
 
   componentDidMount() {
-    this.LoadGraph();
-    // this.configureMouseHandler(this.diagramInfo, this.graph)
+    this.loadGraph();
+    // this.configureMouseHandler(this.diagramInfo, this.graph);
   }
 
-  LoadGraph() {
+  loadGraph() {
     const container = ReactDOM.findDOMNode(this.refs.divGraph);
     console.log(container);
 
@@ -54,7 +60,11 @@ export default class EditorComponent extends React.Component<EditorProps, Editor
       mxEvent.disableContextMenu(container);
 
       // Creates the graph inside the given container
+
+      debugger;
       const graph = new mxGraph(container as Element);
+      this.graph = graph;
+      this.setState({ graph });
 
       // Gets the default parent for inserting new cells. This is normally the first
       // child of the root (ie. layer 0).
@@ -76,6 +86,8 @@ export default class EditorComponent extends React.Component<EditorProps, Editor
       vertexStyle[mxConstants.STYLE_RESIZABLE] = 0;
       vertexStyle[mxConstants.STYLE_WHITE_SPACE] = "wrap";
       vertexStyle[mxConstants.STYLE_SPACING] = 4;
+      vertexStyle[mxConstants.STYLE_STROKEWIDTH] = 1;
+      vertexStyle[mxConstants.STYLE_STROKECOLOR] = "#000";
 
       const edgeStyle = graph.getStylesheet().getDefaultEdgeStyle();
       edgeStyle[mxConstants.STYLE_FONTSIZE] = 12;
@@ -105,7 +117,7 @@ export default class EditorComponent extends React.Component<EditorProps, Editor
               70,
               390,
               140,
-              "rounded=1;strokeColor=black;fillColor=white;movable=0;deletable=0;noLabel=1;"
+              "rounded=1;fillColor=white;movable=0;deletable=0;noLabel=1"
             ))
           : null;
 
@@ -269,44 +281,33 @@ export default class EditorComponent extends React.Component<EditorProps, Editor
     graph.addListener(mxEvent.RESIZE_END, function(sender, evt) {});
   }
 
-  onCellValueChanged(event: { cell: mxCell; value: any }): void {
-    // const model = this.graph.getModel();
-    // model.beginUpdate();
-    // model.setValue(event.cell, event.value);
-    // if (event.cell.edges) {
-    //   for (let i = 0; i < event.cell.edges.length; i++) {
-    //     const cell = event.cell.edges[i].target;
-    //     if (cell.type == "title-entity" && cell.parent.value.type == "border-relation") {
-    //       event.cell.edges[i].target.value.restriction = event.value.restriction;
-    //       model.setValue(event.cell.edges[i].target, event.cell.edges[i].target.value);
-    //     }
-    //   }
-    // }
-    // model.endUpdate();
+  onCellValueChanged(event: { cell: mxgraph.mxCell; value: any }): void {
+    const model = this.graph.getModel();
+    model.beginUpdate();
+    model.setValue(event.cell, event.value);
+    if (event.cell.edges) {
+      for (let i = 0; i < event.cell.edges.length; i++) {
+        const cell = event.cell.edges[i].target;
+        // if (cell.type == "title-entity" && cell.parent.value.type == "border-relation") {
+        //   event.cell.edges[i].target.value.restriction = event.value.restriction;
+        //   model.setValue(event.cell.edges[i].target, event.cell.edges[i].target.value);
+        // }
+      }
+    }
+    model.endUpdate();
   }
 
   render() {
-    let type: string;
+    const { info } = this.props.location.state;
 
-    // if (this.props.match.params.type === "classifiers-entity") {
-    //   type = "ENTITY_CLASSIFIER";
-    // } else if (this.props.match.params.type === "classifiers-relation") {
-    //   type = "RELATION_CLASSIFIER";
-    // } else if (this.props.match.params.type === "classifiers-value") {
-    //   type = "VALUE_CLASSIFIER";
-    // } else {
-    //   type = "INDICATOR";
-    // }
-    this.setState({ type });
-    debugger;
-    if (this.state.type === "ENTITY_CLASSIFIER" || this.state.type === "RELATION_CLASSIFIER") {
-      this.setState({ isClassifier: true });
-      console.log(this.state.type);
-    }
+    const diagramInfo = { _id: "", _rev: "", label: info.label, description: info.description, type: info.type };
+
     return (
-      <Grid container item xs={10} lg={8}>
+      <div style={{ margin: "15px", display: "flex", height: "100vh" }}>
+        {this.state.graph && <Toolbar graph={this.state.graph} location={this.props.location} />}
+
         <div className="graphContainer" ref="divGraph" id="divGraph" />
-      </Grid>
+      </div>
     );
   }
 }

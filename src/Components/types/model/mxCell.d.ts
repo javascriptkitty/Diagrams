@@ -16,7 +16,7 @@ declare class mxCell {
   parent;
   source;
   target;
-  type;
+  // type;
 
   /**
    * @see https://github.com/jgraph/mxgraph/blob/master/javascript/src/js/model/mxCell.js#L169

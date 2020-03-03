@@ -1,5 +1,5 @@
 import React, { Component, createRef } from "react";
-import { createVertex } from "../mxgraphUtils";
+// import { createVertex } from "../mxgraphUtils";
 import { DiagramEntity, DiagramValue, DiagramAggregate } from "../model";
 import { mxgraph } from "mxgraph";
 import { Grid } from "@material-ui/core";
@@ -10,9 +10,20 @@ const mx: typeof mxgraph = require("mxgraph")({
   mxBasePath: "mxgraph"
 });
 
-const { mxUtils, mxToolbar } = mx;
+const { mxUtils, mxToolbar, mxCell, mxGeometry } = mx;
 
-function configureToolbar(graph: mxGraph, container: any, type: string) {
+function createVertex(style: string, x: number, y: number, width: number, height: number, type: string): mxCell {
+  const vertex = new mxCell(null, new mxGeometry(x, y, width, height), style);
+
+  vertex.setVertex(true);
+  //vertex.type = type;
+
+  vertex.geometry.relative = false;
+
+  return vertex;
+}
+
+function configureToolbar(graph: mxgraph.mxGraph, container: any, type: string) {
   const toolbar = new mxToolbar(container);
 
   //@ts-ignore
@@ -36,7 +47,7 @@ function configureToolbar(graph: mxGraph, container: any, type: string) {
     (id: string) => new DiagramValue("vd" + id),
     "Значение c ограничениями",
     "../../assets/images/vowl-datatype.png",
-    "shape=rectangle;",
+    "shape=rectangle;fillColor=#fc3;strokeColor=black;",
     100,
     30,
     "notEntity"
@@ -60,7 +71,7 @@ function configureToolbar(graph: mxGraph, container: any, type: string) {
 }
 
 function createToolbarItem(
-  graph: mxGraph,
+  graph: any,
   toolbar: mxToolbar,
   value: any,
   title: string,
@@ -72,7 +83,8 @@ function createToolbarItem(
 ) {
   // debugger;
   // tslint:disable-next-line:no-shadowed-variable
-  const handler = function(graph: mxGraph, evt: mxMouseEvent, cell: mxCell, x: number, y: number) {
+  const handler = function(graph: mxgraph.mxGraph, evt: mxMouseEvent, cell: mxCell, x: number, y: number) {
+    debugger;
     graph.stopEditing(false);
     const vertex = createVertex(style, x, y, width, height, type);
     let valueId = 1;
@@ -80,6 +92,7 @@ function createToolbarItem(
       valueId = Math.max(...graph.getDefaultParent().children.map(v => +v.id)) + 1;
     }
     vertex.setValue(value.call(null, valueId));
+    //@ts-ignore
     graph.addCell(vertex);
     graph.setSelectionCell(vertex);
   };
@@ -94,16 +107,16 @@ function createToolbarItem(
 }
 
 interface ToolbarProps {
-  graph: mxGraph;
-  toolbar: mxToolbar;
-  value: (id: string) => any;
-  title: string;
-  icon: string;
-  style: string;
-  width: number;
-  height: number;
-  type: string;
-  location: any;
+  graph: mxgraph.mxGraph;
+  toolbar?: mxToolbar;
+  value?: (id: string) => any;
+  title?: string;
+  icon?: string;
+  style?: string;
+  width?: number;
+  height?: number;
+  type?: string;
+  location?: any;
 }
 
 export default class Toolbar extends React.Component<ToolbarProps> {
@@ -115,6 +128,7 @@ export default class Toolbar extends React.Component<ToolbarProps> {
 
   componentDidMount() {
     const { graph } = this.props;
+    debugger;
     const containerElement = this.containerRef.current;
 
     configureToolbar(graph, containerElement, this.props.location.state.info.type);
@@ -122,11 +136,9 @@ export default class Toolbar extends React.Component<ToolbarProps> {
 
   render() {
     return (
-      <Grid container item xs={2} lg={2}>
-        <div style={{ margin: "15px" }}>
-          <h3>Элементы</h3> <div ref={this.containerRef} className="toolbarContainer" />{" "}
-        </div>
-      </Grid>
+      <div>
+        <h3 style={{ margin: "15px" }}>Элементы</h3> <div ref={this.containerRef} className="toolbarContainer" />{" "}
+      </div>
     );
   }
 }

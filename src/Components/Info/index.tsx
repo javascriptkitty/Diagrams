@@ -25,28 +25,26 @@ export default class Info extends React.Component<InfoProps, InfoState> {
 
   render() {
     return (
-      <Grid container item xs={4} lg={4}>
-        <div className="infoContainer">
-          <Card>
-            <CardContent>
-              <h3>{this.props.label}</h3>
-              <p>{this.props.description}</p>
-              <div>
-                <Button variant="contained" color="default" startIcon={<RemoveRedEyeIcon />}>
-                  Показать SPARQL
-                </Button>
-                <hr />
-              </div>
-              <Button variant="contained" color="secondary" startIcon={<DeleteIcon />}>
-                Delete
+      <div className="infoContainer">
+        <Card>
+          <CardContent>
+            <h3>{this.props.label}</h3>
+            <p>{this.props.description}</p>
+            <div>
+              <Button variant="contained" color="default" startIcon={<RemoveRedEyeIcon />}>
+                Показать SPARQL
               </Button>
-              <Button variant="contained" color="primary" size="small" startIcon={<SaveIcon />}>
-                Save
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-      </Grid>
+              <hr />
+            </div>
+            <Button variant="contained" color="secondary" startIcon={<DeleteIcon />}>
+              Delete
+            </Button>
+            <Button variant="contained" color="primary" size="small" startIcon={<SaveIcon />}>
+              Save
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 }

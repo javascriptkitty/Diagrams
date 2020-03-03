@@ -14,6 +14,7 @@ form {
 
 .MuiCardContent-root {
   position: relative;
+
   padding: 20px !important;
 }
 .closeBtn {
@@ -25,4 +26,12 @@ form {
 }
 .closeBtn a {
   color: gray;
+}
+
+.MuiGrid-root .createNew {
+  margin: auto !important;
+}
+.createNew,
+.createNew .MuiCard-container {
+  width: 100%;
 }

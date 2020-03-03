@@ -4,14 +4,14 @@
 .toolbarContainer {
   border: 1px solid lightgray;
   background-color: whitesmoke;
-  border-radius: 3px;
+  border-radius: 5px;
   text-align: center;
+  width: 100px;
+
   padding: 20px 10px;
 }
 
-.toolbarContainer img {
-  margin: 5px;
-}
+.toolbarContainer img,
 .infoContainer button {
-  margin: 5px 0;
+  margin: 5px;
 }

@@ -2,14 +2,7 @@
   text-align: center;
   margin: auto;
 }
-.MuiGrid-root {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.MuiGrid-item {
-  margin: auto !important;
-}
+
 a {
   text-decoration: none;
   color: inherit;

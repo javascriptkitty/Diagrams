@@ -26,18 +26,16 @@ export default class Restriction extends React.Component<RestrictionProps, Restr
   render() {
     return (
       <div className="restrictionContainer">
-        <Grid container item xs={4} lg={4}>
-          <h2>Restrictions</h2>
-          <Card>
-            <CardContent>
-              {!this.state.isSelected ? (
-                <p>Выделите один из элементов, чтобы установить или отредактировать его ограничения</p>
-              ) : (
-                <div></div>
-              )}
-            </CardContent>
-          </Card>
-        </Grid>
+        <h2>Restrictions</h2>
+        <Card>
+          <CardContent>
+            {!this.state.isSelected ? (
+              <p>Выделите один из элементов, чтобы установить или отредактировать его ограничения</p>
+            ) : (
+              <div></div>
+            )}
+          </CardContent>
+        </Card>
       </div>
     );
   }

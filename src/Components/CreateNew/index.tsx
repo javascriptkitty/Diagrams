@@ -17,6 +17,7 @@ interface CreateState {
   label: string;
   _id: string;
   _rev: string;
+  url: string;
 }
 
 export default class CreateNew extends React.Component<CreateProps, CreateState> {
@@ -27,7 +28,8 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
       description: "",
       label: "",
       _id: "",
-      _rev: ""
+      _rev: "",
+      url: ""
     };
 
     this.onChangeLabel = this.onChangeLabel.bind(this);
@@ -64,76 +66,79 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
   }
   componentDidMount() {
     let type: string;
+    let url: string;
     debugger;
     if (this.props.match.params.type === "classifiers-entity") {
       type = "ENTITY_CLASSIFIER";
+      url = "classifiers";
     } else if (this.props.match.params.type === "classifiers-relation") {
       type = "RELATION_CLASSIFIER";
+      url = "classifiers";
     } else if (this.props.match.params.type === "classifiers-value") {
       type = "VALUE_CLASSIFIER";
+      url = "classifiers";
     } else {
       type = "INDICATOR";
+      url = "indicators";
     }
     this.setState({
-      type: type
+      type,
+      url
     });
   }
 
   render() {
     let name: string;
-    let url: string;
-    const id: number = 1;
+
     if (this.props.match.params.type === "classifiers-entity") {
       name = "классификатор сущности";
-      url = "classifiers";
     } else if (this.props.match.params.type === "classifiers-relation") {
       name = "классификатор связи";
-      url = "classifiers";
     } else if (this.props.match.params.type === "classifiers-value") {
       name = "классификатор значения";
-      url = "classifiers";
     } else {
       name = "индикатор";
-      url = "indicators";
     }
 
     return (
-      <Grid container item xs={10} lg={8}>
-        <Card>
-          <CardContent>
-            <div className="closeBtn">
-              <Link to="/">
-                <CloseIcon />
-              </Link>
-            </div>
-            <div className="newItem">
-              <h1>Новый {name} </h1>
-              <form onSubmit={this.onSubmit.bind(this)}>
-                <TextField
-                  id="outlined-basic"
-                  label="Название"
-                  variant="outlined"
-                  helperText="Максимальная длина 45 символом"
-                  value={this.state.label}
-                  onChange={this.onChangeLabel}
-                />
-                <TextField
-                  id="outlined-multiline-static"
-                  label="Описание"
-                  value={this.state.description}
-                  onChange={this.onChangeDescription}
-                  multiline
-                  rows="4"
-                  variant="outlined"
-                />
-                <Button variant="contained" type="submit" color="primary">
-                  {" "}
-                  <Link to={{ pathname: `/${url}/${id}`, state: { info: this.state } }}> Создать</Link>
-                </Button>
-              </form>
-            </div>
-          </CardContent>
-        </Card>
+      <Grid container item sm={10} lg={8} justify="center">
+        <div className="createNew">
+          <Card>
+            <CardContent>
+              <div className="closeBtn">
+                <Link to="/">
+                  <CloseIcon />
+                </Link>
+              </div>
+              <div className="newItem">
+                <h1>Новый {name} </h1>
+                <form onSubmit={this.onSubmit.bind(this)}>
+                  <TextField
+                    id="outlined-basic"
+                    label="Название"
+                    variant="outlined"
+                    helperText="Максимальная длина 45 символом"
+                    value={this.state.label}
+                    onChange={this.onChangeLabel}
+                  />
+                  <TextField
+                    id="outlined-multiline-static"
+                    label="Описание"
+                    value={this.state.description}
+                    onChange={this.onChangeDescription}
+                    multiline
+                    rows="4"
+                    variant="outlined"
+                  />
+                  <Button variant="contained" type="submit" color="primary">
+                    {" "}
+                    <Link to={{ pathname: `/${this.state.url}/1`, state: { info: this.state } }}> Создать</Link>
+                  </Button>
+                </form>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </Grid>
     );
   }
