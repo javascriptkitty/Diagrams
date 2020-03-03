@@ -35,14 +35,16 @@ export default class TemplateEditor extends React.Component<TemplateProps, Templ
 
     return (
       <div className="editorContainer">
-        <Grid container item xs={3} sm={3} spacing={0}>
-          <Info label={info.label} description={info.description} />
-        </Grid>
-        <Grid container item xs={9} sm={9} spacing={0} direction="row">
-          <EditorComponent diagramInfo={diagramInfo} location={location} />
-        </Grid>
-        <Grid container item sm={4} spacing={0}>
-          <Restriction />{" "}
+        <Grid container spacing={0}>
+          <Grid item xs={3} sm={3} md={2}>
+            <Info label={info.label} description={info.description} />
+          </Grid>
+          <Grid item xs={9} sm={9} md={8} direction="row">
+            <EditorComponent diagramInfo={diagramInfo} location={location} />
+          </Grid>
+          <Grid item sm={3} md={2}>
+            <Restriction />{" "}
+          </Grid>
         </Grid>
       </div>
     );

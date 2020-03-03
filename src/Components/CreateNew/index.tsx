@@ -12,24 +12,23 @@ interface CreateProps {
 }
 
 interface CreateState {
-  type: string;
   description: string;
   label: string;
   _id: string;
   _rev: string;
-  url: string;
 }
 
 export default class CreateNew extends React.Component<CreateProps, CreateState> {
+  type: string;
+  url: string;
+
   constructor(props: CreateProps) {
     super(props);
     this.state = {
-      type: "",
       description: "",
       label: "",
       _id: "",
-      _rev: "",
-      url: ""
+      _rev: ""
     };
 
     this.onChangeLabel = this.onChangeLabel.bind(this);
@@ -54,7 +53,7 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
     const info = {
       label: this.state.label,
       description: this.state.description,
-      type: this.state.type,
+      type: this.type,
       _id: this.state._id,
       _rev: this.state._rev
     };
@@ -64,40 +63,27 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
     //     this.setState({ _id: res.data._id, _rev:res.data._rev });
     //   });
   }
-  componentDidMount() {
-    let type: string;
-    let url: string;
-    debugger;
-    if (this.props.match.params.type === "classifiers-entity") {
-      type = "ENTITY_CLASSIFIER";
-      url = "classifiers";
-    } else if (this.props.match.params.type === "classifiers-relation") {
-      type = "RELATION_CLASSIFIER";
-      url = "classifiers";
-    } else if (this.props.match.params.type === "classifiers-value") {
-      type = "VALUE_CLASSIFIER";
-      url = "classifiers";
-    } else {
-      type = "INDICATOR";
-      url = "indicators";
-    }
-    this.setState({
-      type,
-      url
-    });
-  }
+  componentDidMount() {}
 
   render() {
     let name: string;
 
     if (this.props.match.params.type === "classifiers-entity") {
       name = "классификатор сущности";
+      this.type = "ENTITY_CLASSIFIER";
+      this.url = "classifiers";
     } else if (this.props.match.params.type === "classifiers-relation") {
       name = "классификатор связи";
+      this.type = "RELATION_CLASSIFIER";
+      this.url = "classifiers";
     } else if (this.props.match.params.type === "classifiers-value") {
       name = "классификатор значения";
+      this.type = "VALUE_CLASSIFIER";
+      this.url = "classifiers";
     } else {
       name = "индикатор";
+      this.type = "INDICATOR";
+      this.url = "indicators";
     }
 
     return (
@@ -132,7 +118,7 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
                   />
                   <Button variant="contained" type="submit" color="primary">
                     {" "}
-                    <Link to={{ pathname: `/${this.state.url}/1`, state: { info: this.state } }}> Создать</Link>
+                    <Link to={{ pathname: `/${this.url}/1`, state: { info: this.state } }}> Создать</Link>
                   </Button>
                 </form>
               </div>

@@ -27,18 +27,18 @@ interface EditorProps {
 }
 
 interface EditorState {
-  type?: string;
-  isClassifier?: Boolean;
   graph: mxgraph.mxGraph;
   cell: mxgraph.mxCell;
 }
 
 export default class EditorComponent extends React.Component<EditorProps, EditorState> {
   graph: mxgraph.mxGraph;
+  isClassifier: boolean;
+  type: string;
 
   constructor(props: EditorProps) {
     super(props);
-    this.state = { type: "", isClassifier: false, graph: null, cell: null };
+    this.state = { graph: null, cell: null };
     this.loadGraph = this.loadGraph.bind(this);
   }
 
@@ -49,7 +49,6 @@ export default class EditorComponent extends React.Component<EditorProps, Editor
 
   loadGraph() {
     const container = ReactDOM.findDOMNode(this.refs.divGraph);
-    console.log(container);
 
     // Checks if the browser is supported
     if (!mxClient.isBrowserSupported()) {
@@ -108,7 +107,7 @@ export default class EditorComponent extends React.Component<EditorProps, Editor
         let border;
         let shape1;
 
-        border = this.state.isClassifier
+        border = this.isClassifier
           ? (border = graph.insertVertex(
               parent,
               null,
@@ -121,7 +120,7 @@ export default class EditorComponent extends React.Component<EditorProps, Editor
             ))
           : null;
 
-        shape1 = this.state.isClassifier
+        shape1 = this.isClassifier
           ? graph.insertVertex(
               border,
               null,
@@ -134,7 +133,7 @@ export default class EditorComponent extends React.Component<EditorProps, Editor
             )
           : null;
 
-        if (this.state.isClassifier) {
+        if (this.isClassifier) {
           border.value.id = "tb";
           border.value.geometry = {
             x: border.geometry.x,
@@ -156,7 +155,7 @@ export default class EditorComponent extends React.Component<EditorProps, Editor
 
         let shape2;
         shape2 =
-          this.state.type == "RELATION_CLASSIFIER"
+          this.type == "RELATION_CLASSIFIER"
             ? graph.insertVertex(
                 border,
                 null,
@@ -301,7 +300,10 @@ export default class EditorComponent extends React.Component<EditorProps, Editor
     const { info } = this.props.location.state;
 
     const diagramInfo = { _id: "", _rev: "", label: info.label, description: info.description, type: info.type };
-
+    this.type = diagramInfo.type;
+    if (this.props.diagramInfo.type === "ENTITY_CLASSIFIER" || this.props.diagramInfo.type === "RELATION_CLASSIFIER") {
+      this.isClassifier = true;
+    }
     return (
       <div style={{ margin: "15px", display: "flex", height: "100vh" }}>
         {this.state.graph && <Toolbar graph={this.state.graph} location={this.props.location} />}
