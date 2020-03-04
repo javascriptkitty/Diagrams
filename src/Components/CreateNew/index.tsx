@@ -13,9 +13,11 @@ interface CreateProps {
 
 interface CreateState {
   description: string;
+  type: string;
   label: string;
   _id: string;
   _rev: string;
+  modifiedAt: string;
 }
 
 export default class CreateNew extends React.Component<CreateProps, CreateState> {
@@ -27,8 +29,10 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
     this.state = {
       description: "",
       label: "",
+      type: "",
       _id: "",
-      _rev: ""
+      _rev: "",
+      modifiedAt: new Date().toISOString()
     };
 
     this.onChangeLabel = this.onChangeLabel.bind(this);
@@ -53,17 +57,20 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
     const info = {
       label: this.state.label,
       description: this.state.description,
-      type: this.type,
-      _id: this.state._id,
-      _rev: this.state._rev
+      type: this.type
     };
 
+    console.log(this.state);
+
+    // });
     //   axios.post("/api/", info).then(res => {
     //     // debugger;;
     //     this.setState({ _id: res.data._id, _rev:res.data._rev });
     //   });
   }
-  componentDidMount() {}
+  componentDidMount() {
+    this.setState({ type: this.type });
+  }
 
   render() {
     let name: string;
@@ -87,7 +94,7 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
     }
 
     return (
-      <Grid container item sm={10} lg={8} justify="center">
+      <Grid container item sm={10} lg={8}>
         <div className="createNew">
           <Card>
             <CardContent>

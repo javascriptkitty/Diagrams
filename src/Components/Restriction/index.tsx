@@ -1,7 +1,11 @@
 import React, { Component, createRef } from "react";
-import { Card, CardContent, Grid } from "@material-ui/core";
+import { Card, CardContent } from "@material-ui/core";
+import { Diagram, DiagramInfo } from "../../models";
 
-interface RestrictionProps {}
+interface RestrictionProps {
+  diagramInfo: DiagramInfo;
+  diagram: Diagram;
+}
 
 interface RestrictionState {
   isSelected: boolean;

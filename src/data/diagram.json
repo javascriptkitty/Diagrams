@@ -1,0 +1,45 @@
+{
+  "_id": "1ad1678eb4011281cdec566d28003774",
+  "_rev": "1-2010496cd2b58bda795a24215a9d7b41",
+  "queryType": "INDICATOR",
+  "inputParameters": [],
+  "entities": [
+    {
+      "id": "e1",
+      "restriction": {
+        "uri": "http://example.com/pwc#AccountingTransaction",
+        "label": "Проводка",
+        "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+      },
+      "geometry": {
+        "x": 30,
+        "y": 20,
+        "width": 100,
+        "height": 100,
+        "parent": "border"
+      },
+      "classifierRestriction": null
+    }
+  ],
+  "values": [
+    {
+      "id": "vd3",
+      "restriction": {
+        "id": "75faee6b3e7121cab1ec3e910e003b47",
+        "label": "Проводка на круглую сумму",
+        "inputParameters": [{ "name": "x", "datatype": "http://www.w3.org/2001/XMLSchema#integer", "value": "100" }],
+        "resultVarName": null
+      },
+      "geometry": {
+        "x": 29.166656494140625,
+        "y": 76.54166412353516,
+        "width": 100,
+        "height": 100
+      },
+      "datatype": "http://www.w3.org/2001/XMLSchema#double"
+    }
+  ],
+  "relations": [],
+  "expression": null,
+  "statisticIndicator": false
+}
