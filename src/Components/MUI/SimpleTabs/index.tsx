@@ -6,7 +6,7 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
-
+import DataModel from "../../DataModel";
 import SimpleMenu from "../Menu/index";
 import "./style.css";
 interface TabPanelProps {
@@ -60,6 +60,7 @@ export default function SimpleTabs(props: TabPanelProps) {
         <Tabs centered value={value} onChange={handleChange} aria-label="simple tabs example">
           <Tab label="Индикаторы" {...a11yProps(0)} />
           <Tab label="Классификаторы" {...a11yProps(1)} />
+          <Tab label="Модель данных" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <div className="addButton">
@@ -71,6 +72,11 @@ export default function SimpleTabs(props: TabPanelProps) {
         </TabPanel>
         <TabPanel value={value} index={1}>
           Item Two
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <div className="uploadModel">
+            <DataModel />
+          </div>
         </TabPanel>
       </Paper>
     </div>

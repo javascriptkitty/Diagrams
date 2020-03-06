@@ -54,11 +54,11 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
   onSubmit(e: any) {
     debugger;
     e.preventDefault();
-    const info = {
-      label: this.state.label,
-      description: this.state.description,
-      type: this.type
-    };
+    // const info = {
+    //   label: this.state.label,
+    //   description: this.state.description,
+    //   type: this.type
+    // };
 
     console.log(this.state);
 

@@ -1,7 +1,6 @@
 import { mxgraph } from "mxgraph";
 
-import { DatatypeShape, OwlClassShape } from "./OwlClassShape";
-import { Diagram, DiagramInfo, DiagramValue, DiagramEntity } from "../models";
+import { Diagram, DiagramInfo, DiagramValue, DiagramEntity, DiagramAggregate, TitleBlock } from "../models";
 
 declare var require: any;
 
@@ -43,7 +42,7 @@ function configureMouseHandler(
     mouseDown(sender: any, evt: mxgraph.mxMouseEvent) {
       const cell = evt.getCell();
 
-      if (cell == null) {
+      if (cell === null) {
         listener.onCellDeselected();
       } else if (cell.isVertex()) {
         listener.onVertexSelected(diagramInfo, cell);
@@ -105,7 +104,7 @@ export function configureGraph(
       return false;
     }
 
-    if (cell.isVertex() && cell.value != null && cell.value instanceof DiagramValue) {
+    if (cell.isVertex() && cell.value !== null && cell.value instanceof DiagramValue) {
       return cell.getEdgeCount() <= 0;
     }
 
@@ -141,7 +140,7 @@ export function renderDiagram(graph: mxgraph.mxGraph, diagram: Diagram): void {
 
     let previous = graph.model.getStyle;
     graph.model.getStyle = function(cell) {
-      if (cell != null) {
+      if (cell !== null) {
         var style = previous.apply(this, [cell]);
 
         const parentCellType = this.isEdge(cell) && cell.parent.getAttribute("type");
@@ -191,84 +190,77 @@ export function renderDiagram(graph: mxgraph.mxGraph, diagram: Diagram): void {
   }
 }
 
-// function createTitleBlock() {
-//   const parent = this.graph.getDefaultParent();
-//   let border;
-//   let shape1;
-//   const borderWidth = this.type == "RELATION_CLASSIFIER" ? 390 : 300;
+export function createTitleBlock(graph: mxgraph.mxGraph, diagramInfo: DiagramInfo) {
+  const parent = graph.getDefaultParent();
+  let border;
+  let shape1;
+  const borderWidth = diagramInfo.type === "RELATION_CLASSIFIER" ? 390 : 300;
 
-//   border = this.isClassifier
-//     ? (border = this.graph.insertVertex(
-//         parent,
-//         null,
-//         new TitleBlock(),
-//         120,
-//         70,
-//         borderWidth,
-//         140,
-//         "rounded=1;fillColor=white;movable=0;deletable=0;noLabel=1"
-//       ))
-//     : null;
+  border =
+    diagramInfo.type !== "INDICATOR"
+      ? (border = graph.insertVertex(
+          parent,
+          null,
+          new TitleBlock(),
+          120,
+          70,
+          borderWidth,
+          140,
+          "rounded=1;fillColor=white;movable=0;deletable=0;noLabel=1"
+        ))
+      : null;
 
-//   shape1 = this.isClassifier
-//     ? this.graph.insertVertex(
-//         border,
-//         null,
-//         new DiagramEntity(),
-//         30,
-//         20,
-//         100,
-//         100,
-//         "shape=ellipse;movable=0;deletable=0; "
-//       )
-//     : null;
+  shape1 =
+    diagramInfo.type !== "INDICATOR"
+      ? graph.insertVertex(border, null, new DiagramEntity(), 30, 20, 100, 100, "shape=ellipse;movable=0;deletable=0; ")
+      : null;
 
-//   if (this.isClassifier) {
-//     border.value.id = "tb";
-//     border.value.geometry = {
-//       x: border.geometry.x,
-//       y: border.geometry.y,
-//       width: border.geometry.width,
-//       height: border.geometry.height,
-//       parent: undefined
-//     };
+  if (diagramInfo.type !== "INDICATOR") {
+    border.value.id = "tb";
+    border.value.geometry = {
+      x: border.geometry.x,
+      y: border.geometry.y,
+      width: border.geometry.width,
+      height: border.geometry.height,
+      parent: undefined
+    };
 
-//     shape1.value.id = "te1";
-//     shape1.value.geometry = {
-//       x: shape1.geometry.x,
-//       y: shape1.geometry.y,
-//       width: shape1.geometry.width,
-//       height: shape1.geometry.height,
-//       parent: "border"
-//     };
-//   }
+    shape1.value.id = "te1";
+    shape1.value.geometry = {
+      x: shape1.geometry.x,
+      y: shape1.geometry.y,
+      width: shape1.geometry.width,
+      height: shape1.geometry.height,
+      parent: "border"
+    };
+  }
 
-//   let shape2;
-//   shape2 =
-//     this.type == "RELATION_CLASSIFIER"
-//       ? this.graph.insertVertex(
-//           border,
-//           null,
-//           new DiagramValue(),
-//           240,
-//           55,
-//           DatatypeShape.DEFAULT_WIDTH,
-//           DatatypeShape.DEFAULT_HEIGHT,
-//           "shape=vowl-datatype;movable=0;deletable=0;"
-//         )
-//       : null;
-//   shape1.value.type = "title-entity";
-//   if (shape2) {
-//     shape2.value.type = "title-value";
-//     shape2.value.id = "tv1";
-//     shape2.value.geometry = {
-//       x: shape2.geometry.x,
-//       y: shape2.geometry.y,
-//       width: shape2.geometry.width,
-//       height: shape2.geometry.height,
-//       parent: "border"
-//     };
+  let shape2;
+  shape2 =
+    diagramInfo.type === "RELATION_CLASSIFIER"
+      ? graph.insertVertex(
+          border,
+          null,
+          new DiagramValue(),
+          240,
+          55,
+          100,
+          30,
+          "shape=vowl-datatype;fillColor=#fc3;movable=0;deletable=0;"
+        )
+      : null;
+  shape1.value.type = "title-entity";
+  if (shape2) {
+    shape2.value.type = "title-value";
+    shape2.value.id = "tv1";
+    shape2.value.geometry = {
+      x: shape2.geometry.x,
+      y: shape2.geometry.y,
+      width: shape2.geometry.width,
+      height: shape2.geometry.height,
+      parent: "border"
+    };
 
-//     this.graph.insertEdge(border, "var", null, shape1, shape2);
-//   }
-// }
+    graph.insertEdge(border, "var", null, shape1, shape2);
+  }
+}

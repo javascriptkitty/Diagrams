@@ -1,0 +1,33 @@
+.uploadModel {
+  margin: auto !important;
+  display: flex;
+  justify-content: center;
+}
+.isUploaded {
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+.uploadButton {
+  display: flex;
+  flex-direction: column;
+}
+
+.uploadstate-select {
+  background-color: #fde;
+}
+
+.uploadstate-uploading {
+  background-color: #ffe;
+}
+
+.uploadstate-done {
+  background-color: #dfe;
+}
+.uploadstate-select,
+.uploadstate-uploading,
+.uploadstate-done {
+  padding: 15px 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}

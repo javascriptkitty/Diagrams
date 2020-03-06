@@ -22,16 +22,18 @@ export default function SimpleMenu(props: MenuProps) {
 
   return (
     <div className="addButton">
-      <Button
-        startIcon={<AddCircleOutlineIcon />}
-        aria-controls="simple-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        Добавить ▼
-      </Button>
+      {props.value === 0 || props.value === 1 ? (
+        <Button
+          startIcon={<AddCircleOutlineIcon />}
+          aria-controls="simple-menu"
+          aria-haspopup="true"
+          onClick={handleClick}
+        >
+          Добавить ▼
+        </Button>
+      ) : null}
       <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-        {props.value == 0 ? (
+        {props.value === 0 ? (
           <MenuItem onClick={handleClose}>
             <Link to="/indicators/new">Индикатор </Link>
           </MenuItem>

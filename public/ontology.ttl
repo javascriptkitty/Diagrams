@@ -1,0 +1,80 @@
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pwc: <http://example.com/pwc#> .
+
+pwc:Ontology a owl:Ontology ;
+  owl:versionInfo "0.0.1" .
+
+pwc:Account a rdfs:Class ;
+  rdfs:label "Счет"@ru ;
+  rdfs:comment "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."@ru .
+
+pwc:Document a rdfs:Class ;
+  rdfs:label "Документ"@ru ;
+  rdfs:comment "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."@ru .
+
+pwc:AccountingTransaction a rdfs:Class ;
+  rdfs:label "Проводка"@ru ;
+  rdfs:comment "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."@ru .
+
+pwc:User a rdfs:Class ;
+  rdfs:label "Пользователь"@ru ;
+  rdfs:comment "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."@ru .
+
+pwc:id a owl:DatatypeProperty ;
+  rdfs:label "идентификатор"@ru ;
+  rdfs:range xsd:string .
+
+pwc:number a owl:DatatypeProperty ;
+  rdfs:label "номер"@ru ;
+  rdfs:range xsd:string .
+
+pwc:amount a owl:DatatypeProperty ;
+  rdfs:label "сумма"@ru ;
+  rdfs:range xsd:double .
+
+pwc:date a owl:DatatypeProperty ;
+  rdfs:label "дата"@ru ;
+  rdfs:range xsd:date .
+
+pwc:type a owl:DatatypeProperty ;
+  rdfs:label "тип"@ru ;
+  rdfs:range xsd:string .
+
+pwc:financialYear a owl:DatatypeProperty ;
+  rdfs:label "финансовый год"@ru ;
+  rdfs:range xsd:gYear .
+
+pwc:isReversed a owl:DatatypeProperty ;
+  rdfs:label "сторнированная проводка"@ru ;
+  rdfs:range xsd:boolean .
+
+pwc:isSystemCreated a owl:DatatypeProperty ;
+  rdfs:label "автоматическая проводка"@ru ;
+  rdfs:range xsd:boolean .
+
+pwc:name a owl:DatatypeProperty ;
+  rdfs:label "имя"@ru ;
+  rdfs:range xsd:string .
+
+pwc:partOf a owl:ObjectProperty ;
+  rdfs:label "является частью"@ru .
+
+pwc:relatedTo a owl:ObjectProperty ;
+  rdfs:label "относится к"@ru .
+
+pwc:createdBy a owl:ObjectProperty ;
+  rdfs:label "создано <кем>"@ru ;
+  rdfs:range pwc:User .
+
+pwc:ObjectAgrProperty a rdfs:Class;
+	rdfs:subClassOf owl:ObjectProperty.
+
+pwc:sum a pwc:ObjectAgrProperty;
+  rdfs:label "сумма"@ru ;
+  rdfs:range xsd:string.
+
+pwc:average a pwc:ObjectAgrProperty;
+  rdfs:label "среднее значение"@ru ;
+  rdfs:range xsd:string .

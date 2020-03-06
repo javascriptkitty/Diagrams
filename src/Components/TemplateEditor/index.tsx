@@ -8,19 +8,7 @@ import { Diagram, DiagramInfo } from "../../models";
 import diagramJson from "../../data/diagram.json";
 import Info from "../Info/index";
 import Restriction from "../Restriction/index";
-import StatisticsIndicatorComponent from "../StatisticsIndicatorComponent/index";
 import Json2TypescriptService from "../../services/json2typescript";
-
-declare var require: any;
-
-const diagramInfo: DiagramInfo = {
-  _id: "",
-  _rev: "",
-  type: null,
-  label: "",
-  description: "",
-  modifiedAt: ""
-};
 
 const diagram: Diagram = new Json2TypescriptService().deserializeObject(diagramJson, Diagram) as Diagram;
 
@@ -29,8 +17,18 @@ interface TemplateProps {
   diagramInfo: DiagramInfo;
 }
 
+interface InteractionState {
+  diagramInfo: DiagramInfo;
+  element: mxgraph.mxCell;
+}
+
+const DEFAULT_INTERACTION_STATE = {
+  element: null,
+  diagramInfo: null
+};
+
 export default function TemplateEditor(props: TemplateProps) {
-  const [interactionState, setInteractionState] = useState(null);
+  const [interactionState, setInteractionState] = useState(DEFAULT_INTERACTION_STATE);
 
   function onVertexSelected(diagramInfo: DiagramInfo, element: mxgraph.mxCell): void {
     setInteractionState({ diagramInfo, element });
@@ -41,7 +39,7 @@ export default function TemplateEditor(props: TemplateProps) {
   }
 
   function onCellDeselected() {
-    setInteractionState(null);
+    setInteractionState(DEFAULT_INTERACTION_STATE);
   }
 
   const listener: DiagramElementListener = {
@@ -50,24 +48,25 @@ export default function TemplateEditor(props: TemplateProps) {
     onCellDeselected
   };
 
-  const diagramInfo = props.location.state;
+  const diagramInfo = props.location.state.info;
+  // console.log(diagramInfo);
 
   return (
     <div className="editorContainer">
       <Grid container spacing={0}>
-        <Grid item xs={3} sm={3} md={2}>
+        <Grid item xs={3} sm={3} md={2} lg={2}>
           <Info label={diagramInfo.label} description={diagramInfo.description} />
         </Grid>
-        <Grid item xs={9} sm={9} md={8}>
+        <Grid item xs={9} sm={9} md={8} lg={8}>
           <MxGraphContainerComponent diagram={diagram} diagramInfo={diagramInfo} listener={listener} />
         </Grid>
-        {interactionState && (
+        {/* {interactionState && (
           <Grid item sm={3} md={2}>
             <StatisticsIndicatorComponent />{" "}
           </Grid>
-        )}
-        <Grid item sm={3} md={2}>
-          <Restriction diagram={diagram} diagramInfo={diagramInfo} />
+        )} */}
+        <Grid item sm={3} md={2} lg={2}>
+          <Restriction diagram={diagram} diagramInfo={diagramInfo} element={interactionState.element} />
         </Grid>
       </Grid>
     </div>

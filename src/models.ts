@@ -1,4 +1,4 @@
-import { JsonConverter, JsonCustomConvert, JsonObject, JsonProperty, Any } from "json2typescript";
+import { JsonConverter, JsonCustomConvert, JsonObject, JsonProperty } from "json2typescript";
 import Json2TypescriptService from "./services/json2typescript";
 import { CouchDBDocument } from "./services/couchdb";
 
@@ -147,7 +147,7 @@ export class FilterGroup extends Filter {
       const firstFilter = this.filters[0];
       if (firstFilter instanceof SimpleFilter) {
         const simpleFilter = firstFilter as SimpleFilter;
-        if (simpleFilter.operator == SimpleFilterOperator.SPARQL_EXP) {
+        if (simpleFilter.operator === SimpleFilterOperator.SPARQL_EXP) {
           return "...";
         }
       }

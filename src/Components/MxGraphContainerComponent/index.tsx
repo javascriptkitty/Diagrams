@@ -1,15 +1,15 @@
-import React, { createRef } from 'react';
+import React, { createRef } from "react";
 
-import { mxgraph } from 'mxgraph';
-import { configureGraph, renderDiagram, DiagramElementListener } from '../../mxgraph/editor';
-import { configureToolbar } from '../../mxgraph/toolbar';
-import { Diagram, DiagramInfo } from '../../models';
-import './style.css';
+import { mxgraph } from "mxgraph";
+import { configureGraph, renderDiagram, DiagramElementListener, createTitleBlock } from "../../mxgraph/editor";
+import { configureToolbar } from "../../mxgraph/toolbar";
+import { Diagram, DiagramInfo } from "../../models";
+import "./style.css";
 
 declare var require: any;
 
-const mx: typeof mxgraph = require('mxgraph')({
-  mxBasePath: 'mxgraph'
+const mx: typeof mxgraph = require("mxgraph")({
+  mxBasePath: "mxgraph"
 });
 
 interface MxGraphContainerComponentProps {
@@ -33,6 +33,7 @@ export default class MxGraphContainerComponent extends React.Component<MxGraphCo
     configureToolbar(this.graph, this.toolbarRef.current, diagramInfo);
     configureGraph(this.graph, isClassifier, diagramInfo, listener);
     renderDiagram(this.graph, diagram);
+    createTitleBlock(this.graph, diagramInfo);
   }
 
   render() {
