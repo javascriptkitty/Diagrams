@@ -285,6 +285,9 @@ export class DiagramValue {
   @JsonProperty("geometry", Geometry, false)
   geometry?: Geometry = undefined;
 
+  @JsonProperty("type", String)
+  type: string = "Value";
+
   constructor(id?: string) {
     this.id = id;
   }

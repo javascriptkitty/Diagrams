@@ -4,7 +4,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { Any } from "json2typescript";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -19,12 +18,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface SelectProps {
-  restrictionTypes: Any[];
+  restrictionTypes: [];
 }
 
 export default function SimpleSelect(props: SelectProps) {
   const classes = useStyles();
-  const [age, setAge] = React.useState("");
+  const [type, setType] = React.useState("");
 
   const inputLabel = React.useRef<HTMLLabelElement>(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -33,25 +32,25 @@ export default function SimpleSelect(props: SelectProps) {
   }, []);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setAge(event.target.value as string);
+    setType(event.target.value as string);
   };
-  console.log(props);
+  console.log(props.restrictionTypes);
 
   return (
     <div>
       <FormControl variant="outlined" className={classes.formControl}>
         <InputLabel ref={inputLabel} id="demo-simple-select-outlined-label">
-          Age
+          Type
         </InputLabel>
         <Select
           labelId="demo-simple-select-outlined-label"
           id="demo-simple-select-outlined"
-          value={age}
+          value={type}
           onChange={handleChange}
           labelWidth={labelWidth}
         >
           {props.restrictionTypes.map(type => {
-            return <MenuItem value={null}>xxx</MenuItem>;
+            return <MenuItem value={null}></MenuItem>;
           })}
         </Select>
       </FormControl>

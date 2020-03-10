@@ -3,7 +3,7 @@ import React, { createRef } from "react";
 import { mxgraph } from "mxgraph";
 import { configureGraph, renderDiagram, DiagramElementListener, createTitleBlock } from "../../mxgraph/editor";
 import { configureToolbar } from "../../mxgraph/toolbar";
-import { Diagram, DiagramInfo } from "../../models";
+import { Diagram, DiagramInfo, DiagramValue } from "../../models";
 import "./style.css";
 
 declare var require: any;
@@ -29,17 +29,22 @@ export default class MxGraphContainerComponent extends React.Component<MxGraphCo
     this.graph = new mx.mxGraph(this.editorRef.current);
 
     const isClassifier = false;
-    console.log(this.props);
+
     configureToolbar(this.graph, this.toolbarRef.current, diagramInfo);
     configureGraph(this.graph, isClassifier, diagramInfo, listener);
     renderDiagram(this.graph, diagram);
-    createTitleBlock(this.graph, diagramInfo);
+    if (isClassifier) {
+      createTitleBlock(this.graph, diagramInfo);
+    }
   }
 
   render() {
+    const toolbarStyle = {
+      height: this.props.diagramInfo.type === "ENTITY_CLASSIFIER" ? 140 : 90
+    };
     return (
       <div className="mxgraph-container">
-        <div ref={this.toolbarRef} className="mxgraph-toolbar" />
+        <div ref={this.toolbarRef} className="mxgraph-toolbar" style={toolbarStyle} />
         <div ref={this.editorRef} className="mxgraph-editor" />
       </div>
     );

@@ -1,11 +1,11 @@
-import { mxgraph } from 'mxgraph';
+import { mxgraph } from "mxgraph";
 // import { DatatypeShape, OwlClassShape } from '../mxgraph/OwlClassShape';
-import { DiagramEntity, DiagramValue, DiagramInfo } from '../models';
+import { DiagramEntity, DiagramValue, DiagramInfo, DiagramAggregate } from "../models";
 
 declare var require: any;
 
-const mx: typeof mxgraph = require('mxgraph')({
-  mxBasePath: 'mxgraph'
+const mx: typeof mxgraph = require("mxgraph")({
+  mxBasePath: "mxgraph"
 });
 
 function moveCellsIsOverlapping(
@@ -25,18 +25,18 @@ function moveCellsIsOverlapping(
   let yDir = null;
 
   if (cellMinX > borderGeometry.x && cellMinX < borderGeometry.x + borderGeometry.width) {
-    xDir = 'right';
+    xDir = "right";
   } else if (cellMaxX > borderGeometry.x && cellMaxX < borderGeometry.x + borderGeometry.width) {
-    xDir = 'left';
+    xDir = "left";
   }
   if (cellMinY > borderGeometry.y && cellMinY < borderGeometry.y + borderGeometry.height) {
-    yDir = 'up';
+    yDir = "up";
   } else if (cellMaxY > borderGeometry.y && cellMaxY < borderGeometry.y + borderGeometry.height) {
-    yDir = 'down';
+    yDir = "down";
   }
   if (xDir && yDir) {
-    const deltaX = delta * (xDir === 'right' ? 1 : -1);
-    const deltaY = delta * (yDir === 'up' ? -1 : 1);
+    const deltaX = delta * (xDir === "right" ? 1 : -1);
+    const deltaY = delta * (yDir === "up" ? -1 : 1);
     currentCells[i].geometry.x = cellGeometry.x + cellGeometry.width + deltaX;
     currentCells[i].geometry.y = cellGeometry.y + cellGeometry.height + deltaY;
     didMove = true;
@@ -58,7 +58,7 @@ function createVertex(
   const vertex = new mx.mxCell(type, new mx.mxGeometry(x, y, width, height), style);
 
   vertex.setVertex(true);
-  vertex.setAttribute('type', type);
+  vertex.setAttribute("type", type);
   return vertex;
 }
 
@@ -71,36 +71,36 @@ export function configureToolbar(graph: mxgraph.mxGraph, container: any, diagram
   createToolbarItem(
     graph,
     toolbar,
-    id => new DiagramEntity('e' + id),
-    'Сущность',
-    '../assets/images/vowl-owl-class.png',
-    'shape=ellipse;',
+    id => new DiagramEntity("e" + id),
+    "Сущность",
+    "../assets/images/vowl-owl-class.png",
+    "shape=ellipse;",
     100,
     100,
-    'Entity'
+    "Entity"
   );
   createToolbarItem(
     graph,
     toolbar,
-    id => new DiagramValue('vd' + id),
-    'Значение c ограничениями',
-    '../assets/images/vowl-datatype.png',
-    'shape=rectangle;fillColor=#fc3;',
+    id => new DiagramValue("vd" + id),
+    "Значение c ограничениями",
+    "../assets/images/vowl-datatype.png",
+    "shape=rectangle;fillColor=#fc3;",
     100,
     30,
-    'Value'
+    "Value"
   );
-  if (diagramInfo.type === 'ENTITY_CLASSIFIER') {
+  if (diagramInfo.type === "ENTITY_CLASSIFIER") {
     createToolbarItem(
       graph,
       toolbar,
-      id => new DiagramEntity('a' + id),
-      'агрегирующий блок',
-      '../assets/images/vowl-owl-aggregate.png',
-      'shape=rhombus',
+      id => new DiagramAggregate("a" + id),
+      "агрегирующий блок",
+      "../assets/images/vowl-owl-aggregate.png",
+      "shape=rhombus",
       100,
       100,
-      'Aggregate'
+      "Aggregate"
     );
   }
 }
@@ -133,12 +133,12 @@ export function createToolbarItem(
 
     let cellsGeo = [];
 
-    const border = currentCells[0] && currentCells[0].value === 'border' ? currentCells[0] : null;
-    const borderType = border && border.getAttribute('type');
-    const vertexType = vertex.getAttribute('type');
+    const border = currentCells[0] && currentCells[0].value === "border" ? currentCells[0] : null;
+    const borderType = border && border.getAttribute("type");
+    const vertexType = vertex.getAttribute("type");
 
     let offset =
-      border == null || borderType === 'border-relation' || (borderType === 'border-entity' && vertexType !== 'Value')
+      border == null || borderType === "border-relation" || (borderType === "border-entity" && vertexType !== "Value")
         ? 0
         : 1;
 
@@ -160,7 +160,7 @@ export function createToolbarItem(
       }
     }
 
-    if (borderType === 'border-entity') {
+    if (borderType === "border-entity") {
       const borderGeo = border.getGeometry();
 
       if (
@@ -175,7 +175,7 @@ export function createToolbarItem(
           moveCellsIsOverlapping(vertexGeo, geo, border.children, i, 20, graph);
         }
 
-        if (vertexType === 'Value') {
+        if (vertexType === "Value") {
           graph.addCell(vertex, border);
 
           graph.insertEdge(border, null, null, border.children[0], border.children[border.children.length - 1]);
@@ -200,9 +200,9 @@ export function createToolbarItem(
     const pt = graph.getPointForEvent(evt);
     handler(graph, evt, cell, pt.x, pt.y);
   });
-  img.classList.add('my-3');
-  img.classList.add('mx-auto');
-  img.classList.add('d-block');
+  img.classList.add("my-3");
+  img.classList.add("mx-auto");
+  img.classList.add("d-block");
 
   mx.mxUtils.makeDraggable(img, graph, handler);
 }

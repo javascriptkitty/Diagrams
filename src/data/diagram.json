@@ -11,6 +11,7 @@
         "label": "Проводка",
         "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
       },
+      "type": "Entity",
       "geometry": {
         "x": 30,
         "y": 20,
@@ -24,6 +25,7 @@
   "values": [
     {
       "id": "vd3",
+      "type": "Value",
       "restriction": {
         "id": "75faee6b3e7121cab1ec3e910e003b47",
         "label": "Проводка на круглую сумму",

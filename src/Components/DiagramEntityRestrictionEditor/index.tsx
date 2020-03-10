@@ -13,7 +13,6 @@ interface RestrictionTypesProps {
 export default function DiagramEntityRestrictionEditor(props: RestrictionTypesProps) {
   const { diagramInfo, element } = props;
   const isClassifier = diagramInfo.type == "INDICATOR" ? false : true;
-  console.log(props);
 
   return <div>entity types should be here </div>;
 }

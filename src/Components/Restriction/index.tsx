@@ -5,8 +5,8 @@ import DiagramEntityRestrictionEditor from "../DiagramEntityRestrictionEditor";
 import DiagramValueRestrictionEditor from "../DiagramValueRestrictionEditor";
 import DiagramRelationRestrictionEditor from "../DiagramRelationRestrictionEditor";
 import DiagramAggregateRestrictionEditor from "../DiagramAggregateRestrictionEditor";
+import SimpleSelect from "../MUI/SimpleSelect";
 import { mxgraph } from "mxgraph";
-import { render } from "@testing-library/react";
 
 interface RestrictionProps {
   diagramInfo: DiagramInfo;
@@ -15,25 +15,41 @@ interface RestrictionProps {
 }
 
 interface RestrictionState {
-  isClassifier: boolean;
-  isVertex: boolean;
-  isEdge: boolean;
   // cellValue: DiagramEntity | DiagramRelation | DiagramValue | DiagramAggregate
 }
 export default class Restriction extends React.Component<RestrictionProps, RestrictionState> {
+  isClassifier: boolean;
   constructor(props: RestrictionProps) {
     super(props);
-    this.state = {
-      isClassifier: false,
-      isVertex: false,
-      isEdge: false
-      // cellValue: null
-    };
+    this.state = {};
   }
 
   render() {
     const { diagramInfo, diagram, element } = this.props;
     console.log(element);
+
+    if (diagramInfo.type !== "INDICATOR") {
+      this.isClassifier = true;
+    }
+
+    let restrictionTypes;
+    if (element) {
+      if (element.vertex && element.value.type === "Value") {
+        restrictionTypes = !this.isClassifier
+          ? ["Фильтр по значению", "Классификатор значения"]
+          : ["Фильтр по значению"];
+      } else if (element.edge) {
+        if (!this.isClassifier) {
+          restrictionTypes = ["Классификатор связи", "Связь"];
+        } else {
+          if (element.source.value.type == "Aggregate") {
+            restrictionTypes = ["Агрегирующая функция", "Связь"];
+          } else {
+            restrictionTypes = ["Связь"];
+          }
+        }
+      }
+    }
 
     return (
       <div className="restrictionContainer">
@@ -44,29 +60,32 @@ export default class Restriction extends React.Component<RestrictionProps, Restr
               <div>Выделите один из элементов, чтобы установить или отредактировать его ограничения</div>
             ) : (
               <div>
-                {element.vertex && element.value.type === "Entity" ? (
-                  <div>
-                    {" "}
-                    <DiagramEntityRestrictionEditor element={element} diagramInfo={diagramInfo} />{" "}
-                  </div>
-                ) : null}
-                {element.vertex && element.value.type === "Value" ? (
-                  <div>
-                    <DiagramValueRestrictionEditor element={element} diagramInfo={diagramInfo} />{" "}
-                  </div>
-                ) : null}
-                {element.edge ? (
-                  <div>
-                    {" "}
-                    <DiagramRelationRestrictionEditor element={element} diagramInfo={diagramInfo} />
-                  </div>
-                ) : null}
-                {element.vertex && element.value.type === "Aggregate" ? (
-                  <div>
-                    {" "}
-                    <DiagramAggregateRestrictionEditor element={element} diagramInfo={diagramInfo} />
-                  </div>
-                ) : null}
+                <SimpleSelect restrictionTypes={restrictionTypes} />
+                <div>
+                  {element.vertex && element.value.type === "Entity" ? (
+                    <div>
+                      {" "}
+                      <DiagramEntityRestrictionEditor element={element} diagramInfo={diagramInfo} />{" "}
+                    </div>
+                  ) : null}
+                  {element.vertex && element.value.type === "Value" ? (
+                    <div>
+                      <DiagramValueRestrictionEditor element={element} diagramInfo={diagramInfo} />{" "}
+                    </div>
+                  ) : null}
+                  {element.edge ? (
+                    <div>
+                      {" "}
+                      <DiagramRelationRestrictionEditor element={element} diagramInfo={diagramInfo} />
+                    </div>
+                  ) : null}
+                  {element.vertex && element.value.type === "Aggregate" ? (
+                    <div>
+                      {" "}
+                      <DiagramAggregateRestrictionEditor element={element} diagramInfo={diagramInfo} />
+                    </div>
+                  ) : null}
+                </div>{" "}
               </div>
             )}
           </CardContent>

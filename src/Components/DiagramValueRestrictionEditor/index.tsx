@@ -1,6 +1,5 @@
 import React from "react";
 import { Diagram, DiagramInfo, DiagramEntity, DiagramRelation, DiagramAggregate } from "../../models";
-import RestrictionTypes from "../RestrictionTypes";
 import { mxgraph } from "mxgraph";
 
 interface RestrictionTypesProps {
@@ -13,9 +12,5 @@ export default function DiagramValueRestrictionEditor(props: RestrictionTypesPro
   const { diagramInfo, element } = props;
   const isClassifier = diagramInfo.type === "INDICATOR" ? false : true;
   console.log(props);
-  return (
-    <div>
-      <RestrictionTypes diagramInfo={diagramInfo} element={element} />
-    </div>
-  );
+  return <div></div>;
 }

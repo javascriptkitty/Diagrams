@@ -1,5 +1,5 @@
 .mxgraph-container {
-  /* display: flex; */
+  display: flex;
   position: relative;
 
   width: 100%;
@@ -12,6 +12,8 @@
   border-radius: 5px;
   text-align: center;
   width: 100px;
+  height: 100px;
+  max-height: 140px;
   margin: 15px;
   padding: 20px 10px;
 }

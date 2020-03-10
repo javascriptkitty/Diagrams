@@ -14,6 +14,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "axios": "^0.19.2",
     "json2typescript": "^1.2.5",
     "mxgraph": "^4.1.0",
     "prettier": "^1.19.1",
