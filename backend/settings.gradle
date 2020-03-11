@@ -1,0 +1,4 @@
+rootProject.name = 'pwc-analytics'
+include 'sparql-generate'
+findProject(':sparql-generate')?.name = 'SparqlGenerate'
+

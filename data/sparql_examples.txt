@@ -1,0 +1,217 @@
+B1-2
+Необходимо выявить проводки по счетам, использовавшимся менее 4 раз
+:
+  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+  PREFIX pwc: <http://example.com/pwc#>
+  PREFIX cf: <http://datafabric.cc/function#>
+
+  SELECT ?t ?rel
+  WHERE
+  {
+    ?t a pwc:AccountingTransaction;
+      pwc:relatedTo ?rel.
+    {
+      SELECT ?rel
+      WHERE {
+        ?o a pwc:AccountingTransaction;
+          pwc:relatedTo ?rel.
+				?rel a pwc:Account.
+      }
+      GROUP BY ?rel
+      HAVING(COUNT(?o) < 4)
+    }
+  }
+
+
+B1-3
+Выявить сторнированные проводки, сделанные в июле-сентябре
+:
+  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+  PREFIX pwc: <http://example.com/pwc#>
+  PREFIX cf: <http://datafabric.cc/function#>
+
+  SELECT ?t ?date
+  WHERE {
+    ?t rdf:type pwc:AccountingTransaction.
+    ?t pwc:date ?date.
+    ?t pwc:isReversed ?isReversed.
+    FILTER (?isReversed = true && MONTH(?date) IN (9, 8, 7))
+  }
+
+
+B3-3
+Выявление проводок, сделанных в государственные праздники. Рассматриваются только проводки, сделанные вручную.
+:
+  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+  PREFIX pwc: <http://example.com/pwc#>
+  PREFIX cf: <http://datafabric.cc/function#>
+
+  SELECT ?t ?date
+  WHERE {
+    ?t rdf:type pwc:AccountingTransaction.
+    ?t pwc:isSystemCreated ?sc.
+    ?t pwc:date ?date.
+    FILTER(?sc = false &&
+      ?date IN (
+        '2018-01-01'^^xsd:date, '2018-01-02'^^xsd:date, '2018-01-03'^^xsd:date, '2018-01-04'^^xsd:date, '2018-01-05'^^xsd:date,
+        '2018-01-08'^^xsd:date,	'2018-03-08'^^xsd:date, '2018-03-09'^^xsd:date, '2018-04-30'^^xsd:date, '2018-05-01'^^xsd:date,
+        '2018-05-02'^^xsd:date, '2018-05-09'^^xsd:date, '2018-06-11'^^xsd:date, '2018-06-12'^^xsd:date, '2018-11-05'^^xsd:date,
+        '2018-12-31'^^xsd:date, '2018-02-23'^^xsd:date)
+    )
+  }
+
+
+B3-4
+Выявление проводок, сделанных в выходные дни. Рассматриваются только проводки, сделанные вручную.
+Дополнительно, исключены даты, когда выходной был рабочим днем.
+:
+  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+  PREFIX pwc: <http://example.com/pwc#>
+  PREFIX cf: <http://datafabric.cc/function#>
+
+  SELECT ?t ?date ?weekDay
+  WHERE {
+    ?t rdf:type pwc:AccountingTransaction.
+    ?t pwc:isSystemCreated ?sc.
+    ?t pwc:date ?date.
+    BIND ((cf:getWeekDayOfDate(?date)) as ?weekDay)
+    FILTER(?sc = false &&
+      ?weekDay IN (6, 7) &&
+      ?date NOT IN (
+        '2018-04-28'^^xsd:date, '2018-06-09'^^xsd:date, '2018-12-29'^^xsd:date)
+    )
+  }
+
+
+B4-2
+Выявление проводок на круглую сумму выше определенного порога (1 000 000 руб.)
+:
+  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+  PREFIX pwc: <http://example.com/pwc#>
+  PREFIX cf: <http://datafabric.cc/function#>
+
+  SELECT ?t ?amount
+  WHERE {
+    ?t rdf:type pwc:AccountingTransaction.
+    ?t pwc:amount ?amount.
+    BIND ((cf:divRem(?amount, 1000000)) as ?rem)
+    FILTER (?amount > 1000000 && ?rem = 0)
+  }
+
+
+B4-3
+Выявление проводок на сумму, отличающуюся от заданного порога менее чем на заданное отклонение.
+:
+  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+  PREFIX pwc: <http://example.com/pwc#>
+  PREFIX cf: <http://datafabric.cc/function#>
+
+  SELECT ?t ?amount ?x
+  WHERE {
+    ?t rdf:type pwc:AccountingTransaction.
+    ?t pwc:amount ?amount.
+    BIND (ABS(?amount) as ?absAmount)
+    BIND (1000000 as ?threshold)
+    BIND (1 as ?deviation)
+    BIND (?threshold * (1 - (?deviation / 100)) as ?x)
+    FILTER (?absAmount >= (?threshold * (1 - (?deviation / 100)))
+      && ?absAmount <= ?threshold)
+  }
+
+
+С1
+Необходимо выявить нетипичную корреспонденцию со счетами выручки (90.01).
+Типичной считается корреспонденция кредит 90.01 + кредит 68 с дебетом 62 и 76 счетов.
+Счета считаются корреспондирующими, если в рамках одного документа ([Document_number]) сумма оборотов по счетам по кредиту (отрицательные суммы)
+равна сумме оборотов по счетам по дебету (положительные суммы)
+:
+  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+  PREFIX pwc: <http://example.com/pwc#>
+  PREFIX cf: <http://datafabric.cc/function#>
+
+  SELECT ?t ?amount ?accNumber ?docNumber
+  WHERE {
+    ?doc a pwc:Document;
+      pwc:number ?docNumber;
+      pwc:partOf ?t.
+
+    ?t a pwc:AccountingTransaction;
+      pwc:amount ?amount;
+      pwc:relatedTo ?acc.
+
+    ?acc a pwc:Account;
+      pwc:number ?accNumber.
+
+    {
+      SELECT ?docNumber (SUM(?amount) AS ?revAmount)
+      WHERE {
+        ?doc a pwc:Document;
+          pwc:number ?docNumber;
+          pwc:partOf ?t.
+
+        ?t a pwc:AccountingTransaction;
+          pwc:amount ?amount;
+          pwc:relatedTo ?acc.
+
+        ?acc a pwc:Account;
+          pwc:number ?accNumber.
+
+        FILTER (SUBSTR(?accNumber, 1, 5) = '90.01')
+      }
+      GROUP BY ?docNumber
+    }
+
+    {
+      SELECT ?docNumber (SUM(?amount) AS ?vatAmount)
+      WHERE {
+        ?doc a pwc:Document;
+          pwc:number ?docNumber;
+          pwc:partOf ?t.
+
+        ?t a pwc:AccountingTransaction;
+          pwc:amount ?amount;
+          pwc:relatedTo ?acc.
+
+        ?acc a pwc:Account;
+          pwc:number ?accNumber.
+
+        FILTER (SUBSTR(?accNumber, 1, 2) = '68')
+      }
+      GROUP BY ?docNumber
+    }
+
+    {
+      SELECT ?docNumber (SUM(?amount) AS ?normAmount)
+      WHERE {
+        ?doc a pwc:Document;
+          pwc:number ?docNumber;
+          pwc:partOf ?t.
+
+        ?t a pwc:AccountingTransaction;
+          pwc:amount ?amount;
+          pwc:relatedTo ?acc.
+
+        ?acc a pwc:Account;
+          pwc:number ?accNumber.
+
+        BIND (SUBSTR(?accNumber, 1, 2) AS ?substrNumber)
+        FILTER (?substrNumber = '62' || ?substrNumber = '76')
+      }
+      GROUP BY ?docNumber
+    }
+
+    BIND (SUBSTR(?accNumber, 1, 5) AS ?substrNumber5)
+    BIND (SUBSTR(?accNumber, 1, 2) AS ?substrNumber2)
+    FILTER (
+      ((?revAmount + ?vatAmount + ?normAmount) =  0)
+        && ((?substrNumber5 = '90.01') || (?substrNumber2 = '68') ||
+          (?substrNumber2 = '62') || (?substrNumber2 = '76'))
+    )
+  }

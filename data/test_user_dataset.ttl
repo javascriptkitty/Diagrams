@@ -1,0 +1,18 @@
+@prefix :      <http://example.com/resource/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix iter:  <http://w3id.org/sparql-generate/iter/> .
+@prefix pwc:   <http://example.com/pwc#> .
+@prefix fun:   <http://w3id.org/sparql-generate/fn/> .
+
+:user-5bd0c21ebc04f9b1513065bce5fe7bb3
+        a         pwc:User ;
+        pwc:name  "TEST_USER_1" .
+
+:user-0a24e7fd49d18b29c384e6701ffeefee
+        a         pwc:User ;
+        pwc:name  "TEST_USER_2" .
+
+:user-ef5767d6643497675ecca066c210c984
+        a         pwc:User ;
+        pwc:name  "TEST_USER_3" .

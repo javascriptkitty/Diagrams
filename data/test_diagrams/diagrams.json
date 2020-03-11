@@ -1,0 +1,1875 @@
+{
+  "docs": [
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e003b47",
+      "queryType": "VALUE_CLASSIFIER",
+      "inputParameters": [
+        {
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "name": "x",
+          "defaultValue": "100"
+        }
+      ],
+      "restriction": {
+        "filter": {
+          "operator": "AND",
+          "filters": [
+            {
+              "operator": "MORE",
+              "value": "?x"
+            },
+            {
+              "operator": "SPARQL_EXP",
+              "value": "(cf:DivRem($, ?x)) = 0"
+            }
+          ]
+        }
+      },
+      "datatype": "http://www.w3.org/2001/XMLSchema#double"
+    },
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e003b47",
+      "queryType": "VALUE_CLASSIFIER",
+      "inputParameters": [
+        {
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "name": "x",
+          "defaultValue": "100"
+        }
+      ],
+      "restriction": {
+        "filter": {
+          "operator": "AND",
+          "filters": [
+            {
+              "operator": "MORE",
+              "value": "?x"
+            },
+            {
+              "operator": "SPARQL_EXP",
+              "value": "(cf:DivRem($, ?x)) = 0"
+            }
+          ]
+        }
+      },
+      "datatype": "http://www.w3.org/2001/XMLSchema#double"
+    },
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e004186",
+      "queryType": "INDICATOR",
+      "inputParameters": [],
+      "entities": [
+        {
+          "id": "e1",
+          "restriction": {
+            "uri": "http://example.com/pwc#AccountingTransaction",
+            "label": "Проводка",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": null
+        }
+      ],
+      "values": [
+        {
+          "id": "vd3",
+          "restriction": {
+            "id": "75faee6b3e7121cab1ec3e910e003b47",
+            "label": "Проводка на круглую сумму",
+            "inputParameters": [
+              {
+                "name": "x",
+                "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+                "value": "100"
+              }
+            ]
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#double"
+        }
+      ],
+      "relations": [
+        {
+          "sourceId": "e1",
+          "targetId": "vd3",
+          "restriction": {
+            "uri": "http://example.com/pwc#amount",
+            "label": "сумма",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          }
+        }
+      ],
+      "expression": null
+    },
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e004d0b",
+      "queryType": "ENTITY_CLASSIFIER",
+      "inputParameters": [
+        {
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "name": "count",
+          "defaultValue": "4"
+        }
+      ],
+      "sparqlQuery": "SELECT (?rel AS <Account>)\n    WHERE {\n      {\n        SELECT ?rel\n        WHERE {\n          ?o a pwc:AccountingTransaction;\n            pwc:relatedTo ?rel.\n          ?rel a pwc:Account.\n        }\n        GROUP BY ?rel\n        HAVING (COUNT(?o) < ?count)\n      }\n}"
+    },
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e005344",
+      "queryType": "INDICATOR",
+      "inputParameters": [],
+      "entities": [
+        {
+          "id": "e1",
+          "restriction": {
+            "uri": "http://example.com/pwc#AccountingTransaction",
+            "label": "Проводка",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": null
+        },
+        {
+          "id": "e3",
+          "restriction": {
+            "uri": "http://example.com/pwc#Account",
+            "label": "Счет",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": {
+            "id": "75faee6b3e7121cab1ec3e910e004d0b",
+            "label": "Малоиспользуемые счета",
+            "inputParameters": [
+              {
+                "name": "count",
+                "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+                "value": "4"
+              }
+            ],
+            "resultVarName": null
+          }
+        }
+      ],
+      "values": [
+        {
+          "id": "vd5",
+          "restriction": null,
+          "datatype": "http://www.w3.org/2001/XMLSchema#string"
+        },
+        {
+          "id": "vd6",
+          "restriction": null,
+          "datatype": "http://www.w3.org/2001/XMLSchema#string"
+        },
+        {
+          "id": "vd7",
+          "restriction": null,
+          "datatype": "http://www.w3.org/2001/XMLSchema#double"
+        }
+      ],
+      "relations": [
+        {
+          "sourceId": "e1",
+          "targetId": "e3",
+          "restriction": {
+            "uri": "http://example.com/pwc#relatedTo",
+            "label": "относится к",
+            "description": null,
+            "isDatatypeProperty": false,
+            "isObjectProperty": true
+          },
+          "includeInStatistic": false
+        },
+        {
+          "sourceId": "e1",
+          "targetId": "vd6",
+          "restriction": {
+            "uri": "http://example.com/pwc#id",
+            "label": "идентификатор",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          },
+          "includeInStatistic": true
+        },
+        {
+          "sourceId": "e1",
+          "targetId": "vd7",
+          "restriction": {
+            "uri": "http://example.com/pwc#amount",
+            "label": "сумма",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          },
+          "includeInStatistic": true
+        },
+        {
+          "sourceId": "e3",
+          "targetId": "vd5",
+          "restriction": {
+            "uri": "http://example.com/pwc#number",
+            "label": "номер",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          },
+          "includeInStatistic": true
+        }
+      ],
+      "expression": null,
+      "statisticIndicator": true
+    },
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e0089a8",
+      "queryType": "INDICATOR",
+      "inputParameters": [],
+      "entities": [
+        {
+          "id": "e1",
+          "restriction": {
+            "uri": "http://example.com/pwc#AccountingTransaction",
+            "label": "Проводка",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": null
+        }
+      ],
+      "values": [
+        {
+          "id": "vd3",
+          "restriction": {
+            "filter": {
+              "operator": "AND",
+              "filters": [
+                {
+                  "operator": "EQUAL",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#boolean"
+        },
+        {
+          "id": "vd5",
+          "restriction": {
+            "id": "eece6d7c85ff6fbb615cb5b2e9b59902",
+            "label": "Дата в интервале месяцев",
+            "inputParameters": [
+              {
+                "name": "startMonth",
+                "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+                "value": "7"
+              },
+              {
+                "name": "endMonth",
+                "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+                "value": "9"
+              }
+            ],
+            "resultVarName": null
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#date"
+        }
+      ],
+      "relations": [
+        {
+          "sourceId": "e1",
+          "targetId": "vd3",
+          "restriction": {
+            "uri": "http://example.com/pwc#isReversed",
+            "label": "сторнированная проводка",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          }
+        },
+        {
+          "sourceId": "e1",
+          "targetId": "vd5",
+          "restriction": {
+            "uri": "http://example.com/pwc#date",
+            "label": "дата",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          }
+        }
+      ],
+      "expression": null
+    },
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e0097b0",
+      "queryType": "INDICATOR",
+      "entities": [
+        {
+          "id": "e1",
+          "restriction": {
+            "uri": "http://example.com/pwc#AccountingTransaction",
+            "label": "Проводка",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": null
+        }
+      ],
+      "values": [
+        {
+          "id": "vd3",
+          "restriction": {
+            "filter": {
+              "operator": "AND",
+              "filters": [
+                {
+                  "operator": "EQUAL",
+                  "value": "false"
+                }
+              ]
+            }
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#boolean"
+        },
+        {
+          "id": "vd5",
+          "restriction": {
+            "id": "75faee6b3e7121cab1ec3e910e00a4e2",
+            "label": "Дата совпадает с государственным праздником"
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#date"
+        }
+      ],
+      "relations": [
+        {
+          "sourceId": "e1",
+          "targetId": "vd3",
+          "restriction": {
+            "uri": "http://example.com/pwc#isSystemCreated",
+            "label": "автоматическая проводка",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false,
+            "rangeUri": "http://www.w3.org/2001/XMLSchema#boolean"
+          }
+        },
+        {
+          "sourceId": "e1",
+          "targetId": "vd5",
+          "restriction": {
+            "uri": "http://example.com/pwc#date",
+            "label": "дата",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false,
+            "rangeUri": "http://www.w3.org/2001/XMLSchema#date"
+          }
+        }
+      ],
+      "expression": null
+    },
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e00a4e2",
+      "queryType": "VALUE_CLASSIFIER",
+      "restriction": {
+        "filter": {
+          "operator": "OR",
+          "filters": [
+            {
+              "operator": "EQUAL",
+              "value": "2018-01-01"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-01-02"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-01-03"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-01-04"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-01-05"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-01-08"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-03-08"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-03-09"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-04-30"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-05-01"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-05-02"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-05-09"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-06-11"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-06-12"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-11-05"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-12-31"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-02-23"
+            }
+          ]
+        }
+      },
+      "datatype": "http://www.w3.org/2001/XMLSchema#date"
+    },
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e00b204",
+      "queryType": "VALUE_CLASSIFIER",
+      "inputParameters": [],
+      "restriction": {
+        "filter": {
+          "operator": "AND",
+          "filters": [
+            {
+              "operator": "SPARQL_EXP",
+              "value": "cf:DateWeekDay($) IN (6, 7)"
+            },
+            {
+              "operator": "SPARQL_EXP",
+              "value": "$ NOT IN ('2018-04-28'^^xsd:date, '2018-06-09'^^xsd:date, '2018-12-29'^^xsd:date)"
+            }
+          ]
+        }
+      },
+      "datatype": "http://www.w3.org/2001/XMLSchema#date"
+    },
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e00b432",
+      "queryType": "INDICATOR",
+      "entities": [
+        {
+          "id": "e1",
+          "restriction": {
+            "uri": "http://example.com/pwc#AccountingTransaction",
+            "label": "Проводка",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": null
+        }
+      ],
+      "values": [
+        {
+          "id": "vd3",
+          "restriction": {
+            "filter": {
+              "operator": "AND",
+              "filters": [
+                {
+                  "operator": "EQUAL",
+                  "value": "false"
+                }
+              ]
+            }
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#boolean"
+        },
+        {
+          "id": "vd4",
+          "restriction": {
+            "id": "75faee6b3e7121cab1ec3e910e00b204",
+            "label": "Дата совпадает с выходным днем"
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#date"
+        }
+      ],
+      "relations": [
+        {
+          "sourceId": "e1",
+          "targetId": "vd3",
+          "restriction": {
+            "uri": "http://example.com/pwc#isSystemCreated",
+            "label": "автоматическая проводка",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          }
+        },
+        {
+          "sourceId": "e1",
+          "targetId": "vd4",
+          "restriction": {
+            "uri": "http://example.com/pwc#date",
+            "label": "дата",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          }
+        }
+      ],
+      "expression": null
+    },
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e00c16e",
+      "queryType": "INDICATOR",
+      "inputParameters": [],
+      "entities": [
+        {
+          "id": "e1",
+          "restriction": {
+            "uri": "http://example.com/pwc#AccountingTransaction",
+            "label": "Проводка",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": null
+        }
+      ],
+      "values": [
+        {
+          "id": "vd3",
+          "restriction": {
+            "id": "eece6d7c85ff6fbb615cb5b2e9b5a1d5",
+            "label": "Значение в пределах порога и отклонения",
+            "inputParameters": [
+              {
+                "name": "limit",
+                "datatype": "http://www.w3.org/2001/XMLSchema#double",
+                "value": "1000000"
+              },
+              {
+                "name": "delta",
+                "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+                "value": "1"
+              }
+            ],
+            "resultVarName": null
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#double"
+        }
+      ],
+      "relations": [
+        {
+          "sourceId": "e1",
+          "targetId": "vd3",
+          "restriction": {
+            "uri": "http://example.com/pwc#amount",
+            "label": "сумма",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          }
+        }
+      ],
+      "expression": null
+    },
+    {
+      "_id": "eece6d7c85ff6fbb615cb5b2e9b49d7d",
+      "queryType": "RELATION_CLASSIFIER",
+      "inputParameters": [
+        {
+          "datatype": "http://www.w3.org/2001/XMLSchema#string",
+          "name": "acc_num",
+          "defaultValue": ""
+        }
+      ],
+      "sparqlQuery": "SELECT (?doc AS <Document>) (SUM(?amount) AS ?result)\nWHERE {\n  ?doc a pwc:Document;\n       pwc:number ?docNumber;\n       pwc:partOf ?t.\n\n  ?t a pwc:AccountingTransaction;\n     pwc:amount ?amount;\n     pwc:relatedTo ?acc.\n\n  ?acc a pwc:Account;\n       pwc:number ?accNumber.\n\n  FILTER (STRSTARTS(?accNumber, '?acc_num') = true)\n}\nGROUP BY ?doc"
+    },
+    {
+      "_id": "eece6d7c85ff6fbb615cb5b2e9b4a9fd",
+      "queryType": "INDICATOR",
+      "inputParameters": [],
+      "entities": [
+        {
+          "id": "e1",
+          "restriction": {
+            "uri": "http://example.com/pwc#AccountingTransaction",
+            "label": "Проводка",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": null
+        },
+        {
+          "id": "e4",
+          "restriction": {
+            "uri": "http://example.com/pwc#Document",
+            "label": "Документ",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": null
+        },
+        {
+          "id": "e7",
+          "restriction": {
+            "uri": "http://example.com/pwc#Account",
+            "label": "Счет",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": null
+        }
+      ],
+      "values": [
+        {
+          "id": "vd3",
+          "restriction": null,
+          "datatype": "string"
+        },
+        {
+          "id": "vd9",
+          "restriction": {
+            "filter": {
+              "operator": "OR",
+              "filters": [
+                {
+                  "operator": "SPARQL_EXP",
+                  "value": "STRSTARTS($, '90.01') = true"
+                },
+                {
+                  "operator": "SPARQL_EXP",
+                  "value": "STRSTARTS($, '68') = true"
+                },
+                {
+                  "operator": "SPARQL_EXP",
+                  "value": "STRSTARTS($, '62') = true"
+                },
+                {
+                  "operator": "SPARQL_EXP",
+                  "value": "STRSTARTS($, '76') = true"
+                }
+              ]
+            }
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#string"
+        },
+        {
+          "id": "vd11",
+          "restriction": null,
+          "datatype": "string"
+        },
+        {
+          "id": "vd12",
+          "restriction": null,
+          "datatype": "string"
+        },
+        {
+          "id": "vd15",
+          "restriction": null,
+          "datatype": "http://www.w3.org/2001/XMLSchema#string"
+        },
+        {
+          "id": "vd17",
+          "restriction": null,
+          "datatype": "http://www.w3.org/2001/XMLSchema#string"
+        },
+        {
+          "id": "vd19",
+          "restriction": null,
+          "datatype": "http://www.w3.org/2001/XMLSchema#double"
+        }
+      ],
+      "relations": [
+        {
+          "sourceId": "e4",
+          "targetId": "e1",
+          "restriction": {
+            "uri": "http://example.com/pwc#partOf",
+            "label": "является частью",
+            "description": null,
+            "isDatatypeProperty": false,
+            "isObjectProperty": true
+          },
+          "includeInStatistic": false
+        },
+        {
+          "sourceId": "e4",
+          "targetId": "vd3",
+          "restriction": {
+            "id": "eece6d7c85ff6fbb615cb5b2e9b49d7d",
+            "label": "Сумма проводок документа по счетам",
+            "inputParameters": [
+              {
+                "name": "acc_num",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "value": "68"
+              }
+            ],
+            "resultVarName": "Кредит_Б"
+          },
+          "includeInStatistic": true
+        },
+        {
+          "sourceId": "e1",
+          "targetId": "e7",
+          "restriction": {
+            "uri": "http://example.com/pwc#relatedTo",
+            "label": "относится к",
+            "description": null,
+            "isDatatypeProperty": false,
+            "isObjectProperty": true
+          },
+          "includeInStatistic": false
+        },
+        {
+          "sourceId": "e7",
+          "targetId": "vd9",
+          "restriction": {
+            "uri": "http://example.com/pwc#number",
+            "label": "номер",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          },
+          "includeInStatistic": false
+        },
+        {
+          "sourceId": "e4",
+          "targetId": "vd11",
+          "restriction": {
+            "id": "eece6d7c85ff6fbb615cb5b2e9b49d7d",
+            "label": "Сумма проводок документа по счетам",
+            "inputParameters": [
+              {
+                "name": "acc_num",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "value": "90.01"
+              }
+            ],
+            "resultVarName": "Кредит_А"
+          },
+          "includeInStatistic": true
+        },
+        {
+          "sourceId": "e4",
+          "targetId": "vd12",
+          "restriction": {
+            "id": "eece6d7c85ff6fbb615cb5b2e9b590ed",
+            "label": "Сумма проводок документа по счетам (2)",
+            "inputParameters": [
+              {
+                "name": "acc_num_1",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "value": "62"
+              },
+              {
+                "name": "acc_num_2",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "value": "76"
+              }
+            ],
+            "resultVarName": "Дебит"
+          },
+          "includeInStatistic": true
+        },
+        {
+          "sourceId": "e4",
+          "targetId": "vd15",
+          "restriction": {
+            "uri": "http://example.com/pwc#number",
+            "label": "номер",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          },
+          "includeInStatistic": true
+        },
+        {
+          "sourceId": "e1",
+          "targetId": "vd17",
+          "restriction": {
+            "uri": "http://example.com/pwc#id",
+            "label": "идентификатор",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          },
+          "includeInStatistic": true
+        },
+        {
+          "sourceId": "e1",
+          "targetId": "vd19",
+          "restriction": {
+            "uri": "http://example.com/pwc#amount",
+            "label": "сумма",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          },
+          "includeInStatistic": true
+        }
+      ],
+      "expression": "?Кредит_А + ?Кредит_Б + ?Дебит = 0",
+      "statisticIndicator": true
+    },
+    {
+      "_id": "eece6d7c85ff6fbb615cb5b2e9b590ed",
+      "queryType": "RELATION_CLASSIFIER",
+      "inputParameters": [
+        {
+          "datatype": "http://www.w3.org/2001/XMLSchema#string",
+          "name": "acc_num_1",
+          "defaultValue": ""
+        },
+        {
+          "datatype": "http://www.w3.org/2001/XMLSchema#string",
+          "name": "acc_num_2",
+          "defaultValue": ""
+        }
+      ],
+      "sparqlQuery": "SELECT (?doc AS <Document>) (SUM(?amount) AS ?result)\nWHERE {\n  ?doc a pwc:Document;\n       pwc:number ?docNumber;\n       pwc:partOf ?t.\n\n  ?t a pwc:AccountingTransaction;\n     pwc:amount ?amount;\n     pwc:relatedTo ?acc.\n\n  ?acc a pwc:Account;\n       pwc:number ?accNumber.\n\n  FILTER ((STRSTARTS(?accNumber, '?acc_num_1') = true) || (STRSTARTS(?accNumber, '?acc_num_2') = true))\n}\nGROUP BY ?doc"
+    },
+    {
+      "_id": "eece6d7c85ff6fbb615cb5b2e9b59902",
+      "queryType": "VALUE_CLASSIFIER",
+      "inputParameters": [
+        {
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "name": "startMonth",
+          "defaultValue": "7"
+        },
+        {
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "name": "endMonth",
+          "defaultValue": "9"
+        }
+      ],
+      "restriction": {
+        "filter": {
+          "operator": "AND",
+          "filters": [
+            {
+              "operator": "SPARQL_EXP",
+              "value": "MONTH($) >= ?startMonth"
+            },
+            {
+              "operator": "SPARQL_EXP",
+              "value": "MONTH($) <= ?endMonth"
+            }
+          ]
+        }
+      },
+      "datatype": "http://www.w3.org/2001/XMLSchema#date"
+    },
+    {
+      "_id": "eece6d7c85ff6fbb615cb5b2e9b5a1d5",
+      "queryType": "VALUE_CLASSIFIER",
+      "inputParameters": [
+        {
+          "datatype": "http://www.w3.org/2001/XMLSchema#double",
+          "name": "limit",
+          "defaultValue": "1000000"
+        },
+        {
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "name": "delta",
+          "defaultValue": "1"
+        }
+      ],
+      "restriction": {
+        "filter": {
+          "operator": "AND",
+          "filters": [
+            {
+              "operator": "SPARQL_EXP",
+              "value": "ABS($) >= (?limit * (1 - (?delta* 0.01)))"
+            },
+            {
+              "operator": "SPARQL_EXP",
+              "value": "ABS($) <= ?limit"
+            }
+          ]
+        }
+      },
+      "datatype": "http://www.w3.org/2001/XMLSchema#double"
+    },
+
+    {
+      "_id": "038ffa7c34057556e05187f1dab3a838",
+      "queryType": "INDICATOR",
+      "entities": [
+        {
+          "id": "e1",
+          "restriction": {
+            "uri": "http://example.com/pwc#AccountingTransaction",
+            "label": "Проводка",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": null
+        },
+        {
+          "id": "e3",
+          "restriction": {
+            "uri": "http://example.com/pwc#User",
+            "label": "Пользователь",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": null
+        }
+      ],
+      "values": [
+        {
+          "id": "vd4",
+          "restriction": {
+            "filter": {
+              "operator": "AND",
+              "filters": [
+                {
+                  "operator": "EQUAL",
+                  "value": "TEST_USER"
+                }
+              ]
+            }
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "relations": [
+        {
+          "sourceId": "e1",
+          "targetId": "e3",
+          "restriction": {
+            "uri": "http://example.com/pwc#createdBy",
+            "label": "создано <кем>",
+            "description": null,
+            "isDatatypeProperty": false,
+            "isObjectProperty": true,
+            "rangeUri": "http://www.w3.org/2001/XMLSchema#anyURI"
+          }
+        },
+        {
+          "sourceId": "e3",
+          "targetId": "vd4",
+          "restriction": {
+            "uri": "http://example.com/pwc#name",
+            "label": "имя",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false,
+            "rangeUri": "http://www.w3.org/2001/XMLSchema#string"
+          }
+        }
+      ],
+      "expression": null
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e003b47",
+      "queryType": "VALUE_CLASSIFIER",
+      "inputParameters": [
+        {
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "name": "x",
+          "defaultValue": "100"
+        }
+      ],
+      "restriction": {
+        "filter": {
+          "operator": "AND",
+          "filters": [
+            {
+              "operator": "MORE",
+              "value": "?x"
+            },
+            {
+              "operator": "SPARQL_EXP",
+              "value": "(cf:DivRem($, ?x)) = 0"
+            }
+          ]
+        }
+      },
+      "datatype": "http://www.w3.org/2001/XMLSchema#double"
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e003b47",
+      "queryType": "VALUE_CLASSIFIER",
+      "inputParameters": [
+        {
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "name": "x",
+          "defaultValue": "100"
+        }
+      ],
+      "restriction": {
+        "filter": {
+          "operator": "AND",
+          "filters": [
+            {
+              "operator": "MORE",
+              "value": "?x"
+            },
+            {
+              "operator": "SPARQL_EXP",
+              "value": "(cf:DivRem($, ?x)) = 0"
+            }
+          ]
+        }
+      },
+      "datatype": "http://www.w3.org/2001/XMLSchema#double"
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e004186",
+      "queryType": "INDICATOR",
+      "inputParameters": [],
+      "entities": [
+        {
+          "id": "e1",
+          "restriction": {
+            "uri": "http://example.com/pwc#AccountingTransaction",
+            "label": "Проводка",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": null
+        }
+      ],
+      "values": [
+        {
+          "id": "vd3",
+          "restriction": {
+            "id": "75faee6b3e7121cab1ec3e910e003b47",
+            "label": "Проводка на круглую сумму",
+            "inputParameters": [
+              {
+                "name": "x",
+                "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+                "value": "100"
+              }
+            ]
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#double"
+        }
+      ],
+      "relations": [
+        {
+          "sourceId": "e1",
+          "targetId": "vd3",
+          "restriction": {
+            "uri": "http://example.com/pwc#amount",
+            "label": "сумма",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          }
+        }
+      ],
+      "expression": null
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e004d0b",
+      "queryType": "ENTITY_CLASSIFIER",
+      "inputParameters": [
+        {
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "name": "count",
+          "defaultValue": "4"
+        }
+      ],
+      "sparqlQuery": "SELECT (?rel AS <Account>)\n    WHERE {\n      {\n        SELECT ?rel\n        WHERE {\n          ?o a pwc:AccountingTransaction;\n            pwc:relatedTo ?rel.\n          ?rel a pwc:Account.\n        }\n        GROUP BY ?rel\n        HAVING (COUNT(?o) < ?count)\n      }\n}"
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e005344",
+      "queryType": "INDICATOR",
+      "inputParameters": [],
+      "entities": [
+        {
+          "id": "e1",
+          "restriction": {
+            "uri": "http://example.com/pwc#AccountingTransaction",
+            "label": "Проводка",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": null
+        },
+        {
+          "id": "e3",
+          "restriction": {
+            "uri": "http://example.com/pwc#Account",
+            "label": "Счет",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": {
+            "id": "75faee6b3e7121cab1ec3e910e004d0b",
+            "label": "Малоиспользуемые счета",
+            "inputParameters": [
+              {
+                "name": "count",
+                "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+                "value": "4"
+              }
+            ],
+            "resultVarName": null
+          }
+        }
+      ],
+      "values": [
+        {
+          "id": "vd5",
+          "restriction": null,
+          "datatype": "http://www.w3.org/2001/XMLSchema#string"
+        },
+        {
+          "id": "vd6",
+          "restriction": null,
+          "datatype": "http://www.w3.org/2001/XMLSchema#string"
+        },
+        {
+          "id": "vd7",
+          "restriction": null,
+          "datatype": "http://www.w3.org/2001/XMLSchema#double"
+        }
+      ],
+      "relations": [
+        {
+          "sourceId": "e1",
+          "targetId": "e3",
+          "restriction": {
+            "uri": "http://example.com/pwc#relatedTo",
+            "label": "относится к",
+            "description": null,
+            "isDatatypeProperty": false,
+            "isObjectProperty": true
+          },
+          "includeInStatistic": false
+        },
+        {
+          "sourceId": "e1",
+          "targetId": "vd6",
+          "restriction": {
+            "uri": "http://example.com/pwc#id",
+            "label": "идентификатор",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          },
+          "includeInStatistic": true
+        },
+        {
+          "sourceId": "e1",
+          "targetId": "vd7",
+          "restriction": {
+            "uri": "http://example.com/pwc#amount",
+            "label": "сумма",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          },
+          "includeInStatistic": true
+        },
+        {
+          "sourceId": "e3",
+          "targetId": "vd5",
+          "restriction": {
+            "uri": "http://example.com/pwc#number",
+            "label": "номер",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          },
+          "includeInStatistic": true
+        }
+      ],
+      "expression": null,
+      "statisticIndicator": true
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e0089a8",
+      "queryType": "INDICATOR",
+      "inputParameters": [],
+      "entities": [
+        {
+          "id": "e1",
+          "restriction": {
+            "uri": "http://example.com/pwc#AccountingTransaction",
+            "label": "Проводка",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": null
+        }
+      ],
+      "values": [
+        {
+          "id": "vd3",
+          "restriction": {
+            "filter": {
+              "operator": "AND",
+              "filters": [
+                {
+                  "operator": "EQUAL",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#boolean"
+        },
+        {
+          "id": "vd5",
+          "restriction": {
+            "id": "eece6d7c85ff6fbb615cb5b2e9b59902",
+            "label": "Дата в интервале месяцев",
+            "inputParameters": [
+              {
+                "name": "startMonth",
+                "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+                "value": "7"
+              },
+              {
+                "name": "endMonth",
+                "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+                "value": "9"
+              }
+            ],
+            "resultVarName": null
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#date"
+        }
+      ],
+      "relations": [
+        {
+          "sourceId": "e1",
+          "targetId": "vd3",
+          "restriction": {
+            "uri": "http://example.com/pwc#isReversed",
+            "label": "сторнированная проводка",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          }
+        },
+        {
+          "sourceId": "e1",
+          "targetId": "vd5",
+          "restriction": {
+            "uri": "http://example.com/pwc#date",
+            "label": "дата",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          }
+        }
+      ],
+      "expression": null
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e0097b0",
+      "queryType": "INDICATOR",
+      "entities": [
+        {
+          "id": "e1",
+          "restriction": {
+            "uri": "http://example.com/pwc#AccountingTransaction",
+            "label": "Проводка",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": null
+        }
+      ],
+      "values": [
+        {
+          "id": "vd3",
+          "restriction": {
+            "filter": {
+              "operator": "AND",
+              "filters": [
+                {
+                  "operator": "EQUAL",
+                  "value": "false"
+                }
+              ]
+            }
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#boolean"
+        },
+        {
+          "id": "vd5",
+          "restriction": {
+            "id": "75faee6b3e7121cab1ec3e910e00a4e2",
+            "label": "Дата совпадает с государственным праздником"
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#date"
+        }
+      ],
+      "relations": [
+        {
+          "sourceId": "e1",
+          "targetId": "vd3",
+          "restriction": {
+            "uri": "http://example.com/pwc#isSystemCreated",
+            "label": "автоматическая проводка",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false,
+            "rangeUri": "http://www.w3.org/2001/XMLSchema#boolean"
+          }
+        },
+        {
+          "sourceId": "e1",
+          "targetId": "vd5",
+          "restriction": {
+            "uri": "http://example.com/pwc#date",
+            "label": "дата",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false,
+            "rangeUri": "http://www.w3.org/2001/XMLSchema#date"
+          }
+        }
+      ],
+      "expression": null
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e00a4e2",
+      "queryType": "VALUE_CLASSIFIER",
+      "restriction": {
+        "filter": {
+          "operator": "OR",
+          "filters": [
+            {
+              "operator": "EQUAL",
+              "value": "2018-01-01"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-01-02"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-01-03"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-01-04"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-01-05"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-01-08"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-03-08"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-03-09"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-04-30"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-05-01"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-05-02"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-05-09"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-06-11"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-06-12"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-11-05"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-12-31"
+            },
+            {
+              "operator": "EQUAL",
+              "value": "2018-02-23"
+            }
+          ]
+        }
+      },
+      "datatype": "http://www.w3.org/2001/XMLSchema#date"
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e00b204",
+      "queryType": "VALUE_CLASSIFIER",
+      "inputParameters": [],
+      "restriction": {
+        "filter": {
+          "operator": "AND",
+          "filters": [
+            {
+              "operator": "SPARQL_EXP",
+              "value": "cf:DateWeekDay($) IN (6, 7)"
+            },
+            {
+              "operator": "SPARQL_EXP",
+              "value": "$ NOT IN ('2018-04-28'^^xsd:date, '2018-06-09'^^xsd:date, '2018-12-29'^^xsd:date)"
+            }
+          ]
+        }
+      },
+      "datatype": "http://www.w3.org/2001/XMLSchema#date"
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e00b432",
+      "queryType": "INDICATOR",
+      "entities": [
+        {
+          "id": "e1",
+          "restriction": {
+            "uri": "http://example.com/pwc#AccountingTransaction",
+            "label": "Проводка",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": null
+        }
+      ],
+      "values": [
+        {
+          "id": "vd3",
+          "restriction": {
+            "filter": {
+              "operator": "AND",
+              "filters": [
+                {
+                  "operator": "EQUAL",
+                  "value": "false"
+                }
+              ]
+            }
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#boolean"
+        },
+        {
+          "id": "vd4",
+          "restriction": {
+            "id": "75faee6b3e7121cab1ec3e910e00b204",
+            "label": "Дата совпадает с выходным днем"
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#date"
+        }
+      ],
+      "relations": [
+        {
+          "sourceId": "e1",
+          "targetId": "vd3",
+          "restriction": {
+            "uri": "http://example.com/pwc#isSystemCreated",
+            "label": "автоматическая проводка",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          }
+        },
+        {
+          "sourceId": "e1",
+          "targetId": "vd4",
+          "restriction": {
+            "uri": "http://example.com/pwc#date",
+            "label": "дата",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          }
+        }
+      ],
+      "expression": null
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e00c16e",
+      "queryType": "INDICATOR",
+      "inputParameters": [],
+      "entities": [
+        {
+          "id": "e1",
+          "restriction": {
+            "uri": "http://example.com/pwc#AccountingTransaction",
+            "label": "Проводка",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": null
+        }
+      ],
+      "values": [
+        {
+          "id": "vd3",
+          "restriction": {
+            "id": "eece6d7c85ff6fbb615cb5b2e9b5a1d5",
+            "label": "Значение в пределах порога и отклонения",
+            "inputParameters": [
+              {
+                "name": "limit",
+                "datatype": "http://www.w3.org/2001/XMLSchema#double",
+                "value": "1000000"
+              },
+              {
+                "name": "delta",
+                "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+                "value": "1"
+              }
+            ],
+            "resultVarName": null
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#double"
+        }
+      ],
+      "relations": [
+        {
+          "sourceId": "e1",
+          "targetId": "vd3",
+          "restriction": {
+            "uri": "http://example.com/pwc#amount",
+            "label": "сумма",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          }
+        }
+      ],
+      "expression": null
+    },
+    {
+      "_id": "0ece6d7c85ff6fbb615cb5b2e9b49d7d",
+      "queryType": "RELATION_CLASSIFIER",
+      "inputParameters": [
+        {
+          "datatype": "http://www.w3.org/2001/XMLSchema#string",
+          "name": "acc_num",
+          "defaultValue": ""
+        }
+      ],
+      "sparqlQuery": "SELECT (?doc AS <Document>) (SUM(?amount) AS ?result)\nWHERE {\n  ?doc a pwc:Document;\n       pwc:number ?docNumber;\n       pwc:partOf ?t.\n\n  ?t a pwc:AccountingTransaction;\n     pwc:amount ?amount;\n     pwc:relatedTo ?acc.\n\n  ?acc a pwc:Account;\n       pwc:number ?accNumber.\n\n  FILTER (STRSTARTS(?accNumber, '?acc_num') = true)\n}\nGROUP BY ?doc"
+    },
+    {
+      "_id": "0ece6d7c85ff6fbb615cb5b2e9b4a9fd",
+      "queryType": "INDICATOR",
+      "inputParameters": [],
+      "entities": [
+        {
+          "id": "e1",
+          "restriction": {
+            "uri": "http://example.com/pwc#AccountingTransaction",
+            "label": "Проводка",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": null
+        },
+        {
+          "id": "e4",
+          "restriction": {
+            "uri": "http://example.com/pwc#Document",
+            "label": "Документ",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": null
+        },
+        {
+          "id": "e7",
+          "restriction": {
+            "uri": "http://example.com/pwc#Account",
+            "label": "Счет",
+            "description": "Lorem ipsum dolor sit amet et delectus accommodare his. Lorem ipsum dolor sit amet et delectus accommodare his."
+          },
+          "classifierRestriction": null
+        }
+      ],
+      "values": [
+        {
+          "id": "vd3",
+          "restriction": null,
+          "datatype": "string"
+        },
+        {
+          "id": "vd9",
+          "restriction": {
+            "filter": {
+              "operator": "OR",
+              "filters": [
+                {
+                  "operator": "SPARQL_EXP",
+                  "value": "STRSTARTS($, '90.01') = true"
+                },
+                {
+                  "operator": "SPARQL_EXP",
+                  "value": "STRSTARTS($, '68') = true"
+                },
+                {
+                  "operator": "SPARQL_EXP",
+                  "value": "STRSTARTS($, '62') = true"
+                },
+                {
+                  "operator": "SPARQL_EXP",
+                  "value": "STRSTARTS($, '76') = true"
+                }
+              ]
+            }
+          },
+          "datatype": "http://www.w3.org/2001/XMLSchema#string"
+        },
+        {
+          "id": "vd11",
+          "restriction": null,
+          "datatype": "string"
+        },
+        {
+          "id": "vd12",
+          "restriction": null,
+          "datatype": "string"
+        },
+        {
+          "id": "vd15",
+          "restriction": null,
+          "datatype": "http://www.w3.org/2001/XMLSchema#string"
+        },
+        {
+          "id": "vd17",
+          "restriction": null,
+          "datatype": "http://www.w3.org/2001/XMLSchema#string"
+        },
+        {
+          "id": "vd19",
+          "restriction": null,
+          "datatype": "http://www.w3.org/2001/XMLSchema#double"
+        }
+      ],
+      "relations": [
+        {
+          "sourceId": "e4",
+          "targetId": "e1",
+          "restriction": {
+            "uri": "http://example.com/pwc#partOf",
+            "label": "является частью",
+            "description": null,
+            "isDatatypeProperty": false,
+            "isObjectProperty": true
+          },
+          "includeInStatistic": false
+        },
+        {
+          "sourceId": "e4",
+          "targetId": "vd3",
+          "restriction": {
+            "id": "eece6d7c85ff6fbb615cb5b2e9b49d7d",
+            "label": "Сумма проводок документа по счетам",
+            "inputParameters": [
+              {
+                "name": "acc_num",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "value": "68"
+              }
+            ],
+            "resultVarName": "Кредит_Б"
+          },
+          "includeInStatistic": true
+        },
+        {
+          "sourceId": "e1",
+          "targetId": "e7",
+          "restriction": {
+            "uri": "http://example.com/pwc#relatedTo",
+            "label": "относится к",
+            "description": null,
+            "isDatatypeProperty": false,
+            "isObjectProperty": true
+          },
+          "includeInStatistic": false
+        },
+        {
+          "sourceId": "e7",
+          "targetId": "vd9",
+          "restriction": {
+            "uri": "http://example.com/pwc#number",
+            "label": "номер",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          },
+          "includeInStatistic": false
+        },
+        {
+          "sourceId": "e4",
+          "targetId": "vd11",
+          "restriction": {
+            "id": "eece6d7c85ff6fbb615cb5b2e9b49d7d",
+            "label": "Сумма проводок документа по счетам",
+            "inputParameters": [
+              {
+                "name": "acc_num",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "value": "90.01"
+              }
+            ],
+            "resultVarName": "Кредит_А"
+          },
+          "includeInStatistic": true
+        },
+        {
+          "sourceId": "e4",
+          "targetId": "vd12",
+          "restriction": {
+            "id": "eece6d7c85ff6fbb615cb5b2e9b590ed",
+            "label": "Сумма проводок документа по счетам (2)",
+            "inputParameters": [
+              {
+                "name": "acc_num_1",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "value": "62"
+              },
+              {
+                "name": "acc_num_2",
+                "datatype": "http://www.w3.org/2001/XMLSchema#string",
+                "value": "76"
+              }
+            ],
+            "resultVarName": "Дебит"
+          },
+          "includeInStatistic": true
+        },
+        {
+          "sourceId": "e4",
+          "targetId": "vd15",
+          "restriction": {
+            "uri": "http://example.com/pwc#number",
+            "label": "номер",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          },
+          "includeInStatistic": true
+        },
+        {
+          "sourceId": "e1",
+          "targetId": "vd17",
+          "restriction": {
+            "uri": "http://example.com/pwc#id",
+            "label": "идентификатор",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          },
+          "includeInStatistic": true
+        },
+        {
+          "sourceId": "e1",
+          "targetId": "vd19",
+          "restriction": {
+            "uri": "http://example.com/pwc#amount",
+            "label": "сумма",
+            "description": null,
+            "isDatatypeProperty": true,
+            "isObjectProperty": false
+          },
+          "includeInStatistic": true
+        }
+      ],
+      "expression": "?Кредит_А + ?Кредит_Б + ?Дебит = 0",
+      "statisticIndicator": true
+    },
+    {
+      "_id": "0ece6d7c85ff6fbb615cb5b2e9b590ed",
+      "queryType": "RELATION_CLASSIFIER",
+      "inputParameters": [
+        {
+          "datatype": "http://www.w3.org/2001/XMLSchema#string",
+          "name": "acc_num_1",
+          "defaultValue": ""
+        },
+        {
+          "datatype": "http://www.w3.org/2001/XMLSchema#string",
+          "name": "acc_num_2",
+          "defaultValue": ""
+        }
+      ],
+      "sparqlQuery": "SELECT (?doc AS <Document>) (SUM(?amount) AS ?result)\nWHERE {\n  ?doc a pwc:Document;\n       pwc:number ?docNumber;\n       pwc:partOf ?t.\n\n  ?t a pwc:AccountingTransaction;\n     pwc:amount ?amount;\n     pwc:relatedTo ?acc.\n\n  ?acc a pwc:Account;\n       pwc:number ?accNumber.\n\n  FILTER ((STRSTARTS(?accNumber, '?acc_num_1') = true) || (STRSTARTS(?accNumber, '?acc_num_2') = true))\n}\nGROUP BY ?doc"
+    },
+    {
+      "_id": "0ece6d7c85ff6fbb615cb5b2e9b59902",
+      "queryType": "VALUE_CLASSIFIER",
+      "inputParameters": [
+        {
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "name": "startMonth",
+          "defaultValue": "7"
+        },
+        {
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "name": "endMonth",
+          "defaultValue": "9"
+        }
+      ],
+      "restriction": {
+        "filter": {
+          "operator": "AND",
+          "filters": [
+            {
+              "operator": "SPARQL_EXP",
+              "value": "MONTH($) >= ?startMonth"
+            },
+            {
+              "operator": "SPARQL_EXP",
+              "value": "MONTH($) <= ?endMonth"
+            }
+          ]
+        }
+      },
+      "datatype": "http://www.w3.org/2001/XMLSchema#date"
+    },
+    {
+      "_id": "0ece6d7c85ff6fbb615cb5b2e9b5a1d5",
+      "queryType": "VALUE_CLASSIFIER",
+      "inputParameters": [
+        {
+          "datatype": "http://www.w3.org/2001/XMLSchema#double",
+          "name": "limit",
+          "defaultValue": "1000000"
+        },
+        {
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "name": "delta",
+          "defaultValue": "1"
+        }
+      ],
+      "restriction": {
+        "filter": {
+          "operator": "AND",
+          "filters": [
+            {
+              "operator": "SPARQL_EXP",
+              "value": "ABS($) >= (?limit * (1 - (?delta* 0.01)))"
+            },
+            {
+              "operator": "SPARQL_EXP",
+              "value": "ABS($) <= ?limit"
+            }
+          ]
+        }
+      },
+      "datatype": "http://www.w3.org/2001/XMLSchema#double"
+    }
+  ]
+}

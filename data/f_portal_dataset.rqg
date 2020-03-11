@@ -1,0 +1,42 @@
+BASE <http://example.com/resource/>
+PREFIX : <http://example.com/resource/>
+PREFIX pwc: <http://example.com/pwc#>
+PREFIX iter: <http://w3id.org/sparql-generate/iter/>
+PREFIX fun: <http://w3id.org/sparql-generate/fn/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+
+GENERATE {
+    <doc-{?document_number}> a pwc:Document ;
+        pwc:number "{?document_number}" ;
+        pwc:type "{?document_type}" ;
+        pwc:financialYear "{?document_fy}"^^xsd:gYear ;
+        pwc:relatedTo <acc-{?account_number}> ;
+        pwc:partOf <transaction-{?pwc_id}>.
+
+    <transaction-{?pwc_id}> a pwc:AccountingTransaction ;
+        pwc:id "{?pwc_id}" ;
+        pwc:amount "{?entry_amount}"^^xsd:double ;
+        pwc:date "{?entry_date}"^^xsd:date ;
+        pwc:isReversed "{?reversed}"^^xsd:boolean ;
+        pwc:isSystemCreated "{?system_created}"^^xsd:boolean ;
+        pwc:createdBy <user-{?user_id}> ;
+        pwc:relatedTo <acc-{?account_number}> .
+
+    <acc-{?account_number}> a pwc:Account ;
+        pwc:number "{?account_number}" .
+
+    <user-{?user_id}> a pwc:User ;
+        pwc:name "{?user_name}" .
+}
+ITERATOR iter:CSV(
+    <http://example.com/resource/f_portal_dataset_short_2.csv>, true, "\"", ";", "\n", 100,
+    "Document_number", "Document_Type", "FY", "pwc_id", "pwc_doc_id", "Account", "Entry_amount", "Entry_date", "Reversed", "System-Created Entry", "User"
+) AS ?document_number ?document_type_dirty ?document_fy ?pwc_id ?pwc_doc_id ?account_number ?entry_amount ?entry_date_dirty ?reversed_dirty ?system_created_dirty ?user_name
+WHERE {
+  BIND(IF(REGEX(?document_type_dirty, "\\S+"), ?document_type_dirty, ?UNDEF) AS ?document_type)
+  BIND(fun:SplitAtPosition(?entry_date_dirty, "\\s+", 0) AS ?entry_date)
+  BIND(IF(?reversed_dirty = "Yes", "true", IF(?reversed_dirty = "No", "false", ?UNDEF)) AS ?reversed)
+  BIND(IF(?system_created_dirty = "Yes", "true", IF(?system_created_dirty = "No", "false", ?UNDEF)) AS ?system_created)
+  BIND(MD5(?user_name) AS ?user_id)
+}

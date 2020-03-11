@@ -1,7 +1,4 @@
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { map, mapTo, take } from "rxjs/operators";
-
+import axios from "axios";
 export interface SPARQLResultsDocument {
   head: {
     vars: [string];
@@ -12,46 +9,48 @@ export interface SPARQLResultsDocument {
   };
 }
 
-export default class SPARQLService {
+function fixUrl(sparqlEndpointUrl) {
+  return sparqlEndpointUrl;
+  // sparqlEndpointUrl = sparqlEndpointUrl.replace("/sparql", "");
+  // return `${baseUrl}${sparqlEndpointUrl}`;
+}
+//const baseUrl = "http://130.211.58.252:3030/ds/";
+
+class SPARQLService {
   private static SPARQL_GRAPH_URL_PARAM = "?graph=";
 
-  constructor(private http: HttpClient) {}
-
-  executeSelect(sparqlEndpointUrl: string, query: string): Observable<SPARQLResultsDocument> {
-    return this.http
-      .post(sparqlEndpointUrl, query, {
+  executeSelect(sparqlEndpointUrl: string, query: string): Promise<SPARQLResultsDocument> {
+    return axios
+      .post(fixUrl(sparqlEndpointUrl), query, {
         headers: {
           "Content-Type": "application/sparql-query",
-          Accept: "application/json"
+          Accept: "text/plain"
         }
       })
-      .pipe(
-        take(1),
-        map((body: SPARQLResultsDocument) => body)
-      );
+      .then(res => res.data);
   }
 
-  postGraph(sparqlEndpointUrl: string, graphUri: string, payload: File): Observable<string> {
-    return this.http
-      .post(sparqlEndpointUrl + SPARQLService.SPARQL_GRAPH_URL_PARAM + graphUri, payload, {
-        headers: { "Content-Type": "text/turtle" },
-        responseType: "text"
+  postGraph(sparqlEndpointUrl: string, graphUri: string, payload: File): Promise<string> {
+    return axios
+      .post(fixUrl(sparqlEndpointUrl + SPARQLService.SPARQL_GRAPH_URL_PARAM + graphUri), payload, {
+        headers: { "Content-Type": "text/turtle", Accept: "text/plain" }
       })
-      .pipe(take(1), mapTo(graphUri));
+      .then(() => graphUri);
   }
 
-  postGraphFromString(sparqlEndpointUrl: string, graphUri: string, payload: string): Observable<string> {
-    return this.http
-      .post(sparqlEndpointUrl + SPARQLService.SPARQL_GRAPH_URL_PARAM + graphUri, payload, {
-        headers: { "Content-Type": "text/turtle" },
-        responseType: "text"
+  postGraphFromString(sparqlEndpointUrl: string, graphUri: string, payload: string): Promise<string> {
+    return axios
+      .post(fixUrl(sparqlEndpointUrl + SPARQLService.SPARQL_GRAPH_URL_PARAM + graphUri), payload, {
+        headers: { "Content-Type": "text/turtle", Accept: "text/plain" }
       })
-      .pipe(take(1), mapTo(graphUri));
+      .then(() => graphUri);
   }
 
-  deleteGraph(sparqlEndpointUrl: string, graphUri: string): Observable<string> {
-    return this.http
-      .delete(sparqlEndpointUrl + SPARQLService.SPARQL_GRAPH_URL_PARAM + graphUri)
-      .pipe(take(1), mapTo(graphUri));
+  deleteGraph(sparqlEndpointUrl: string, graphUri: string): Promise<string> {
+    return axios
+      .delete(fixUrl(sparqlEndpointUrl + SPARQLService.SPARQL_GRAPH_URL_PARAM + graphUri))
+      .then(() => graphUri);
   }
 }
+
+export default new SPARQLService();

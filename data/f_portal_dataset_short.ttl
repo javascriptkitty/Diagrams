@@ -1,0 +1,1418 @@
+@prefix :      <http://example.com/resource/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix iter:  <http://w3id.org/sparql-generate/iter/> .
+@prefix pwc:   <http://example.com/pwc#> .
+@prefix fun:   <http://w3id.org/sparql-generate/fn/> .
+
+:transaction-65728  a        pwc:AccountingTransaction ;
+        pwc:amount           "448.31"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-10-02"^^xsd:date ;
+        pwc:id               "65728" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+:transaction-63388  a        pwc:AccountingTransaction ;
+        pwc:amount           "82997.44"^^xsd:double ;
+        pwc:createdBy        :user-fc340452139a122b3f92386567112b83 ;
+        pwc:date             "2018-07-31"^^xsd:date ;
+        pwc:id               "63388" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.21.1 .
+
+:transaction-73030  a        pwc:AccountingTransaction ;
+        pwc:amount           "476.18"^^xsd:double ;
+        pwc:createdBy        :user-fc340452139a122b3f92386567112b83 ;
+        pwc:date             "2018-04-30"^^xsd:date ;
+        pwc:id               "73030" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.28.1 .
+
+<http://example.com/resource/doc-%D0%9F%D0%9E%D0%90%D0%92-10-03906>
+        a                  pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "ПОАВ-10-03906" ;
+        pwc:partOf         :transaction-66545 ;
+        pwc:relatedTo      :acc-19.03 ;
+        pwc:type           "Invoice" .
+
+<http://example.com/resource/doc-%D0%9F%D0%9E%D0%A1%D0%A7-10-08938>
+        a                  pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "ПОСЧ-10-08938" ;
+        pwc:partOf         :transaction-66562 ;
+        pwc:relatedTo      :acc-19.03 ;
+        pwc:type           "Invoice" .
+
+:transaction-71812  a        pwc:AccountingTransaction ;
+        pwc:amount           "-26666.67"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-11-30"^^xsd:date ;
+        pwc:id               "71812" ;
+        pwc:isReversed       true ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.17 .
+
+:transaction-66579  a        pwc:AccountingTransaction ;
+        pwc:amount           "545.45"^^xsd:double ;
+        pwc:createdBy        :user-081c31919be59ce8fbd06217c01f5e4e ;
+        pwc:date             "2018-07-31"^^xsd:date ;
+        pwc:id               "66579" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-20.29 .
+
+:transaction-69403  a        pwc:AccountingTransaction ;
+        pwc:amount           "-26801.80"^^xsd:double ;
+        pwc:createdBy        :user-859ff69ed98e3640f04728be5a6ed128 ;
+        pwc:date             "2018-04-30"^^xsd:date ;
+        pwc:id               "69403" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-19.03 .
+
+:doc-FA9478  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "FA9478" ;
+        pwc:partOf         :transaction-75320 ;
+        pwc:relatedTo      :acc-20.17.1 .
+
+:doc-G51631  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G51631" ;
+        pwc:partOf         :transaction-74050 ;
+        pwc:relatedTo      :acc-60.06 ;
+        pwc:type           "Payment" .
+
+:transaction-64894  a        pwc:AccountingTransaction ;
+        pwc:amount           "-24382.65"^^xsd:double ;
+        pwc:createdBy        :user-fc340452139a122b3f92386567112b83 ;
+        pwc:date             "2018-02-05"^^xsd:date ;
+        pwc:id               "64894" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-51.03 .
+
+:transaction-71862  a        pwc:AccountingTransaction ;
+        pwc:amount           "146.04"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-04-19"^^xsd:date ;
+        pwc:id               "71862" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+:doc-G47800  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G47800" ;
+        pwc:partOf         :transaction-75254 ;
+        pwc:relatedTo      :acc-51.03 ;
+        pwc:type           "Payment" .
+
+:transaction-75287  a        pwc:AccountingTransaction ;
+        pwc:amount           "-28813.56"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-10-31"^^xsd:date ;
+        pwc:id               "75287" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+:transaction-63354  a        pwc:AccountingTransaction ;
+        pwc:amount           "157750.00"^^xsd:double ;
+        pwc:createdBy        :user-fc340452139a122b3f92386567112b83 ;
+        pwc:date             "2018-07-31"^^xsd:date ;
+        pwc:id               "63354" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.21.1 .
+
+<http://example.com/resource/doc-%D0%9F%D0%9E%D0%A1%D0%A7-10-09676>
+        a                  pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "ПОСЧ-10-09676" ;
+        pwc:partOf         :transaction-65746 ;
+        pwc:relatedTo      :acc-10.06 .
+
+:doc-G47537  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G47537" ;
+        pwc:partOf         :transaction-76492 ;
+        pwc:relatedTo      :acc-62.01 ;
+        pwc:type           "Payment" .
+
+:transaction-70272  a        pwc:AccountingTransaction ;
+        pwc:amount           "1.25"^^xsd:double ;
+        pwc:createdBy        :user-081c31919be59ce8fbd06217c01f5e4e ;
+        pwc:date             "2018-12-31"^^xsd:date ;
+        pwc:id               "70272" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-20.23 .
+
+:doc-G53383  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G53383" ;
+        pwc:partOf         :transaction-63457 ;
+        pwc:relatedTo      :acc-51.01 ;
+        pwc:type           "Payment" .
+
+:transaction-66545  a        pwc:AccountingTransaction ;
+        pwc:amount           "15.10"^^xsd:double ;
+        pwc:createdBy        :user-2acacd6db3f833781e9d626ed580de7d ;
+        pwc:date             "2018-04-13"^^xsd:date ;
+        pwc:id               "66545" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-19.03 .
+
+:transaction-69340  a        pwc:AccountingTransaction ;
+        pwc:amount           "48.92"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-10-31"^^xsd:date ;
+        pwc:id               "69340" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.23 .
+
+:user-081c31919be59ce8fbd06217c01f5e4e
+        a         pwc:User ;
+        pwc:name  "KATYA" .
+
+:transaction-72963  a        pwc:AccountingTransaction ;
+        pwc:amount           "64800.00"^^xsd:double ;
+        pwc:createdBy        :user-8c8a6fb88e1d70b843cfd5a99573e891 ;
+        pwc:date             "2018-12-03"^^xsd:date ;
+        pwc:id               "72963" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-68.02.01 .
+
+:doc-G47524  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G47524" ;
+        pwc:partOf         :transaction-76506 ;
+        pwc:relatedTo      :acc-62.01 ;
+        pwc:type           "Payment" .
+
+:transaction-69390  a        pwc:AccountingTransaction ;
+        pwc:amount           "2.69"^^xsd:double ;
+        pwc:createdBy        :user-081c31919be59ce8fbd06217c01f5e4e ;
+        pwc:date             "2018-10-31"^^xsd:date ;
+        pwc:id               "69390" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-20.23 .
+
+:user-8c8a6fb88e1d70b843cfd5a99573e891
+        a         pwc:User ;
+        pwc:name  "SAVCHENKOP" .
+
+:transaction-66532  a        pwc:AccountingTransaction ;
+        pwc:amount           "477.27"^^xsd:double ;
+        pwc:createdBy        :user-081c31919be59ce8fbd06217c01f5e4e ;
+        pwc:date             "2018-07-31"^^xsd:date ;
+        pwc:id               "66532" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-20.29 .
+
+:doc-G05420  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G05420" ;
+        pwc:partOf         :transaction-71894 , :transaction-71880 , :transaction-71878 , :transaction-71812 ;
+        pwc:relatedTo      :acc-20.17 .
+
+:transaction-71878  a        pwc:AccountingTransaction ;
+        pwc:amount           "-40000.00"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-11-30"^^xsd:date ;
+        pwc:id               "71878" ;
+        pwc:isReversed       true ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.17 .
+
+:transaction-73033  a        pwc:AccountingTransaction ;
+        pwc:amount           "-15708.45"^^xsd:double ;
+        pwc:createdBy        :user-fc340452139a122b3f92386567112b83 ;
+        pwc:date             "2018-03-31"^^xsd:date ;
+        pwc:id               "73033" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.24 .
+
+:acc-20.28.2  a     pwc:Account ;
+        pwc:number  "20.28.2" .
+
+:transaction-65660  a        pwc:AccountingTransaction ;
+        pwc:amount           "14402.25"^^xsd:double ;
+        pwc:createdBy        :user-ba85494633d15c8c7f29f559c42806a6 ;
+        pwc:date             "2018-12-31"^^xsd:date ;
+        pwc:id               "65660" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.24 .
+
+<http://example.com/resource/doc-%D0%9F%D0%9E%D0%A1%D0%A7-10-08891>
+        a                  pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "ПОСЧ-10-08891" ;
+        pwc:partOf         :transaction-69403 ;
+        pwc:relatedTo      :acc-19.03 ;
+        pwc:type           "Invoice" .
+
+:transaction-76525  a        pwc:AccountingTransaction ;
+        pwc:amount           "263376.00"^^xsd:double ;
+        pwc:createdBy        :user-8c8a6fb88e1d70b843cfd5a99573e891 ;
+        pwc:date             "2018-05-21"^^xsd:date ;
+        pwc:id               "76525" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-62.01 .
+
+:transaction-75219  a        pwc:AccountingTransaction ;
+        pwc:amount           "-3654.60"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-10-31"^^xsd:date ;
+        pwc:id               "75219" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+:acc-19.03  a       pwc:Account ;
+        pwc:number  "19.03" .
+
+:transaction-65760  a        pwc:AccountingTransaction ;
+        pwc:amount           "3940.68"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-10-15"^^xsd:date ;
+        pwc:id               "65760" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+:doc-G47440  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G47440" ;
+        pwc:partOf         :transaction-74051 ;
+        pwc:relatedTo      :acc-51.01 ;
+        pwc:type           "Payment" .
+
+:transaction-75269  a        pwc:AccountingTransaction ;
+        pwc:amount           "-3364.41"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-10-31"^^xsd:date ;
+        pwc:id               "75269" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+<http://example.com/resource/doc-%D0%9F%D0%9E%D0%A1%D0%A7-10-08907>
+        a                  pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "ПОСЧ-10-08907" ;
+        pwc:partOf         :transaction-71893 , :transaction-71877 , :transaction-71862 , :transaction-71829 , :transaction-71827 ;
+        pwc:relatedTo      :acc-10.06 .
+
+:user-ba85494633d15c8c7f29f559c42806a6
+        a         pwc:User ;
+        pwc:name  "NAUMOVAK" .
+
+:user-859ff69ed98e3640f04728be5a6ed128
+        a         pwc:User ;
+        pwc:name  "PSHUGA" .
+
+:transaction-63457  a        pwc:AccountingTransaction ;
+        pwc:amount           "-93500.00"^^xsd:double ;
+        pwc:createdBy        :user-859ff69ed98e3640f04728be5a6ed128 ;
+        pwc:date             "2018-11-13"^^xsd:date ;
+        pwc:id               "63457" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-51.01 .
+
+:doc-FA9489  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "FA9489" ;
+        pwc:partOf         :transaction-75339 ;
+        pwc:relatedTo      :acc-20.17.1 .
+
+:acc-99.01  a       pwc:Account ;
+        pwc:number  "99.01" .
+
+:transaction-71894  a        pwc:AccountingTransaction ;
+        pwc:amount           "-57500.00"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-11-30"^^xsd:date ;
+        pwc:id               "71894" ;
+        pwc:isReversed       true ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.17 .
+
+:transaction-73049  a        pwc:AccountingTransaction ;
+        pwc:amount           "23876.69"^^xsd:double ;
+        pwc:createdBy        :user-fc340452139a122b3f92386567112b83 ;
+        pwc:date             "2018-03-31"^^xsd:date ;
+        pwc:id               "73049" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.24 .
+
+:transaction-75306  a        pwc:AccountingTransaction ;
+        pwc:amount           "-13920.00"^^xsd:double ;
+        pwc:createdBy        :user-fc340452139a122b3f92386567112b83 ;
+        pwc:date             "2018-05-18"^^xsd:date ;
+        pwc:id               "75306" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-51.03 .
+
+:doc-FA9255  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "FA9255" ;
+        pwc:partOf         :transaction-66563 , :transaction-66532 ;
+        pwc:relatedTo      :acc-20.29 .
+
+<http://example.com/resource/doc-%D0%A2%D0%90%D0%9E-10-00871>
+        a                  pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "ТАО-10-00871" ;
+        pwc:partOf         :transaction-75269 ;
+        pwc:relatedTo      :acc-10.06 .
+
+<http://example.com/resource/doc-%D0%9F%D0%9E%D0%90%D0%92-10-03875>
+        a                  pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "ПОАВ-10-03875" ;
+        pwc:partOf         :transaction-69405 ;
+        pwc:relatedTo      :acc-19.03 ;
+        pwc:type           "Invoice" .
+
+:doc-G44682  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G44682" ;
+        pwc:partOf         :transaction-64894 ;
+        pwc:relatedTo      :acc-51.03 ;
+        pwc:type           "Payment" .
+
+:doc-G50194  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G50194" ;
+        pwc:partOf         :transaction-69372 ;
+        pwc:relatedTo      :acc-51.01 ;
+        pwc:type           "Payment" .
+
+:doc-G05302  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G05302" ;
+        pwc:partOf         :transaction-73030 ;
+        pwc:relatedTo      :acc-20.28.1 .
+
+:acc-60.06  a       pwc:Account ;
+        pwc:number  "60.06" .
+
+:transaction-74050  a        pwc:AccountingTransaction ;
+        pwc:amount           "6002783.40"^^xsd:double ;
+        pwc:createdBy        :user-859ff69ed98e3640f04728be5a6ed128 ;
+        pwc:date             "2018-12-31"^^xsd:date ;
+        pwc:id               "74050" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-60.06 .
+
+:transaction-70241  a        pwc:AccountingTransaction ;
+        pwc:amount           "48.92"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-12-31"^^xsd:date ;
+        pwc:id               "70241" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.23 .
+
+:transaction-69372  a        pwc:AccountingTransaction ;
+        pwc:amount           "498432.00"^^xsd:double ;
+        pwc:createdBy        :user-a513468c43363ba3d49a05cf358871bc ;
+        pwc:date             "2018-08-22"^^xsd:date ;
+        pwc:id               "69372" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-51.01 .
+
+:transaction-66514  a        pwc:AccountingTransaction ;
+        pwc:amount           "21.69"^^xsd:double ;
+        pwc:createdBy        :user-859ff69ed98e3640f04728be5a6ed128 ;
+        pwc:date             "2018-04-11"^^xsd:date ;
+        pwc:id               "66514" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-19.03 .
+
+:transaction-64892  a        pwc:AccountingTransaction ;
+        pwc:amount           "-58274.97"^^xsd:double ;
+        pwc:createdBy        :user-081c31919be59ce8fbd06217c01f5e4e ;
+        pwc:date             "2018-09-30"^^xsd:date ;
+        pwc:id               "64892" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-20.28.1 .
+
+:transaction-73015  a        pwc:AccountingTransaction ;
+        pwc:amount           "8445.09"^^xsd:double ;
+        pwc:createdBy        :user-fc340452139a122b3f92386567112b83 ;
+        pwc:date             "2018-03-31"^^xsd:date ;
+        pwc:id               "73015" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.24 .
+
+:doc-FA00256  a            pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "FA00256" ;
+        pwc:partOf         :transaction-70272 ;
+        pwc:relatedTo      :acc-20.23 .
+
+:transaction-72932  a        pwc:AccountingTransaction ;
+        pwc:amount           "-14400.00"^^xsd:double ;
+        pwc:createdBy        :user-8c8a6fb88e1d70b843cfd5a99573e891 ;
+        pwc:date             "2018-12-03"^^xsd:date ;
+        pwc:id               "72932" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-68.02.01 .
+
+:transaction-65663  a        pwc:AccountingTransaction ;
+        pwc:amount           "1154.72"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-10-01"^^xsd:date ;
+        pwc:id               "65663" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+<http://example.com/resource/doc-%D0%9F%D0%9E%D0%A1%D0%A7-10-09674>
+        a                  pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "ПОСЧ-10-09674" ;
+        pwc:partOf         :transaction-65760 ;
+        pwc:relatedTo      :acc-10.06 .
+
+:transaction-75222  a        pwc:AccountingTransaction ;
+        pwc:amount           "12926620.20"^^xsd:double ;
+        pwc:createdBy        :user-859ff69ed98e3640f04728be5a6ed128 ;
+        pwc:date             "2018-06-18"^^xsd:date ;
+        pwc:id               "75222" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-60.07 .
+
+:transaction-63473  a        pwc:AccountingTransaction ;
+        pwc:amount           "-12428.71"^^xsd:double ;
+        pwc:createdBy        :user-ba85494633d15c8c7f29f559c42806a6 ;
+        pwc:date             "2018-11-20"^^xsd:date ;
+        pwc:id               "63473" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-51.03 .
+
+:acc-20.17  a       pwc:Account ;
+        pwc:number  "20.17" .
+
+:transaction-65763  a        pwc:AccountingTransaction ;
+        pwc:amount           "5892.20"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-10-19"^^xsd:date ;
+        pwc:id               "65763" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+:user-b5bf9ca68261f0cdeb35f7e068feaade
+        a         pwc:User ;
+        pwc:name  "OYAKO" .
+
+:doc-FA9989  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "FA9989" ;
+        pwc:partOf         :transaction-69390 , :transaction-69386 ;
+        pwc:relatedTo      :acc-20.23 .
+
+:transaction-70257  a        pwc:AccountingTransaction ;
+        pwc:amount           "48.92"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-12-31"^^xsd:date ;
+        pwc:id               "70257" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.23 .
+
+:transaction-69304  a        pwc:AccountingTransaction ;
+        pwc:amount           "-370.56"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-10-31"^^xsd:date ;
+        pwc:id               "69304" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.23 .
+
+:transaction-72948  a        pwc:AccountingTransaction ;
+        pwc:amount           "-106920.00"^^xsd:double ;
+        pwc:createdBy        :user-8c8a6fb88e1d70b843cfd5a99573e891 ;
+        pwc:date             "2018-12-03"^^xsd:date ;
+        pwc:id               "72948" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-68.02.01 .
+
+<http://example.com/resource/doc-%D0%9F%D0%9E%D0%A1%D0%A7-10-09690>
+        a                  pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "ПОСЧ-10-09690" ;
+        pwc:partOf         :transaction-65695 , :transaction-65693 , :transaction-65663 , :transaction-65661 ;
+        pwc:relatedTo      :acc-10.06 .
+
+:transaction-75238  a        pwc:AccountingTransaction ;
+        pwc:amount           "-580.60"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-10-31"^^xsd:date ;
+        pwc:id               "75238" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+:user-2acacd6db3f833781e9d626ed580de7d
+        a         pwc:User ;
+        pwc:name  "SHATOBOE" .
+
+:doc-G51511  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G51511" ;
+        pwc:partOf         :transaction-75271 ;
+        pwc:relatedTo      :acc-60.07 ;
+        pwc:type           "Payment" .
+
+:transaction-76523  a        pwc:AccountingTransaction ;
+        pwc:amount           "0.00"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-05-24"^^xsd:date ;
+        pwc:id               "76523" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-62.01 .
+
+:transaction-69404  a        pwc:AccountingTransaction ;
+        pwc:amount           "3750.00"^^xsd:double ;
+        pwc:createdBy        :user-fc340452139a122b3f92386567112b83 ;
+        pwc:date             "2018-08-31"^^xsd:date ;
+        pwc:id               "69404" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.29 .
+
+:transaction-66546  a        pwc:AccountingTransaction ;
+        pwc:amount           "3181.82"^^xsd:double ;
+        pwc:createdBy        :user-fc340452139a122b3f92386567112b83 ;
+        pwc:date             "2018-07-31"^^xsd:date ;
+        pwc:id               "66546" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.29 .
+
+:doc-G05284  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G05284" ;
+        pwc:partOf         :transaction-73015 , :transaction-72933 , :transaction-72946 , :transaction-73049 , :transaction-73033 , :transaction-72996 ;
+        pwc:relatedTo      :acc-20.24 .
+
+:transaction-65745  a        pwc:AccountingTransaction ;
+        pwc:amount           "82.37"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-10-02"^^xsd:date ;
+        pwc:id               "65745" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+:transaction-65695  a        pwc:AccountingTransaction ;
+        pwc:amount           "1200.40"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-10-01"^^xsd:date ;
+        pwc:id               "65695" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+:transaction-72964  a        pwc:AccountingTransaction ;
+        pwc:amount           "9091.05"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-10-31"^^xsd:date ;
+        pwc:id               "72964" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-99.01 .
+
+:transaction-71829  a        pwc:AccountingTransaction ;
+        pwc:amount           "100.85"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-04-19"^^xsd:date ;
+        pwc:id               "71829" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+:transaction-75254  a        pwc:AccountingTransaction ;
+        pwc:amount           "-1532.60"^^xsd:double ;
+        pwc:createdBy        :user-fc340452139a122b3f92386567112b83 ;
+        pwc:date             "2018-05-18"^^xsd:date ;
+        pwc:id               "75254" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-51.03 .
+
+:doc-G51506  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G51506" ;
+        pwc:partOf         :transaction-75270 ;
+        pwc:relatedTo      :acc-60.07 ;
+        pwc:type           "Payment" .
+
+:doc-G47525  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G47525" ;
+        pwc:partOf         :transaction-76508 ;
+        pwc:relatedTo      :acc-62.01 ;
+        pwc:type           "Payment" .
+
+:transaction-70239  a        pwc:AccountingTransaction ;
+        pwc:amount           "48.92"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-12-31"^^xsd:date ;
+        pwc:id               "70239" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.23 .
+
+:transaction-65711  a        pwc:AccountingTransaction ;
+        pwc:amount           "1530.51"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-10-02"^^xsd:date ;
+        pwc:id               "65711" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+:transaction-65661  a        pwc:AccountingTransaction ;
+        pwc:amount           "983.40"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-10-01"^^xsd:date ;
+        pwc:id               "65661" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+:transaction-63471  a        pwc:AccountingTransaction ;
+        pwc:amount           "-24010.00"^^xsd:double ;
+        pwc:createdBy        :user-859ff69ed98e3640f04728be5a6ed128 ;
+        pwc:date             "2018-11-13"^^xsd:date ;
+        pwc:id               "63471" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-51.01 .
+
+:transaction-66562  a        pwc:AccountingTransaction ;
+        pwc:amount           "-762.71"^^xsd:double ;
+        pwc:createdBy        :user-859ff69ed98e3640f04728be5a6ed128 ;
+        pwc:date             "2018-04-13"^^xsd:date ;
+        pwc:id               "66562" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-19.03 .
+
+:transaction-75320  a        pwc:AccountingTransaction ;
+        pwc:amount           "3634.79"^^xsd:double ;
+        pwc:createdBy        :user-081c31919be59ce8fbd06217c01f5e4e ;
+        pwc:date             "2018-08-31"^^xsd:date ;
+        pwc:id               "75320" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-20.17.1 .
+
+:transaction-73063  a        pwc:AccountingTransaction ;
+        pwc:amount           "6864.39"^^xsd:double ;
+        pwc:createdBy        :user-859ff69ed98e3640f04728be5a6ed128 ;
+        pwc:date             "2018-06-30"^^xsd:date ;
+        pwc:id               "73063" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-68.02.01 .
+
+:transaction-69336  a        pwc:AccountingTransaction ;
+        pwc:amount           "48.92"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-10-31"^^xsd:date ;
+        pwc:id               "69336" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.23 .
+
+:doc-G47441  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G47441" ;
+        pwc:partOf         :transaction-74049 ;
+        pwc:relatedTo      :acc-51.01 ;
+        pwc:type           "Payment" .
+
+:transaction-75270  a        pwc:AccountingTransaction ;
+        pwc:amount           "2979120.78"^^xsd:double ;
+        pwc:createdBy        :user-859ff69ed98e3640f04728be5a6ed128 ;
+        pwc:date             "2018-09-25"^^xsd:date ;
+        pwc:id               "75270" ;
+        pwc:isReversed       true ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-60.07 .
+
+:doc-2018-784  a           pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "2018-784" ;
+        pwc:partOf         :transaction-76525 ;
+        pwc:relatedTo      :acc-62.01 ;
+        pwc:type           "Invoice" .
+
+<http://example.com/resource/doc-%D0%A2%D0%90%D0%9E-10-00864>
+        a                  pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "ТАО-10-00864" ;
+        pwc:partOf         :transaction-75238 , :transaction-75236 , :transaction-75219 ;
+        pwc:relatedTo      :acc-10.06 .
+
+:acc-20.23  a       pwc:Account ;
+        pwc:number  "20.23" .
+
+:transaction-69386  a        pwc:AccountingTransaction ;
+        pwc:amount           "3.46"^^xsd:double ;
+        pwc:createdBy        :user-081c31919be59ce8fbd06217c01f5e4e ;
+        pwc:date             "2018-10-31"^^xsd:date ;
+        pwc:id               "69386" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-20.23 .
+
+:transaction-73050  a        pwc:AccountingTransaction ;
+        pwc:amount           "-438967.48"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-11-30"^^xsd:date ;
+        pwc:id               "73050" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-99.01 .
+
+:transaction-63387  a        pwc:AccountingTransaction ;
+        pwc:amount           "119688.00"^^xsd:double ;
+        pwc:createdBy        :user-fc340452139a122b3f92386567112b83 ;
+        pwc:date             "2018-07-31"^^xsd:date ;
+        pwc:id               "63387" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.21.1 .
+
+:transaction-69323  a        pwc:AccountingTransaction ;
+        pwc:amount           "-401.14"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-10-31"^^xsd:date ;
+        pwc:id               "69323" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.23 .
+
+:acc-20.21.1  a     pwc:Account ;
+        pwc:number  "20.21.1" .
+
+:transaction-72946  a        pwc:AccountingTransaction ;
+        pwc:amount           "7872.10"^^xsd:double ;
+        pwc:createdBy        :user-fc340452139a122b3f92386567112b83 ;
+        pwc:date             "2018-03-31"^^xsd:date ;
+        pwc:id               "72946" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.24 .
+
+:acc-51.03  a       pwc:Account ;
+        pwc:number  "51.03" .
+
+:transaction-75236  a        pwc:AccountingTransaction ;
+        pwc:amount           "-233.90"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-10-31"^^xsd:date ;
+        pwc:id               "75236" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+:doc-G05324  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G05324" ;
+        pwc:partOf         :transaction-70240 ;
+        pwc:relatedTo      :acc-20.28.2 .
+
+:doc-G53587  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G53587" ;
+        pwc:partOf         :transaction-63473 ;
+        pwc:relatedTo      :acc-51.03 ;
+        pwc:type           "Payment" .
+
+:acc-60.07  a       pwc:Account ;
+        pwc:number  "60.07" .
+
+:transaction-74051  a        pwc:AccountingTransaction ;
+        pwc:amount           "349752.00"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-05-17"^^xsd:date ;
+        pwc:id               "74051" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-51.01 .
+
+:transaction-76492  a        pwc:AccountingTransaction ;
+        pwc:amount           "-311520.00"^^xsd:double ;
+        pwc:createdBy        :user-859ff69ed98e3640f04728be5a6ed128 ;
+        pwc:date             "2018-05-22"^^xsd:date ;
+        pwc:id               "76492" ;
+        pwc:isReversed       true ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-62.01 .
+
+:acc-20.17.1  a     pwc:Account ;
+        pwc:number  "20.17.1" .
+
+:transaction-75336  a        pwc:AccountingTransaction ;
+        pwc:amount           "-3478.26"^^xsd:double ;
+        pwc:createdBy        :user-081c31919be59ce8fbd06217c01f5e4e ;
+        pwc:date             "2018-08-31"^^xsd:date ;
+        pwc:id               "75336" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-20.17.1 .
+
+:transaction-69373  a        pwc:AccountingTransaction ;
+        pwc:amount           "9.78"^^xsd:double ;
+        pwc:createdBy        :user-081c31919be59ce8fbd06217c01f5e4e ;
+        pwc:date             "2018-10-31"^^xsd:date ;
+        pwc:id               "69373" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-20.23 .
+
+<http://example.com/resource/doc-%D0%9F%D0%9E%D0%A1%D0%A7-10-09220>
+        a                  pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "ПОСЧ-10-09220" ;
+        pwc:partOf         :transaction-73063 ;
+        pwc:relatedTo      :acc-68.02.01 ;
+        pwc:type           "Invoice" .
+
+:transaction-72996  a        pwc:AccountingTransaction ;
+        pwc:amount           "4190.01"^^xsd:double ;
+        pwc:createdBy        :user-fc340452139a122b3f92386567112b83 ;
+        pwc:date             "2018-03-31"^^xsd:date ;
+        pwc:id               "72996" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.24 .
+
+:acc-62.01  a       pwc:Account ;
+        pwc:number  "62.01" .
+
+:doc-G47791  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G47791" ;
+        pwc:partOf         :transaction-75306 ;
+        pwc:relatedTo      :acc-51.03 ;
+        pwc:type           "Payment" .
+
+:user-a513468c43363ba3d49a05cf358871bc
+        a         pwc:User ;
+        pwc:name  "MYACHINAI" .
+
+:transaction-72933  a        pwc:AccountingTransaction ;
+        pwc:amount           "8141.81"^^xsd:double ;
+        pwc:createdBy        :user-fc340452139a122b3f92386567112b83 ;
+        pwc:date             "2018-03-31"^^xsd:date ;
+        pwc:id               "72933" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.24 .
+
+:transaction-75202  a        pwc:AccountingTransaction ;
+        pwc:amount           "-14043.48"^^xsd:double ;
+        pwc:createdBy        :user-fc340452139a122b3f92386567112b83 ;
+        pwc:date             "2018-05-31"^^xsd:date ;
+        pwc:id               "75202" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-51.03 .
+
+:transaction-76508  a        pwc:AccountingTransaction ;
+        pwc:amount           "-637200.00"^^xsd:double ;
+        pwc:createdBy        :user-859ff69ed98e3640f04728be5a6ed128 ;
+        pwc:date             "2018-05-24"^^xsd:date ;
+        pwc:id               "76508" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-62.01 .
+
+:doc-G05432  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G05432" ;
+        pwc:partOf         :transaction-70258 , :transaction-70257 , :transaction-70241 , :transaction-70239 ;
+        pwc:relatedTo      :acc-20.23 .
+
+:doc-FA9272  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "FA9272" ;
+        pwc:partOf         :transaction-66613 ;
+        pwc:relatedTo      :acc-20.29 .
+
+<http://example.com/resource/doc-2018-2060%2F%D0%A1%D0%9F%D0%91>
+        a                  pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "2018-2060/СПБ" ;
+        pwc:partOf         :transaction-72932 ;
+        pwc:relatedTo      :acc-68.02.01 ;
+        pwc:type           "Invoice" .
+
+:transaction-71827  a        pwc:AccountingTransaction ;
+        pwc:amount           "225.42"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-04-19"^^xsd:date ;
+        pwc:id               "71827" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+:transaction-65693  a        pwc:AccountingTransaction ;
+        pwc:amount           "209.75"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-10-01"^^xsd:date ;
+        pwc:id               "65693" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+:doc-G05361  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G05361" ;
+        pwc:partOf         :transaction-69404 ;
+        pwc:relatedTo      :acc-20.29 .
+
+:doc-G05340  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G05340" ;
+        pwc:partOf         :transaction-63388 , :transaction-63406 , :transaction-66546 , :transaction-63390 , :transaction-63387 , :transaction-63354 ;
+        pwc:relatedTo      :acc-20.21.1 , :acc-20.29 .
+
+:doc-2018-2070  a          pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "2018-2070" ;
+        pwc:partOf         :transaction-72948 ;
+        pwc:relatedTo      :acc-68.02.01 ;
+        pwc:type           "Invoice" .
+
+:doc-G53390  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G53390" ;
+        pwc:partOf         :transaction-63471 ;
+        pwc:relatedTo      :acc-51.01 ;
+        pwc:type           "Payment" .
+
+:transaction-70258  a        pwc:AccountingTransaction ;
+        pwc:amount           "18.94"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-12-31"^^xsd:date ;
+        pwc:id               "70258" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.23 .
+
+:transaction-66531  a        pwc:AccountingTransaction ;
+        pwc:amount           "-116.54"^^xsd:double ;
+        pwc:createdBy        :user-859ff69ed98e3640f04728be5a6ed128 ;
+        pwc:date             "2018-04-11"^^xsd:date ;
+        pwc:id               "66531" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-19.03 .
+
+:transaction-71877  a        pwc:AccountingTransaction ;
+        pwc:amount           "80.34"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-04-19"^^xsd:date ;
+        pwc:id               "71877" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+:doc-FA9259  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "FA9259" ;
+        pwc:partOf         :transaction-66579 ;
+        pwc:relatedTo      :acc-20.29 .
+
+:transaction-63390  a        pwc:AccountingTransaction ;
+        pwc:amount           "163810.63"^^xsd:double ;
+        pwc:createdBy        :user-fc340452139a122b3f92386567112b83 ;
+        pwc:date             "2018-07-31"^^xsd:date ;
+        pwc:id               "63390" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.21.1 .
+
+<http://example.com/resource/doc-%D0%9F%D0%9E%D0%A1%D0%A7-10-08940>
+        a                  pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "ПОСЧ-10-08940" ;
+        pwc:partOf         :transaction-66514 ;
+        pwc:relatedTo      :acc-19.03 ;
+        pwc:type           "Invoice" .
+
+:transaction-69305  a        pwc:AccountingTransaction ;
+        pwc:amount           "-2100.00"^^xsd:double ;
+        pwc:createdBy        :user-859ff69ed98e3640f04728be5a6ed128 ;
+        pwc:date             "2018-08-21"^^xsd:date ;
+        pwc:id               "69305" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-51.01 .
+
+:acc-20.28.1  a     pwc:Account ;
+        pwc:number  "20.28.1" .
+
+<http://example.com/resource/doc-%D0%9F%D0%9E%D0%A1%D0%A7-10-09691>
+        a                  pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "ПОСЧ-10-09691" ;
+        pwc:partOf         :transaction-65745 , :transaction-65728 , :transaction-65712 , :transaction-65711 ;
+        pwc:relatedTo      :acc-10.06 .
+
+<http://example.com/resource/doc-%D0%9F%D0%9E%D0%A1%D0%A7-10-08890>
+        a                  pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "ПОСЧ-10-08890" ;
+        pwc:partOf         :transaction-66531 ;
+        pwc:relatedTo      :acc-19.03 ;
+        pwc:type           "Invoice" .
+
+:transaction-69405  a        pwc:AccountingTransaction ;
+        pwc:amount           "-19.35"^^xsd:double ;
+        pwc:createdBy        :user-859ff69ed98e3640f04728be5a6ed128 ;
+        pwc:date             "2018-04-30"^^xsd:date ;
+        pwc:id               "69405" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-19.03 .
+
+:user-df149b277378dce7437d37c3f7114308
+        a         pwc:User ;
+        pwc:name  "SMIRNOVA" .
+
+:transaction-75339  a        pwc:AccountingTransaction ;
+        pwc:amount           "38.04"^^xsd:double ;
+        pwc:createdBy        :user-081c31919be59ce8fbd06217c01f5e4e ;
+        pwc:date             "2018-08-31"^^xsd:date ;
+        pwc:id               "75339" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-20.17.1 .
+
+:transaction-63406  a        pwc:AccountingTransaction ;
+        pwc:amount           "97260.00"^^xsd:double ;
+        pwc:createdBy        :user-fc340452139a122b3f92386567112b83 ;
+        pwc:date             "2018-07-31"^^xsd:date ;
+        pwc:id               "63406" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.21.1 .
+
+:transaction-69355  a        pwc:AccountingTransaction ;
+        pwc:amount           "48.92"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-10-31"^^xsd:date ;
+        pwc:id               "69355" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.23 .
+
+:doc-G05406  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G05406" ;
+        pwc:partOf         :transaction-69355 , :transaction-69340 , :transaction-69336 ;
+        pwc:relatedTo      :acc-20.23 .
+
+:doc-G22576  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G22576" ;
+        pwc:partOf         :transaction-69323 , :transaction-69304 ;
+        pwc:relatedTo      :acc-20.23 .
+
+:doc-FA9751  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "FA9751" ;
+        pwc:partOf         :transaction-64892 ;
+        pwc:relatedTo      :acc-20.28.1 .
+
+<http://example.com/resource/doc-%D0%9F%D0%A0%D0%9A%D0%A0-10-00935>
+        a                  pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "ПРКР-10-00935" ;
+        pwc:partOf         :transaction-72963 ;
+        pwc:relatedTo      :acc-68.02.01 ;
+        pwc:type           "Credit Memo" .
+
+:doc-G50569  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G50569" ;
+        pwc:partOf         :transaction-69305 ;
+        pwc:relatedTo      :acc-51.01 ;
+        pwc:type           "Payment" .
+
+:transaction-75205  a        pwc:AccountingTransaction ;
+        pwc:amount           "-292641.00"^^xsd:double ;
+        pwc:createdBy        :user-859ff69ed98e3640f04728be5a6ed128 ;
+        pwc:date             "2018-07-31"^^xsd:date ;
+        pwc:id               "75205" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-60.07 .
+
+:doc-FA9488  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "FA9488" ;
+        pwc:partOf         :transaction-75336 ;
+        pwc:relatedTo      :acc-20.17.1 .
+
+:transaction-71893  a        pwc:AccountingTransaction ;
+        pwc:amount           "77.63"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-04-19"^^xsd:date ;
+        pwc:id               "71893" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+:user-fc340452139a122b3f92386567112b83
+        a         pwc:User ;
+        pwc:name  "KOCHETKOVAN" .
+
+:doc-G05435  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G05435" ;
+        pwc:partOf         :transaction-65660 ;
+        pwc:relatedTo      :acc-20.24 .
+
+:transaction-65746  a        pwc:AccountingTransaction ;
+        pwc:amount           "380.00"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-10-10"^^xsd:date ;
+        pwc:id               "65746" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+:transaction-75305  a        pwc:AccountingTransaction ;
+        pwc:amount           "335413.15"^^xsd:double ;
+        pwc:createdBy        :user-859ff69ed98e3640f04728be5a6ed128 ;
+        pwc:date             "2018-08-21"^^xsd:date ;
+        pwc:id               "75305" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-60.07 .
+
+:transaction-73048  a        pwc:AccountingTransaction ;
+        pwc:amount           "-174544.89"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-11-30"^^xsd:date ;
+        pwc:id               "73048" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-99.01 .
+
+:doc-G22584  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G22584" ;
+        pwc:partOf         :transaction-72981 , :transaction-72964 ;
+        pwc:relatedTo      :acc-99.01 .
+
+:doc-2018-1890  a          pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "2018-1890" ;
+        pwc:partOf         :transaction-75287 ;
+        pwc:relatedTo      :acc-10.06 .
+
+:acc-51.01  a       pwc:Account ;
+        pwc:number  "51.01" .
+
+:doc-G47931  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G47931" ;
+        pwc:partOf         :transaction-75202 ;
+        pwc:relatedTo      :acc-51.03 ;
+        pwc:type           "Payment" .
+
+:doc-G36415  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G36415" ;
+        pwc:partOf         :transaction-75205 ;
+        pwc:relatedTo      :acc-60.07 ;
+        pwc:type           "Payment" .
+
+:doc-G53585  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G53585" ;
+        pwc:partOf         :transaction-63472 ;
+        pwc:relatedTo      :acc-51.03 ;
+        pwc:type           "Payment" .
+
+:doc-G22663  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G22663" ;
+        pwc:partOf         :transaction-73050 , :transaction-73048 ;
+        pwc:relatedTo      :acc-99.01 .
+
+:doc-G47526  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G47526" ;
+        pwc:partOf         :transaction-76523 ;
+        pwc:relatedTo      :acc-62.01 ;
+        pwc:type           "Payment" .
+
+:acc-20.29  a       pwc:Account ;
+        pwc:number  "20.29" .
+
+:transaction-74049  a        pwc:AccountingTransaction ;
+        pwc:amount           "566400.00"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-05-17"^^xsd:date ;
+        pwc:id               "74049" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-51.01 .
+
+:transaction-70240  a        pwc:AccountingTransaction ;
+        pwc:amount           "3482.67"^^xsd:double ;
+        pwc:createdBy        :user-fc340452139a122b3f92386567112b83 ;
+        pwc:date             "2018-06-30"^^xsd:date ;
+        pwc:id               "70240" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.28.2 .
+
+:transaction-71880  a        pwc:AccountingTransaction ;
+        pwc:amount           "-32380.95"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-11-30"^^xsd:date ;
+        pwc:id               "71880" ;
+        pwc:isReversed       true ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-20.17 .
+
+:transaction-65712  a        pwc:AccountingTransaction ;
+        pwc:amount           "158.28"^^xsd:double ;
+        pwc:createdBy        :user-df149b277378dce7437d37c3f7114308 ;
+        pwc:date             "2018-10-02"^^xsd:date ;
+        pwc:id               "65712" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-10.06 .
+
+:doc-G48398  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G48398" ;
+        pwc:partOf         :transaction-75222 ;
+        pwc:relatedTo      :acc-60.07 ;
+        pwc:type           "Payment" .
+
+<http://example.com/resource/doc-%D0%9F%D0%9E%D0%A1%D0%A7-10-09694>
+        a                  pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "ПОСЧ-10-09694" ;
+        pwc:partOf         :transaction-65763 ;
+        pwc:relatedTo      :acc-10.06 .
+
+:transaction-66613  a        pwc:AccountingTransaction ;
+        pwc:amount           "123.50"^^xsd:double ;
+        pwc:createdBy        :user-081c31919be59ce8fbd06217c01f5e4e ;
+        pwc:date             "2018-07-31"^^xsd:date ;
+        pwc:id               "66613" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-20.29 .
+
+:transaction-76506  a        pwc:AccountingTransaction ;
+        pwc:amount           "-107312.00"^^xsd:double ;
+        pwc:createdBy        :user-859ff69ed98e3640f04728be5a6ed128 ;
+        pwc:date             "2018-05-24"^^xsd:date ;
+        pwc:id               "76506" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-62.01 .
+
+:transaction-63472  a        pwc:AccountingTransaction ;
+        pwc:amount           "-27964.86"^^xsd:double ;
+        pwc:createdBy        :user-ba85494633d15c8c7f29f559c42806a6 ;
+        pwc:date             "2018-11-20"^^xsd:date ;
+        pwc:id               "63472" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-51.03 .
+
+:transaction-66563  a        pwc:AccountingTransaction ;
+        pwc:amount           "636.37"^^xsd:double ;
+        pwc:createdBy        :user-081c31919be59ce8fbd06217c01f5e4e ;
+        pwc:date             "2018-07-31"^^xsd:date ;
+        pwc:id               "66563" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-20.29 .
+
+:doc-FA9988  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "FA9988" ;
+        pwc:partOf         :transaction-69373 ;
+        pwc:relatedTo      :acc-20.23 .
+
+:acc-68.02.01  a    pwc:Account ;
+        pwc:number  "68.02.01" .
+
+:transaction-72981  a        pwc:AccountingTransaction ;
+        pwc:amount           "3068.58"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-10-31"^^xsd:date ;
+        pwc:id               "72981" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-99.01 .
+
+:transaction-75271  a        pwc:AccountingTransaction ;
+        pwc:amount           "38157.02"^^xsd:double ;
+        pwc:createdBy        :user-859ff69ed98e3640f04728be5a6ed128 ;
+        pwc:date             "2018-09-25"^^xsd:date ;
+        pwc:id               "75271" ;
+        pwc:isReversed       true ;
+        pwc:isSystemCreated  true ;
+        pwc:relatedTo        :acc-60.07 .
+
+:doc-G50572  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "G50572" ;
+        pwc:partOf         :transaction-75305 ;
+        pwc:relatedTo      :acc-60.07 ;
+        pwc:type           "Payment" .
+
+:acc-20.24  a       pwc:Account ;
+        pwc:number  "20.24" .
+
+:acc-10.06  a       pwc:Account ;
+        pwc:number  "10.06" .

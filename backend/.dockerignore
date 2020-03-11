@@ -1,0 +1,8 @@
+.dockerignore
+.git/*
+.gitignore
+.idea/*
+temp/*
+tdb-dataset/*
+gradle/*
+

@@ -10,7 +10,7 @@ import Info from "../Info/index";
 import Restriction from "../Restriction/index";
 import Json2TypescriptService from "../../services/json2typescript";
 
-const diagram: Diagram = new Json2TypescriptService().deserializeObject(diagramJson, Diagram) as Diagram;
+const diagram: Diagram = Json2TypescriptService.deserializeObject(diagramJson, Diagram) as Diagram;
 
 interface TemplateProps {
   location: any;
@@ -49,7 +49,6 @@ export default function TemplateEditor(props: TemplateProps) {
   };
 
   const diagramInfo = props.location.state.info;
-  // console.log(diagramInfo);
 
   return (
     <div className="editorContainer">

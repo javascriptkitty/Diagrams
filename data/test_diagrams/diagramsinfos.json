@@ -1,0 +1,291 @@
+{
+  "docs": [
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e003b47",
+      "type": "VALUE_CLASSIFIER",
+      "label": "Проводка на круглую сумму",
+      "description": null,
+      "modifiedAt": "2019-11-18T13:12:19.812Z",
+      "projectId": "2030cd40e03dc5b7d2aef75c39008142"
+    },
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e004186",
+      "type": "INDICATOR",
+      "label": "В4-2",
+      "description": "Выявление проводок на круглую сумму выше определенного порога (1 000 000 руб.)",
+      "modifiedAt": "2019-11-18T13:17:54.411Z",
+      "projectId": "2030cd40e03dc5b7d2aef75c39008142"
+    },
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e004d0b",
+      "type": "ENTITY_CLASSIFIER",
+      "label": "Малоиспользуемые счета",
+      "description": "Классификатор для выявления счетов использовавшихся менее ?count раз",
+      "modifiedAt": "2019-11-18T15:43:19.932Z",
+      "projectId": "2030cd40e03dc5b7d2aef75c39008142"
+    },
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e005344",
+      "type": "INDICATOR",
+      "label": "B1-2",
+      "description": "Необходимо выявить проводки по счетам, использовавшимся менее 4 раз.",
+      "modifiedAt": "2019-11-18T16:06:08.469Z",
+      "projectId": "2030cd40e03dc5b7d2aef75c39008142"
+    },
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e005344",
+      "type": "INDICATOR",
+      "label": "B1-2",
+      "description": "Необходимо выявить проводки по счетам, использовавшимся менее 4 раз.",
+      "modifiedAt": "2019-11-18T16:06:08.469Z",
+      "projectId": "2030cd40e03dc5b7d2aef75c39008142"
+    },
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e0089a8",
+      "type": "INDICATOR",
+      "label": "B1-3",
+      "description": "Выявить сторнированные проводки, сделанные в июле-сентябре",
+      "modifiedAt": "2019-11-19T16:43:23.906Z",
+      "projectId": "2030cd40e03dc5b7d2aef75c39008142"
+    },
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e0097b0",
+      "type": "INDICATOR",
+      "label": "B3-3",
+      "description": "Выявление проводок, сделанных в государственные праздники. Рассматриваются только проводки, сделанные вручную.",
+      "modifiedAt": "2019-11-19T17:05:32.477Z",
+      "projectId": "2030cd40e03dc5b7d2aef75c39008142"
+    },
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e00a4e2",
+      "type": "VALUE_CLASSIFIER",
+      "label": "Дата совпадает с государственным праздником",
+      "description": null,
+      "modifiedAt": "2019-11-19T17:06:41.842Z",
+      "projectId": "2030cd40e03dc5b7d2aef75c39008142"
+    },
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e00b204",
+      "type": "VALUE_CLASSIFIER",
+      "label": "Дата совпадает с выходным днем",
+      "description": null,
+      "modifiedAt": "2019-11-19T17:16:08.239Z",
+      "projectId": "2030cd40e03dc5b7d2aef75c39008142"
+    },
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e00b432",
+      "type": "INDICATOR",
+      "label": "B3-4",
+      "description": "Выявление проводок, сделанных в выходные дни. Рассматриваются только проводки, сделанные вручную.\nДополнительно, исключены даты, когда выходной был рабочим днем.",
+      "modifiedAt": "2019-11-19T17:17:45.312Z",
+      "projectId": "2030cd40e03dc5b7d2aef75c39008142"
+    },
+    {
+      "_id": "75faee6b3e7121cab1ec3e910e00c16e",
+      "type": "INDICATOR",
+      "label": "B4-3",
+      "description": "Выявление проводок на сумму, отличающуюся от заданного порога менее чем на заданное отклонение.",
+      "modifiedAt": "2019-11-20T12:18:10.939Z",
+      "projectId": "2030cd40e03dc5b7d2aef75c39008142"
+    },
+    {
+      "_id": "eece6d7c85ff6fbb615cb5b2e9b49d7d",
+      "type": "RELATION_CLASSIFIER",
+      "label": "Сумма проводок документа по счетам",
+      "description": null,
+      "modifiedAt": "2019-12-02T20:41:24.588Z",
+      "projectId": "2030cd40e03dc5b7d2aef75c39008142",
+      "libraryDiagram": false
+    },
+    {
+      "_id": "eece6d7c85ff6fbb615cb5b2e9b4a9fd",
+      "type": "INDICATOR",
+      "label": "C1",
+      "description": "Необходимо выявить нетипичную корреспонденцию со счетами выручки (90.01).\nТипичной считается корреспонденция кредит 90.01 + кредит 68 с дебетом 62 и 76 счетов.",
+      "modifiedAt": "2019-12-02T20:53:05.333Z",
+      "projectId": "2030cd40e03dc5b7d2aef75c39008142",
+      "libraryDiagram": false
+    },
+    {
+      "_id": "eece6d7c85ff6fbb615cb5b2e9b590ed",
+      "type": "RELATION_CLASSIFIER",
+      "label": "Сумма проводок документа по счетам (2)",
+      "description": null,
+      "modifiedAt": "2019-12-03T09:27:15.443Z",
+      "projectId": "2030cd40e03dc5b7d2aef75c39008142",
+      "libraryDiagram": false
+    },
+    {
+      "_id": "eece6d7c85ff6fbb615cb5b2e9b59902",
+      "type": "VALUE_CLASSIFIER",
+      "label": "Дата в интервале месяцев",
+      "description": "Определяет попадает ли дата в интервал месяцев, номера которых задаются параметрами",
+      "modifiedAt": "2019-12-03T12:17:29.405Z",
+      "projectId": "2030cd40e03dc5b7d2aef75c39008142",
+      "libraryDiagram": false
+    },
+    {
+      "_id": "eece6d7c85ff6fbb615cb5b2e9b5a1d5",
+      "type": "VALUE_CLASSIFIER",
+      "label": "Значение в пределах порога и отклонения",
+      "description": "Определяет находится ли значение в пределах порога и заданного параметрами отклонения",
+      "modifiedAt": "2019-12-03T12:24:45.456Z",
+      "projectId": "2030cd40e03dc5b7d2aef75c39008142",
+      "libraryDiagram": false
+    },
+
+    {
+      "_id": "038ffa7c34057556e05187f1dab3a838",
+      "type": "INDICATOR",
+      "label": "Поиск проводок по имени пользователя",
+      "description": null,
+      "modifiedAt": "2019-11-27T12:33:15.395Z",
+      "projectId": null,
+      "libraryDiagram": true
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e003b47",
+      "type": "VALUE_CLASSIFIER",
+      "label": "Проводка на круглую сумму",
+      "description": null,
+      "modifiedAt": "2019-11-18T13:12:19.812Z",
+      "projectId": null,
+      "libraryDiagram": true
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e004186",
+      "type": "INDICATOR",
+      "label": "В4-2",
+      "description": "Выявление проводок на круглую сумму выше определенного порога (1 000 000 руб.)",
+      "modifiedAt": "2019-11-18T13:17:54.411Z",
+      "projectId": null,
+      "libraryDiagram": true
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e004d0b",
+      "type": "ENTITY_CLASSIFIER",
+      "label": "Малоиспользуемые счета",
+      "description": "Классификатор для выявления счетов использовавшихся менее ?count раз",
+      "modifiedAt": "2019-11-18T15:43:19.932Z",
+      "projectId": null,
+      "libraryDiagram": true
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e005344",
+      "type": "INDICATOR",
+      "label": "B1-2",
+      "description": "Необходимо выявить проводки по счетам, использовавшимся менее 4 раз.",
+      "modifiedAt": "2019-11-18T16:06:08.469Z",
+      "projectId": null,
+      "libraryDiagram": true
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e005344",
+      "type": "INDICATOR",
+      "label": "B1-2",
+      "description": "Необходимо выявить проводки по счетам, использовавшимся менее 4 раз.",
+      "modifiedAt": "2019-11-18T16:06:08.469Z",
+      "projectId": null,
+      "libraryDiagram": true
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e0089a8",
+      "type": "INDICATOR",
+      "label": "B1-3",
+      "description": "Выявить сторнированные проводки, сделанные в июле-сентябре",
+      "modifiedAt": "2019-11-19T16:43:23.906Z",
+      "projectId": null,
+      "libraryDiagram": true
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e0097b0",
+      "type": "INDICATOR",
+      "label": "B3-3",
+      "description": "Выявление проводок, сделанных в государственные праздники. Рассматриваются только проводки, сделанные вручную.",
+      "modifiedAt": "2019-11-19T17:05:32.477Z",
+      "projectId": null,
+      "libraryDiagram": true
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e00a4e2",
+      "type": "VALUE_CLASSIFIER",
+      "label": "Дата совпадает с государственным праздником",
+      "description": null,
+      "modifiedAt": "2019-11-19T17:06:41.842Z",
+      "projectId": null,
+      "libraryDiagram": true
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e00b204",
+      "type": "VALUE_CLASSIFIER",
+      "label": "Дата совпадает с выходным днем",
+      "description": null,
+      "modifiedAt": "2019-11-19T17:16:08.239Z",
+      "projectId": null,
+      "libraryDiagram": true
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e00b432",
+      "type": "INDICATOR",
+      "label": "B3-4",
+      "description": "Выявление проводок, сделанных в выходные дни. Рассматриваются только проводки, сделанные вручную.\nДополнительно, исключены даты, когда выходной был рабочим днем.",
+      "modifiedAt": "2019-11-19T17:17:45.312Z",
+      "projectId": null,
+      "libraryDiagram": true
+    },
+    {
+      "_id": "05faee6b3e7121cab1ec3e910e00c16e",
+      "type": "INDICATOR",
+      "label": "B4-3",
+      "description": "Выявление проводок на сумму, отличающуюся от заданного порога менее чем на заданное отклонение.",
+      "modifiedAt": "2019-11-20T12:18:10.939Z",
+      "projectId": null,
+      "libraryDiagram": true
+    },
+    {
+      "_id": "0ece6d7c85ff6fbb615cb5b2e9b49d7d",
+      "type": "RELATION_CLASSIFIER",
+      "label": "Сумма проводок документа по счетам",
+      "description": null,
+      "modifiedAt": "2019-12-02T20:41:24.588Z",
+      "projectId": null,
+      "libraryDiagram": true
+    },
+    {
+      "_id": "0ece6d7c85ff6fbb615cb5b2e9b4a9fd",
+      "type": "INDICATOR",
+      "label": "C1",
+      "description": "Необходимо выявить нетипичную корреспонденцию со счетами выручки (90.01).\nТипичной считается корреспонденция кредит 90.01 + кредит 68 с дебетом 62 и 76 счетов.",
+      "modifiedAt": "2019-12-02T20:53:05.333Z",
+      "projectId": null,
+      "libraryDiagram": true
+    },
+    {
+      "_id": "0ece6d7c85ff6fbb615cb5b2e9b590ed",
+      "type": "RELATION_CLASSIFIER",
+      "label": "Сумма проводок документа по счетам (2)",
+      "description": null,
+      "modifiedAt": "2019-12-03T09:27:15.443Z",
+      "projectId": null,
+      "libraryDiagram": true
+    },
+    {
+      "_id": "0ece6d7c85ff6fbb615cb5b2e9b59902",
+      "type": "VALUE_CLASSIFIER",
+      "label": "Дата в интервале месяцев",
+      "description": "Определяет попадает ли дата в интервал месяцев, номера которых задаются параметрами",
+      "modifiedAt": "2019-12-03T12:17:29.405Z",
+      "projectId": null,
+      "libraryDiagram": true
+    },
+    {
+      "_id": "0ece6d7c85ff6fbb615cb5b2e9b5a1d5",
+      "type": "VALUE_CLASSIFIER",
+      "label": "Значение в пределах порога и отклонения",
+      "description": "Определяет находится ли значение в пределах порога и заданного параметрами отклонения",
+      "modifiedAt": "2019-12-03T12:24:45.456Z",
+      "projectId": null,
+      "libraryDiagram": true
+    }
+  ]
+}

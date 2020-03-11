@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface SelectProps {
-  restrictionTypes: [];
+  restrictionTypes: string[];
+  onSelect: Function;
 }
 
 export default function SimpleSelect(props: SelectProps) {

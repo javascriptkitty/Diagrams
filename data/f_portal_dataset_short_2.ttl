@@ -1,0 +1,124 @@
+@prefix :      <http://example.com/resource/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix iter:  <http://w3id.org/sparql-generate/iter/> .
+@prefix pwc:   <http://example.com/pwc#> .
+@prefix fun:   <http://w3id.org/sparql-generate/fn/> .
+
+:acc-62.01  a       pwc:Account ;
+        pwc:number  "62.01" .
+
+:acc-68.02.01  a    pwc:Account ;
+        pwc:number  "68.02.01" .
+
+:transaction-40002  a        pwc:AccountingTransaction ;
+        pwc:amount           "3000"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-12-31"^^xsd:date ;
+        pwc:id               "40002" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-90.01.01 .
+
+:transaction-40022  a        pwc:AccountingTransaction ;
+        pwc:amount           "-6000"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-12-31"^^xsd:date ;
+        pwc:id               "40022" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-76.01 .
+
+:transaction-40011  a        pwc:AccountingTransaction ;
+        pwc:amount           "20000"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-12-31"^^xsd:date ;
+        pwc:id               "40011" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-68.02.01 .
+
+:transaction-40000  a        pwc:AccountingTransaction ;
+        pwc:amount           "1000"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-12-31"^^xsd:date ;
+        pwc:id               "40000" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-90.01.01 .
+
+:doc-TESTC1  a             pwc:Document ;
+        pwc:financialYear  "2018"^^xsd:gYear ;
+        pwc:number         "TESTC1" ;
+        pwc:partOf         :transaction-40021 , :transaction-40000 , :transaction-40022 , :transaction-40012 , :transaction-40011 , :transaction-40010 , :transaction-40002 , :transaction-40001 , :transaction-40030 , :transaction-40031;
+        pwc:relatedTo      :acc-62.01 , :acc-68.02.01 , :acc-90.01.01 , :acc-76.01 .
+
+:user-b5bf9ca68261f0cdeb35f7e068feaade
+        a         pwc:User ;
+        pwc:name  "OYAKO" .
+
+:transaction-40012  a        pwc:AccountingTransaction ;
+        pwc:amount           "30000"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-12-31"^^xsd:date ;
+        pwc:id               "40012" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-68.02.01 .
+
+:transaction-40001  a        pwc:AccountingTransaction ;
+        pwc:amount           "2000"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-12-31"^^xsd:date ;
+        pwc:id               "40001" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-90.01.01 .
+
+:acc-90.01.01  a    pwc:Account ;
+        pwc:number  "90.01.01" .
+
+:transaction-40021  a        pwc:AccountingTransaction ;
+        pwc:amount           "-60000"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-12-31"^^xsd:date ;
+        pwc:id               "40021" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-62.01 .
+
+:transaction-40010  a        pwc:AccountingTransaction ;
+        pwc:amount           "10000"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-12-31"^^xsd:date ;
+        pwc:id               "40010" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-68.02.01 .
+
+:acc-76.01  a       pwc:Account ;
+        pwc:number  "76.01" .
+
+:acc-60.07  a       pwc:Account ;
+        pwc:number  "60.07" .
+        
+:acc-99.01  a       pwc:Account ;
+        pwc:number  "99.01" .
+
+:transaction-40030  a        pwc:AccountingTransaction ;
+        pwc:amount           "-60000"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-12-31"^^xsd:date ;
+        pwc:id               "40030" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-60.07 .
+
+:transaction-40031  a        pwc:AccountingTransaction ;
+        pwc:amount           "50000"^^xsd:double ;
+        pwc:createdBy        :user-b5bf9ca68261f0cdeb35f7e068feaade ;
+        pwc:date             "2018-12-31"^^xsd:date ;
+        pwc:id               "40031" ;
+        pwc:isReversed       false ;
+        pwc:isSystemCreated  false ;
+        pwc:relatedTo        :acc-99.01 .

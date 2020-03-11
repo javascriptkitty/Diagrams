@@ -22,6 +22,7 @@
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
+    "react-toastify": "^5.5.0",
     "rxjs": "^6.5.4",
     "typescript": "~3.7.2"
   },
@@ -48,6 +49,7 @@
   },
   "devDependencies": {
     "@types/mxgraph": "lgleim/mxgraph-typings",
+    "body-parser": "^1.19.0",
     "prettier": "^1.19.1"
   }
 }

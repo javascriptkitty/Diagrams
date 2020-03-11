@@ -1,4 +1,3 @@
-// import { Injectable, OnDestroy } from "@angular/core";
 // import {
 //   Project,
 //   Report,
@@ -20,14 +19,18 @@ import {
   VisualQuery,
   VisualQueryType
 } from "../models";
-import { combineLatest, forkJoin, Observable } from "rxjs";
-import { catchError, map, mapTo, mergeMap, take } from "rxjs/operators";
+
 // import { AppToastService } from "./app-toast.service";
-import { HttpClient } from "@angular/common/http";
-import { CouchDB, CouchDBAllDocumentsResponse, CouchDBDocument, CouchDBService } from "./couchdb";
+
+import { CouchDB, CouchDBAllDocumentsResponse, CouchDBDocument } from "./couchdb";
+import CouchDBService from "./couchdb";
 import Json2TypescriptService from "./json2typescript";
 import { SPARQLResultsDocument } from "./sparql";
 import SPARQLService from "./sparql";
+
+interface DiagramInfoClass {
+  new (): DiagramInfo;
+}
 
 class DataService {
   private static COUCHDB_URL = "couchdb/";
@@ -108,6 +111,10 @@ class DataService {
   }
 `;
 
+  private couchDBService;
+  private j2tService;
+  private sparqlService;
+
   private readonly projectDB: CouchDB;
   private readonly diagramInfoDB: CouchDB;
   private readonly diagramDB: CouchDB;
@@ -117,13 +124,10 @@ class DataService {
 
   private isInstantiated = false;
 
-  constructor(
-    private http: HttpClient,
-    private couchDBService: CouchDBService,
-    private j2tService: Json2TypescriptService,
-    // private toastService: AppToastService,
-    private sparqlService: SPARQLService
-  ) {
+  constructor() {
+    this.couchDBService = CouchDBService;
+    this.j2tService = Json2TypescriptService;
+    this.sparqlService = SPARQLService;
     if (!this.isInstantiated) {
       this.diagramInfoDB = this.couchDBService.connect(DataService.COUCHDB_URL, DataService.COUCHDB_DB_DIAGRAM_INFOS);
       this.diagramDB = this.couchDBService.connect(DataService.COUCHDB_URL, DataService.COUCHDB_DB_DIAGRAMS);
@@ -140,15 +144,11 @@ class DataService {
 
   //   ngOnDestroy(): void {}
 
-  dataModelExists(): Observable<boolean> {
-    return this.sparqlService.executeSelect(DataService.TRIPLESTORE_URL, DataService.QUERY_DATAMODEL_EXISTS).pipe(
-      take(1),
-      map(body => body.boolean),
-      catchError((err: Observable<boolean>) => {
-        this.onError(err);
-        return err;
-      })
-    );
+  dataModelExists(): Promise<boolean> {
+    return this.sparqlService
+      .executeSelect(DataService.TRIPLESTORE_URL, DataService.QUERY_DATAMODEL_EXISTS)
+      .then(body => body.boolean)
+      .catch(this.onError);
   }
 
   onError(err: any) {
@@ -156,14 +156,13 @@ class DataService {
     return err;
   }
 
-  uploadDataModel(dataModel: File): Observable<any> {
-    return this.sparqlService.postGraph(DataService.TRIPLESTORE_URL, DataService.DATAMODEL_GRAPH_URI, dataModel).pipe(
-      take(1),
-      catchError(err => this.onError(err))
-    );
+  uploadDataModel(dataModel: File): Promise<any> {
+    return this.sparqlService
+      .postGraph(DataService.TRIPLESTORE_URL, DataService.DATAMODEL_GRAPH_URI, dataModel)
+      .catch(err => this.onError(err));
   }
 
-  //   uploadProjectDataFile(project: Project, data: File): Observable<any> {
+  //   uploadProjectDataFile(project: Project, data: File): Promise<any> {
   //     return this.sparqlService
   //       .postGraph(
   //         DataService.TRIPLESTORE_URL,
@@ -171,7 +170,7 @@ class DataService {
   //         data
   //       )
   //       .pipe(
-  //         take(1),
+  //
   //         catchError(err => {
   //           return this._onError(err);
   //         })
@@ -182,18 +181,18 @@ class DataService {
   //     project: Project,
   //     data: string,
   //     graphUri: string
-  //   ): Observable<any> {
+  //   ): Promise<any> {
   //     return this.sparqlService
   //       .postGraphFromString(DataService.TRIPLESTORE_URL, graphUri, data)
   //       .pipe(
-  //         take(1),
+  //
   //         catchError(err => {
   //           return this._onError(err);
   //         })
   //       );
   //   }
 
-  //   getProjects(): Observable<Project[]> {
+  //   getProjects(): Promise<Project[]> {
   //     return this.projectDB.all(true).pipe(
   //       map((response: CouchDBAllDocumentsResponse) =>
   //         response.rows.map(row =>
@@ -204,7 +203,7 @@ class DataService {
   //     );
   //   }
 
-  //   getProject(id: string): Observable<Project> {
+  //   getProject(id: string): Promise<Project> {
   //     const project$ = this.projectDB
   //       .get(id)
   //       .pipe(map(doc => this.j2tService.deserializeObject(doc, Project)));
@@ -234,7 +233,7 @@ class DataService {
   //     name: string,
   //     description: string,
   //     data: File
-  //   ): Observable<Project> {
+  //   ): Promise<Project> {
   //     return this.projectDB.save(new Project(name, description)).pipe(
   //       map((doc: CouchDBDocument) =>
   //         this.j2tService.converter().deserializeObject(doc, Project)
@@ -252,7 +251,7 @@ class DataService {
   //     );
   //   }
 
-  //   updateProject(project: Project): Observable<Project> {
+  //   updateProject(project: Project): Promise<Project> {
   //     project.modifiedAt = new Date().toISOString();
 
   //     return this.projectDB
@@ -260,7 +259,7 @@ class DataService {
   //       .pipe(catchError(err => this._onError(err)));
   //   }
 
-  //   deleteProject(id: string): Observable<CouchDBDocument> {
+  //   deleteProject(id: string): Promise<CouchDBDocument> {
   //     return this.getProject(id).pipe(
   //       mergeMap((doc: CouchDBDocument) => {
   //         const project = Object.assign(new Project(), doc);
@@ -293,62 +292,37 @@ class DataService {
   //    *
   //    * @param projectId if null then the indicator is shared, otherwise is project-based
   //    */
-  //   createDiagram(
-  //     type: VisualQueryType,
-  //     label: string,
-  //     description?: string,
-  //     projectId?: string
-  //   ): Observable<DiagramInfo> {
-  //     const libraryDiagram = projectId == null;
-  //     return this.diagramInfoDB
-  //       .save(
-  //         new DiagramInfo(type, label, description, projectId, libraryDiagram)
-  //       )
-  //       .pipe(
-  //         mergeMap(diagramInfo => {
-  //           switch (type) {
-  //             case VisualQueryType.INDICATOR:
-  //               return this.diagramDB
-  //                 .save(new Diagram(diagramInfo._id))
-  //                 .pipe(
-  //                   mapTo(
-  //                     this.j2tService.deserializeObject(diagramInfo, DiagramInfo)
-  //                   )
-  //                 );
-  //             case VisualQueryType.ENTITY_CLASSIFIER:
-  //               return this.diagramDB
-  //                 .save(new ClassifierEntityQuery(diagramInfo._id))
-  //                 .pipe(
-  //                   mapTo(
-  //                     this.j2tService.deserializeObject(diagramInfo, DiagramInfo)
-  //                   )
-  //                 );
-  //             case VisualQueryType.RELATION_CLASSIFIER:
-  //               return this.diagramDB
-  //                 .save(new ClassifierRelationQuery(diagramInfo._id))
-  //                 .pipe(
-  //                   mapTo(
-  //                     this.j2tService.deserializeObject(diagramInfo, DiagramInfo)
-  //                   )
-  //                 );
-  //             case VisualQueryType.VALUE_CLASSIFIER:
-  //               return this.diagramDB
-  //                 .save(new ClassifierValueQuery(diagramInfo._id))
-  //                 .pipe(
-  //                   mapTo(
-  //                     this.j2tService.deserializeObject(diagramInfo, DiagramInfo)
-  //                   )
-  //                 );
-  //           }
-  //         }),
-  //         catchError(err => this._onError(err))
-  //       );
-  //   }
+  createDiagram(type: VisualQueryType, label: string, description?: string, projectId?: string): Promise<DiagramInfo> {
+    const libraryDiagram = projectId == null;
+    return this.diagramInfoDB
+      .save(new DiagramInfo({ type, label, description, projectId, libraryDiagram }))
+      .then(diagramInfo => {
+        switch (type) {
+          case VisualQueryType.INDICATOR:
+            return this.diagramDB
+              .save(new Diagram(diagramInfo._id))
+              .then(res => this.j2tService.deserializeObject(res, DiagramInfo as DiagramInfoClass));
+          case VisualQueryType.ENTITY_CLASSIFIER:
+            return this.diagramDB
+              .save(new ClassifierEntityQuery(diagramInfo._id))
+              .then(res => this.j2tService.deserializeObject(res, DiagramInfo as DiagramInfoClass));
+          case VisualQueryType.RELATION_CLASSIFIER:
+            return this.diagramDB
+              .save(new ClassifierRelationQuery(diagramInfo._id))
+              .then(res => this.j2tService.deserializeObject(res, DiagramInfo as DiagramInfoClass));
+          case VisualQueryType.VALUE_CLASSIFIER:
+            return this.diagramDB
+              .save(new ClassifierValueQuery(diagramInfo._id))
+              .then(res => this.j2tService.deserializeObject(res, DiagramInfo as DiagramInfoClass));
+        }
+      })
+      .catch(this.onError);
+  }
 
   //   copyDiagramToProject(
   //     diagramInfo: DiagramInfo,
   //     projectId: string
-  //   ): Observable<DiagramInfo> {
+  //   ): Promise<DiagramInfo> {
   //     return this.diagramInfoDB
   //       .save(
   //         new DiagramInfo(
@@ -360,7 +334,7 @@ class DataService {
   //       )
   //       .pipe(
   //         map(diagramInfoCopy => {
-  //           let diagramCopy: Observable<VisualQuery>;
+  //           let diagramCopy: Promise<VisualQuery>;
   //           switch (diagramInfo.type) {
   //             case VisualQueryType.INDICATOR:
   //               diagramCopy = this.getDiagram(diagramInfo._id).pipe(
@@ -430,14 +404,14 @@ class DataService {
   //       );
   //   }
 
-  //   getDiagram(id: string): Observable<Diagram> {
+  //   getDiagram(id: string): Promise<Diagram> {
   //     return this.diagramDB.get(id).pipe(
   //       map(doc => this.j2tService.deserializeObject(doc, Diagram)),
   //       catchError(err => this._onError(err))
   //     );
   //   }
 
-  //   getVisualQueries<T extends VisualQuery>(ids: string[]): Observable<T[]> {
+  //   getVisualQueries<T extends VisualQuery>(ids: string[]): Promise<T[]> {
   //     return this.diagramDB
   //       .findOnlyDocs({
   //         selector: {
@@ -452,7 +426,7 @@ class DataService {
   //       );
   //   }
 
-  //   getVisualQuery<T extends VisualQuery>(id: string): Observable<T> {
+  //   getVisualQuery<T extends VisualQuery>(id: string): Promise<T> {
   //     return this.diagramDB.get(id).pipe(
   //       map((doc: T) => VisualQuery.convertToSubClass<T>(doc)),
   //       catchError(err => this._onError(err))
@@ -461,7 +435,7 @@ class DataService {
 
   //   getDiagramClassifierRelationQuery(
   //     diagram: Diagram
-  //   ): Observable<ClassifierRelationQuery[]> {
+  //   ): Promise<ClassifierRelationQuery[]> {
   //     let classifierRelationIds = diagram.relations
   //       .map(v => v.restriction)
   //       .filter(v => v instanceof ClassifierRestriction)
@@ -485,7 +459,7 @@ class DataService {
 
   //   getDiagramClassifierEntityQuery(
   //     diagram: Diagram
-  //   ): Observable<ClassifierEntityQuery[]> {
+  //   ): Promise<ClassifierEntityQuery[]> {
   //     let classifierEntityIds = diagram.entities
   //       .filter(v => v.classifierRestriction != null)
   //       .map(v => v.classifierRestriction)
@@ -508,7 +482,7 @@ class DataService {
 
   //   private getClassifierRestrictions(
   //     classifierInfos: DiagramInfo[]
-  //   ): Observable<ClassifierRestriction[]> {
+  //   ): Promise<ClassifierRestriction[]> {
   //     return this.getVisualQueries(classifierInfos.map(i => i._id)).pipe(
   //       map(classifiers => {
   //         let classifiersMap = {};
@@ -539,7 +513,7 @@ class DataService {
   //   getValueClassifiers(
   //     projectId: string,
   //     datatype: string
-  //   ): Observable<ClassifierRestriction[]> {
+  //   ): Promise<ClassifierRestriction[]> {
   //     return this.getProjectDiagramInfos(projectId, [
   //       VisualQueryType.VALUE_CLASSIFIER
   //     ]).pipe(
@@ -550,7 +524,7 @@ class DataService {
 
   //   getRelationClassifiers(
   //     projectId: string
-  //   ): Observable<ClassifierRestriction[]> {
+  //   ): Promise<ClassifierRestriction[]> {
   //     return this.getProjectDiagramInfos(projectId, [
   //       VisualQueryType.RELATION_CLASSIFIER
   //     ]).pipe(
@@ -559,7 +533,7 @@ class DataService {
   //     );
   //   }
 
-  //   getEntityClassifiers(projectId: string): Observable<ClassifierRestriction[]> {
+  //   getEntityClassifiers(projectId: string): Promise<ClassifierRestriction[]> {
   //     return this.getProjectDiagramInfos(projectId, [
   //       VisualQueryType.ENTITY_CLASSIFIER
   //     ]).pipe(
@@ -568,7 +542,7 @@ class DataService {
   //     );
   //   }
 
-  //   getClassifierRestriction(id: string): Observable<ClassifierRestriction> {
+  //   getClassifierRestriction(id: string): Promise<ClassifierRestriction> {
   //     return this.getDiagramInfo(id).pipe(
   //       mergeMap((info: DiagramInfo) =>
   //         this.getVisualQuery(id).pipe(
@@ -593,7 +567,7 @@ class DataService {
   //     );
   //   }
 
-  //   getDiagramInfo(id: string): Observable<DiagramInfo> {
+  //   getDiagramInfo(id: string): Promise<DiagramInfo> {
   //     return this.diagramInfoDB.get(id).pipe(
   //       map(doc =>
   //         this.j2tService.converter().deserializeObject(doc, DiagramInfo)
@@ -602,14 +576,14 @@ class DataService {
   //     );
   //   }
 
-  //   saveDiagram<T extends VisualQuery>(diagram: T): Observable<T> {
+  //   saveDiagram<T extends VisualQuery>(diagram: T): Promise<T> {
   //     return this.diagramDB.save(diagram).pipe(
   //       map((doc: T) => VisualQuery.convertToSubClass<T>(doc)),
   //       catchError(err => this._onError(err))
   //     );
   //   }
 
-  //   deleteDiagram(id: string): Observable<string> {
+  //   deleteDiagram(id: string): Promise<string> {
   //     const a$ = this.diagramDB.delete(id);
   //     const b$ = this.diagramInfoDB.delete(id);
 
@@ -619,88 +593,73 @@ class DataService {
   //     );
   //   }
 
-  //   getOntologyEntities(): Observable<OntologyEntity[]> {
-  //     return this.sparqlService
-  //       .executeSelect(
-  //         DataService.TRIPLESTORE_URL,
-  //         DataService.QUERY_ALL_ENTITIES
-  //       )
-  //       .pipe(
-  //         map((body: SPARQLResultsDocument) => {
-  //           if (body.results.bindings.length > 0) {
-  //             return body.results.bindings.map(binding => {
-  //               const entity = new OntologyEntity();
-  //               entity.uri = binding.uri.value;
-  //               entity.label = binding.label.value;
-  //               if (binding.comment) {
-  //                 entity.description = binding.comment.value;
-  //               }
-  //               return entity;
-  //             });
-  //           } else {
-  //             return [];
-  //           }
-  //         }),
-  //         catchError(err => this._onError(err))
-  //       );
-  //   }
+  getOntologyEntities(): Promise<OntologyEntity[]> {
+    return this.sparqlService
+      .executeSelect(DataService.TRIPLESTORE_URL, DataService.QUERY_ALL_ENTITIES)
+      .then((body: SPARQLResultsDocument) => {
+        if (body.results.bindings.length > 0) {
+          return body.results.bindings.map(binding => {
+            const entity = new OntologyEntity();
+            entity.uri = binding.uri.value;
+            entity.label = binding.label.value;
+            if (binding.comment) {
+              entity.description = binding.comment.value;
+            }
+            return entity;
+          });
+        } else {
+          return [];
+        }
+      })
+      .catch(err => this.onError(err));
+  }
 
-  //   getOntologyRelations(): Observable<OntologyRelation[]> {
-  //     return this.sparqlService
-  //       .executeSelect(
-  //         DataService.TRIPLESTORE_URL,
-  //         DataService.QUERY_ALL_RELATIONS
-  //       )
-  //       .pipe(
-  //         map((body: SPARQLResultsDocument) => {
-  //           if (body.results.bindings.length > 0) {
-  //             return body.results.bindings.map(binding => {
-  //               const relation = new OntologyRelation();
-  //               relation.uri = binding.uri.value;
-  //               relation.label = binding.label.value;
-  //               relation.isDatatypeProperty = binding.type.value === "datatype";
-  //               relation.isObjectProperty = binding.type.value === "object";
-  //               if (binding.comment) {
-  //                 relation.description = binding.comment.value;
-  //               }
-  //               relation.rangeUri = binding.range.value;
+  getOntologyRelations(): Promise<OntologyRelation[]> {
+    return this.sparqlService
+      .executeSelect(DataService.TRIPLESTORE_URL, DataService.QUERY_ALL_RELATIONS)
+      .then((body: SPARQLResultsDocument) => {
+        if (body.results.bindings.length > 0) {
+          return body.results.bindings.map(binding => {
+            const relation = new OntologyRelation();
+            relation.uri = binding.uri.value;
+            relation.label = binding.label.value;
+            relation.isDatatypeProperty = binding.type.value === "datatype";
+            relation.isObjectProperty = binding.type.value === "object";
+            if (binding.comment) {
+              relation.description = binding.comment.value;
+            }
+            relation.rangeUri = binding.range.value;
 
-  //               return relation;
-  //             });
-  //           } else {
-  //             return [];
-  //           }
-  //         }),
-  //         catchError(err => this._onError(err))
-  //       );
-  //   }
+            return relation;
+          });
+        } else {
+          return [];
+        }
+      })
+      .catch(err => this.onError(err));
+  }
 
-  //   getAggregateRestrictions(): Observable<AggregateRestriction[]> {
-  //     return this.sparqlService
-  //       .executeSelect(
-  //         DataService.TRIPLESTORE_URL,
-  //         DataService.QUERY_ALL_AGR_PROPERTIES
-  //       )
-  //       .pipe(
-  //         map((body: SPARQLResultsDocument) => {
-  //           if (body.results.bindings.length > 0) {
-  //             return body.results.bindings.map(binding => {
-  //               const restriction = new AggregateRestriction();
-  //               restriction.uri = binding.uri.value;
-  //               restriction.label = binding.label.value;
-  //               restriction.rangeUri = binding.range.value;
+  getAggregateRestrictions(): Promise<AggregateRestriction[]> {
+    return this.sparqlService
+      .executeSelect(DataService.TRIPLESTORE_URL, DataService.QUERY_ALL_AGR_PROPERTIES)
+      .then((body: SPARQLResultsDocument) => {
+        if (body.results.bindings.length > 0) {
+          return body.results.bindings.map(binding => {
+            const restriction = new AggregateRestriction();
+            restriction.uri = binding.uri.value;
+            restriction.label = binding.label.value;
+            restriction.rangeUri = binding.range.value;
 
-  //               return restriction;
-  //             });
-  //           } else {
-  //             return [];
-  //           }
-  //         }),
-  //         catchError(err => this._onError(err))
-  //       );
-  //   }
+            return restriction;
+          });
+        } else {
+          return [];
+        }
+      })
+      .catch(err => this.onError(err));
+  }
 
-  //   getReport(projectId: string): Observable<Report> {
+  //   getReport(projectId: string): Promise<Report> {
   //     return this.reportsDB
   //       .findOnlyDocs({
   //         selector: { projectId },
@@ -726,7 +685,7 @@ class DataService {
   //     dateFrom?: string,
   //     dateTo?: string,
   //     indicators?: [string]
-  //   ): Observable<GeneralReportResult[]> {
+  //   ): Promise<GeneralReportResult[]> {
   //     const selector = { reportId };
 
   //     if (amountFrom || amountTo) {
@@ -774,7 +733,7 @@ class DataService {
   //     reportId: string,
   //     limit: number,
   //     indicators?: [string]
-  //   ): Observable<GeneralReportResult[]> {
+  //   ): Promise<GeneralReportResult[]> {
   //     const selector = { reportId };
   //     if (indicators) {
   //       selector["diagramId"] = {
@@ -802,7 +761,7 @@ class DataService {
   //     reportId: string,
   //     indicatorId: string,
   //     pageNumber: number = 0
-  //   ): Observable<StatisticReportResult[]> {
+  //   ): Promise<StatisticReportResult[]> {
   //     const selector = {
   //       reportId: reportId,
   //       diagramId: indicatorId,
@@ -828,7 +787,7 @@ class DataService {
   //   getProjectDiagramInfos(
   //     projectId: string,
   //     types: VisualQueryType[]
-  //   ): Observable<DiagramInfo[]> {
+  //   ): Promise<DiagramInfo[]> {
   //     return this.diagramInfoDB
   //       .findOnlyDocs({
   //         selector: {
@@ -843,7 +802,7 @@ class DataService {
   //       );
   //   }
 
-  //   getLibraryDiagramInfos(): Observable<DiagramInfo[]> {
+  //   getLibraryDiagramInfos(): Promise<DiagramInfo[]> {
   //     return this.diagramInfoDB
   //       .findOnlyDocs({
   //         selector: {
@@ -857,7 +816,7 @@ class DataService {
   //       );
   //   }
 
-  //   getLibraryIndicatorsDiagramInfos(): Observable<DiagramInfo[]> {
+  //   getLibraryIndicatorsDiagramInfos(): Promise<DiagramInfo[]> {
   //     return this.diagramInfoDB
   //       .findOnlyDocs({
   //         selector: {
@@ -872,7 +831,7 @@ class DataService {
   //       );
   //   }
 
-  //   getLibraryClassifierDiagramInfos(): Observable<DiagramInfo[]> {
+  //   getLibraryClassifierDiagramInfos(): Promise<DiagramInfo[]> {
   //     return this.diagramInfoDB
   //       .findOnlyDocs({
   //         selector: {
@@ -921,7 +880,7 @@ class DataService {
   //     return csvResult;
   //   }
 
-  //   private _onError(err: any): Observable<any> {
+  //   private _onError(err: any): Promise<any> {
   //     let message = "It failed to execute an HTTP request. Please retry later!";
 
   //     if (err.message) {
@@ -935,8 +894,4 @@ class DataService {
   //     throw err;
   //   }
 }
-export default {
-  dataModelExists: function() {
-    return true;
-  }
-};
+export default new DataService();

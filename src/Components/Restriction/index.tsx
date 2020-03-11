@@ -15,14 +15,23 @@ interface RestrictionProps {
 }
 
 interface RestrictionState {
-  // cellValue: DiagramEntity | DiagramRelation | DiagramValue | DiagramAggregate
+  restriction: string;
 }
 export default class Restriction extends React.Component<RestrictionProps, RestrictionState> {
   isClassifier: boolean;
+  restrictionTypes: string[];
+  restriction: string;
   constructor(props: RestrictionProps) {
     super(props);
-    this.state = {};
+    this.state = {
+      restriction: null
+    };
   }
+  onSelect = (selected: string) => {
+    this.setState({
+      restriction: selected
+    });
+  };
 
   render() {
     const { diagramInfo, diagram, element } = this.props;
@@ -32,20 +41,19 @@ export default class Restriction extends React.Component<RestrictionProps, Restr
       this.isClassifier = true;
     }
 
-    let restrictionTypes;
     if (element) {
       if (element.vertex && element.value.type === "Value") {
-        restrictionTypes = !this.isClassifier
+        this.restrictionTypes = !this.isClassifier
           ? ["Фильтр по значению", "Классификатор значения"]
           : ["Фильтр по значению"];
       } else if (element.edge) {
         if (!this.isClassifier) {
-          restrictionTypes = ["Классификатор связи", "Связь"];
+          this.restrictionTypes = ["Классификатор связи", "Связь"];
         } else {
           if (element.source.value.type == "Aggregate") {
-            restrictionTypes = ["Агрегирующая функция", "Связь"];
+            this.restrictionTypes = ["Агрегирующая функция", "Связь"];
           } else {
-            restrictionTypes = ["Связь"];
+            this.restrictionTypes = ["Связь"];
           }
         }
       }
@@ -60,7 +68,9 @@ export default class Restriction extends React.Component<RestrictionProps, Restr
               <div>Выделите один из элементов, чтобы установить или отредактировать его ограничения</div>
             ) : (
               <div>
-                <SimpleSelect restrictionTypes={restrictionTypes} />
+                {element.vertex && element.value.type !== "Entity" ? (
+                  <SimpleSelect restrictionTypes={this.restrictionTypes} onSelect={this.onSelect} />
+                ) : null}
                 <div>
                   {element.vertex && element.value.type === "Entity" ? (
                     <div>

@@ -1,0 +1,160 @@
+B1-2:
+  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  PREFIX pwc: <http://example.com/pwc#>
+  SELECT (?e1 AS ?uri) WHERE {
+    ?e1 rdf:type pwc:AccountingTransaction.
+    ?e3 rdf:type pwc:Account.
+    ?e1 pwc:relatedTo ?e3.
+
+  {
+    SELECT (?rel AS ?e3)
+    WHERE {
+      {
+        SELECT ?rel
+        WHERE {
+          ?o a pwc:AccountingTransaction;
+            pwc:relatedTo ?rel.
+          ?rel a pwc:Account.
+        }
+        GROUP BY ?rel
+        HAVING(COUNT(?o) < 4)
+      }
+    }
+  }
+  }
+
+
+B1-3:
+  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+  PREFIX pwc: <http://example.com/pwc#>
+  SELECT (?e1 AS ?uri) WHERE {
+    ?e1 rdf:type pwc:AccountingTransaction.
+    ?e1 pwc:isReversed ?vd3.
+    ?e1 pwc:date ?vd5.
+    FILTER(?vd3 = "true"^^xsd:boolean)
+    FILTER(MONTH(?vd5) IN (9, 8, 7))
+  }
+
+
+B3-3:
+  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+  PREFIX pwc: <http://example.com/pwc#>
+  SELECT (?e1 AS ?uri) WHERE {
+    ?e1 rdf:type pwc:AccountingTransaction.
+    ?e1 pwc:isSystemCreated ?vd3.
+    ?e1 pwc:date ?vd5.
+    FILTER(?vd3 = "false"^^xsd:boolean)
+    FILTER((?vd5 = "2018-01-01"^^xsd:date) || ((?vd5 = "2018-01-02"^^xsd:date) || ((?vd5 = "2018-01-03"^^xsd:date) || ((?vd5 = "2018-01-04"^^xsd:date) || ((?vd5 = "2018-01-05"^^xsd:date) || ((?vd5 = "2018-01-08"^^xsd:date) || ((?vd5 = "2018-03-08"^^xsd:date) || ((?vd5 = "2018-03-09"^^xsd:date) || ((?vd5 = "2018-04-30"^^xsd:date) || ((?vd5 = "2018-05-01"^^xsd:date) || ((?vd5 = "2018-05-02"^^xsd:date) || ((?vd5 = "2018-05-09"^^xsd:date) || ((?vd5 = "2018-06-11"^^xsd:date) || ((?vd5 = "2018-06-12"^^xsd:date) || ((?vd5 = "2018-11-05"^^xsd:date) || ((?vd5 = "2018-12-31"^^xsd:date) || (?vd5 = "2018-02-23"^^xsd:date)))))))))))))))))
+  }
+
+
+B3-4:
+    PREFIX cf: <http://datafabric.cc/function#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+    PREFIX pwc: <http://example.com/pwc#>
+    SELECT (?e1 AS ?uri) WHERE {
+      ?e1 rdf:type pwc:AccountingTransaction.
+      ?e1 pwc:isSystemCreated ?vd3.
+      ?e1 pwc:date ?vd4.
+      FILTER(?vd3 = "false"^^xsd:boolean)
+      FILTER((cf:getWeekDayOfDate(?vd4) IN (6, 7)) && (?vd4 NOT IN ('2018-04-28'^^xsd:date, '2018-06-09'^^xsd:date, '2018-12-29'^^xsd:date)))
+    }
+
+
+B4-2:
+    PREFIX cf: <http://datafabric.cc/function#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+    PREFIX pwc: <http://example.com/pwc#>
+    SELECT (?e1 AS ?uri) WHERE {
+      ?e1 rdf:type pwc:AccountingTransaction.
+      ?e1 pwc:amount ?vd3.
+      FILTER((?vd3 > "1000000"^^xsd:double) && ((cf:divRem(?vd3, 1000000)) = 0))
+    }
+
+B4-3:
+    PREFIX cf: <http://datafabric.cc/function#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX pwc: <http://example.com/pwc#>
+    SELECT (?e1 AS ?uri) WHERE {
+      ?e1 rdf:type pwc:AccountingTransaction.
+      ?e1 pwc:amount ?vd3.
+      FILTER((ABS(?vd3) >= (1000000 * (1 - 0.01)) && ABS(?vd3) <= 1000000))
+    }
+
+
+C1:
+  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  PREFIX pwc: <http://example.com/pwc#>
+  SELECT (?e13 AS ?uri) WHERE {
+    ?e1 rdf:type pwc:Document.
+    ?e10 rdf:type pwc:Account.
+    ?e13 rdf:type pwc:AccountingTransaction.
+    ?e10 pwc:number ?vd9.
+    ?e1 pwc:partOf ?e13.
+    ?e13 pwc:relatedTo ?e10.
+
+  {
+  SELECT (?doc AS ?e1) (SUM(?amount) AS ?Кредит_А)
+  WHERE {
+    ?doc a pwc:Document;
+         pwc:number ?docNumber;
+         pwc:partOf ?t.
+
+    ?t a pwc:AccountingTransaction;
+       pwc:amount ?amount;
+       pwc:relatedTo ?acc.
+
+    ?acc a pwc:Account;
+         pwc:number ?accNumber.
+
+    FILTER (SUBSTR(?accNumber, 1, 5) = '90.01')
+  }
+  GROUP BY ?doc
+  }
+
+  {
+  SELECT (?doc AS ?e1) (SUM(?amount) AS ?Кредит_Б)
+  WHERE {
+    ?doc a pwc:Document;
+         pwc:number ?docNumber;
+         pwc:partOf ?t.
+
+    ?t a pwc:AccountingTransaction;
+       pwc:amount ?amount;
+       pwc:relatedTo ?acc.
+
+    ?acc a pwc:Account;
+         pwc:number ?accNumber.
+
+    FILTER (SUBSTR(?accNumber, 1, 2) = '68')
+  }
+  GROUP BY ?doc
+  }
+
+  {
+  SELECT (?doc AS ?e1) (SUM(?amount) AS ?Дебит)
+  WHERE {
+    ?doc a pwc:Document;
+         pwc:number ?docNumber;
+         pwc:partOf ?t.
+
+    ?t a pwc:AccountingTransaction;
+       pwc:amount ?amount;
+       pwc:relatedTo ?acc.
+
+    ?acc a pwc:Account;
+         pwc:number ?accNumber.
+
+     BIND (SUBSTR(?accNumber, 1, 2) AS ?substrNumber)
+     FILTER (?substrNumber = '62' || ?substrNumber = '76')
+  }
+  GROUP BY ?doc
+  }
+  FILTER(((SUBSTR(?vd9, 1, 5) = '90.01') || (SUBSTR(?vd9, 1, 2) = '68') || (SUBSTR(?vd9, 1, 2) = '62') || (SUBSTR(?vd9, 1, 2) = '76')))
+
+  FILTER (?Кредит_А + ?Кредит_Б + ?Дебит = 0)
+  }

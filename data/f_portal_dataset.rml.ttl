@@ -1,0 +1,49 @@
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix csvw: <http://www.w3.org/ns/csvw#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#>.
+@prefix : <http://example.com/resource/> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+
+:f_portal_mapping a rr:TriplesMap ;
+    rml:logicalSource :f_portal_dataset ;
+    rr:subjectMap [
+        rr:template "http://example.com/resource/doc-{pwc_doc_id}" ;
+        rr:class :Document
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate dcterms:identifier ;
+        rr:objectMap [ rml:reference "pwc_doc_id" ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate :account ;
+        rr:objectMap [ rr:parentTriplesMap :account_mapping ]
+    ] .
+
+:account_mapping
+    rml:logicalSource :f_portal_dataset ;
+    rr:subjectMap [
+        rr:template "http://example.com/resource/acc-{Account}" ;
+        rr:class :Account
+    ] ;
+    rr:predicateObjectMap [
+       rr:predicate dcterms:identifier ;
+       rr:objectMap [ rml:reference "Account" ]
+    ] .
+
+:f_portal_dataset
+    rml:source [
+        a csvw:Table ;
+        csvw:url "f_portal_dataset.csv" ;
+        csvw:dialect [
+            a csvw:Dialect ;
+            csvw:delimiter ";" ;
+            csvw:trim true ;
+            csvw:header true
+        ] ;
+    ] ;
+    rml:referenceFormulation ql:CSV
+.
