@@ -1,12 +1,13 @@
 import React from "react";
 import { Card, CardContent } from "@material-ui/core";
-import { Diagram, DiagramInfo, DiagramEntity, DiagramRelation, DiagramAggregate } from "../../models";
+import { Diagram, DiagramInfo } from "../../models";
 import DiagramEntityRestrictionEditor from "../DiagramEntityRestrictionEditor";
 import DiagramValueRestrictionEditor from "../DiagramValueRestrictionEditor";
 import DiagramRelationRestrictionEditor from "../DiagramRelationRestrictionEditor";
 import DiagramAggregateRestrictionEditor from "../DiagramAggregateRestrictionEditor";
 import SimpleSelect from "../MUI/SimpleSelect";
 import { mxgraph } from "mxgraph";
+import { Button } from "@material-ui/core";
 
 interface RestrictionProps {
   diagramInfo: DiagramInfo;
@@ -64,7 +65,7 @@ export default class Restriction extends React.Component<RestrictionProps, Restr
         <h2>Restrictions</h2>
         <Card>
           <CardContent>
-            {element === null ? (
+            {element === null || (element.vertex && element.value.type == "title-entity") ? (
               <div>Выделите один из элементов, чтобы установить или отредактировать его ограничения</div>
             ) : (
               <div>
@@ -96,6 +97,9 @@ export default class Restriction extends React.Component<RestrictionProps, Restr
                     </div>
                   ) : null}
                 </div>{" "}
+                <Button variant="contained" color="primary">
+                  Применить
+                </Button>
               </div>
             )}
           </CardContent>

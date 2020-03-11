@@ -1,6 +1,6 @@
 import { mxgraph } from "mxgraph";
 
-import { Diagram, DiagramInfo, DiagramValue, DiagramEntity, DiagramAggregate, TitleBlock } from "../models";
+import { Diagram, DiagramInfo, DiagramValue, DiagramEntity, TitleBlock } from "../models";
 
 declare var require: any;
 
@@ -54,6 +54,27 @@ function configureMouseHandler(
 
     mouseUp(sender: any, evt: mxgraph.mxMouseEvent) {}
   });
+
+  graph.addListener(mx.mxEvent.CELLS_ADDED, function(sender, evt) {
+    if (evt.properties.parent.children.length > 1 && !(evt.properties.parent.value instanceof TitleBlock)) {
+      const cellsGeo = graph.getChildCells(graph.getDefaultParent(), true, false).map(cell => {
+        return cell.getGeometry();
+      });
+
+      const vertexGeo = evt.properties.cells[0].getGeometry();
+      for (let i = 0; i < cellsGeo.length; i++) {
+        const cell = cellsGeo[i];
+        if (
+          ((vertexGeo.x < cell.x && vertexGeo.x + vertexGeo.width > cell.x) ||
+            (vertexGeo.x > cell.x && vertexGeo.x < cell.x + cell.width)) &&
+          ((vertexGeo.y < cell.y && vertexGeo.y + vertexGeo.height > cell.y) ||
+            (vertexGeo.y > cell.y && vertexGeo.y < cell.y + cell.height))
+        ) {
+          graph.removeCells([evt.properties.cells[0]], true);
+        }
+      }
+    }
+  });
 }
 
 export function configureEventHandlers(
@@ -84,6 +105,42 @@ export function configureGraph(
 
   //  validation
 
+  graph.isValidConnection = function(source, target) {
+    if (source.value.type === "title-entity" && source.parent.value.type === "border-entity") {
+      return true;
+    }
+    if (source.value.type === "Aggregate" && target.value.type === "Value") {
+      if (target.edges && target.edges.length < 2) {
+        return true;
+      }
+    }
+    if (
+      (source.value.type === "Value" && target.value.type === "title-value") ||
+      (source.value.type === "Entity" && target.value.type === "Value")
+    ) {
+      if (source.value.type === "Entity" && source.edges && source.edges.length > 0) {
+        const edges = source.edges;
+        for (let i = 0; i < edges.length; i++) {
+          if (edges[i].target.type === "Value") {
+            return false;
+          }
+        }
+      }
+      if (target.value.type === "title-value" && target.edges.length > 1) {
+        return false;
+      }
+      return true;
+    }
+
+    if (source.value.type !== "title-entity" && source.value.type !== "title-value") {
+      if (source.value.type === "Value" && target.value.type !== "title-value") {
+        return false;
+      }
+
+      return this.isValidSource(source) && this.isValidTarget(target);
+    }
+  };
+
   graph.isValidSource = (cell: mxgraph.mxCell) => {
     // for INDICATORS
     if (cell.isVertex() && cell.value != null && cell.value instanceof DiagramValue && !isClassifier) {
@@ -95,7 +152,7 @@ export function configureGraph(
 
   graph.isValidTarget = (cell: mxgraph.mxCell) => {
     //
-    if (cell.value === "border") {
+    if (cell.value instanceof TitleBlock) {
       return false;
     }
     const cellType = cell.getAttribute("type");
@@ -110,6 +167,15 @@ export function configureGraph(
 
     return mx.mxGraph.prototype.isValidTarget.call(graph, cell);
   };
+
+  graph.connectionHandler.addListener(mx.mxEvent.CONNECT, function(sender, evt) {
+    debugger;
+    const props = evt.properties.cell;
+
+    if (props.target.value.type === "title-entity" && props.target.parent.value.type === "border-relation") {
+      this.graph.model.setValue(props.target, props.source.value);
+    }
+  });
 
   const vertexStyle = graph.getStylesheet().getDefaultVertexStyle();
   vertexStyle[mx.mxConstants.STYLE_FONTSIZE] = 12;
@@ -216,6 +282,7 @@ export function createTitleBlock(graph: mxgraph.mxGraph, diagramInfo: DiagramInf
       : null;
 
   if (diagramInfo.type !== "INDICATOR") {
+    border.value.type = diagramInfo.type === "RELATION_CLASSIFIER" ? "border-relation" : "border-entity";
     border.value.id = "tb";
     border.value.geometry = {
       x: border.geometry.x,

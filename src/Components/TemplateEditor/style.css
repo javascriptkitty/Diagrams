@@ -14,3 +14,21 @@
 .infoContainer button {
   margin: 5px;
 }
+.restrictionContainer {
+  text-align: center;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.restrictionContainer h3 {
+  font-weight: 400;
+}
+
+.entityRestrictions .MuiFormControl-root {
+  width: 100%;
+}
+.restrictionContainer .MuiButton-root {
+  margin-top: 20px;
+}

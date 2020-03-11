@@ -54,8 +54,6 @@ declare interface CouchDBDocumentStatusResponse {
 }
 
 class CouchDBService {
-  constructor() {}
-
   connect(hostUrl: string, databaseName: string): CouchDB {
     return new CouchDB(hostUrl, databaseName);
   }

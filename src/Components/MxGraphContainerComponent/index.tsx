@@ -28,12 +28,23 @@ export default class MxGraphContainerComponent extends React.Component<MxGraphCo
     const { diagram, diagramInfo, listener } = this.props;
     this.graph = new mx.mxGraph(this.editorRef.current);
 
-    const isClassifier = false;
+    const isClassifier = diagramInfo.type == "INDICATOR" ? false : true;
 
     configureToolbar(this.graph, this.toolbarRef.current, diagramInfo);
     configureGraph(this.graph, isClassifier, diagramInfo, listener);
     renderDiagram(this.graph, diagram);
     if (isClassifier) {
+      // if (
+      //   (diagramInfo.type == "RELATION_CLASSIFIER" &&
+      //     diagram.entities.length == 0 &&
+      //     diagram.values.length == 0 &&
+      //     diagram.titleBlock.length == 0) ||
+      //   (diagramInfo.type == "ENTITY_CLASSIFIER" &&
+      //     diagram.entities.length == 0 &&
+      //     diagram.values.length == 0 &&
+      //     diagram.titleBlock.length == 0 &&
+      //     diagram.aggregate.length == 0)
+      // )
       createTitleBlock(this.graph, diagramInfo);
     }
   }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -8,7 +8,10 @@ import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
 import DataModel from "../../DataModel";
 import SimpleMenu from "../Menu/index";
+import DataService from "../../../services/data.service";
+import { VisualQueryType } from "../../../models";
 import "./style.css";
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: any;
@@ -50,9 +53,25 @@ export default function SimpleTabs(props: TabPanelProps) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
+  const [list, getList] = React.useState({ indicators: [], classifiers: [] });
+
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    Promise.all([
+      DataService.getProjectDiagramInfos("2030cd40e03dc5b7d2aef75c39008142", [VisualQueryType.INDICATOR]),
+      DataService.getProjectDiagramInfos("2030cd40e03dc5b7d2aef75c39008142", [
+        VisualQueryType.ENTITY_CLASSIFIER,
+        VisualQueryType.RELATION_CLASSIFIER,
+        VisualQueryType.VALUE_CLASSIFIER
+      ])
+    ]).then(res => {
+      //list.indicators= getList(res);
+      console.log(res);
+    });
+  });
 
   return (
     <div className={classes.root}>

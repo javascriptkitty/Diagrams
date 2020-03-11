@@ -784,23 +784,16 @@ class DataService {
   //       );
   //   }
 
-  //   getProjectDiagramInfos(
-  //     projectId: string,
-  //     types: VisualQueryType[]
-  //   ): Promise<DiagramInfo[]> {
-  //     return this.diagramInfoDB
-  //       .findOnlyDocs({
-  //         selector: {
-  //           projectId,
-  //           type: { $in: types }
-  //         }
-  //       })
-  //       .pipe(
-  //         map(docs =>
-  //           this.j2tService.converter().deserializeArray(docs, DiagramInfo)
-  //         )
-  //       );
-  //   }
+  getProjectDiagramInfos(projectId: string, types: VisualQueryType[]): Promise<DiagramInfo[]> {
+    return this.diagramInfoDB
+      .findOnlyDocs({
+        selector: {
+          projectId,
+          type: { $in: types }
+        }
+      })
+      .then(docs => this.j2tService.converter().deserializeArray(docs, DiagramInfo));
+  }
 
   //   getLibraryDiagramInfos(): Promise<DiagramInfo[]> {
   //     return this.diagramInfoDB

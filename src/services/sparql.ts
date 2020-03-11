@@ -24,7 +24,7 @@ class SPARQLService {
       .post(fixUrl(sparqlEndpointUrl), query, {
         headers: {
           "Content-Type": "application/sparql-query",
-          Accept: "text/plain"
+          Accept: "application/json"
         }
       })
       .then(res => res.data);
@@ -33,7 +33,8 @@ class SPARQLService {
   postGraph(sparqlEndpointUrl: string, graphUri: string, payload: File): Promise<string> {
     return axios
       .post(fixUrl(sparqlEndpointUrl + SPARQLService.SPARQL_GRAPH_URL_PARAM + graphUri), payload, {
-        headers: { "Content-Type": "text/turtle", Accept: "text/plain" }
+        headers: { "Content-Type": "text/turtle", Accept: "text/plain" },
+        responseType: "text"
       })
       .then(() => graphUri);
   }
@@ -41,7 +42,8 @@ class SPARQLService {
   postGraphFromString(sparqlEndpointUrl: string, graphUri: string, payload: string): Promise<string> {
     return axios
       .post(fixUrl(sparqlEndpointUrl + SPARQLService.SPARQL_GRAPH_URL_PARAM + graphUri), payload, {
-        headers: { "Content-Type": "text/turtle", Accept: "text/plain" }
+        headers: { "Content-Type": "text/turtle", Accept: "text/plain" },
+        responseType: "text"
       })
       .then(() => graphUri);
   }
