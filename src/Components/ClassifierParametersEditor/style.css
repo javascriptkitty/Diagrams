@@ -1,0 +1,36 @@
+.input-parameters,
+.parameter-group-titles,
+.parameter-group-inputs {
+  display: flex;
+}
+.parameter-group-titles {
+  text-align: center;
+}
+.input-parameters p,
+.input-parameters button,
+.parameter-group-titles span {
+  flex: 1;
+}
+.input-parameters {
+  margin-bottom: 15px;
+}
+.input-parameters button {
+  height: 40px;
+}
+
+.classifier-value .MuiCardContent-root {
+  margin-bottom: 10px;
+}
+.parameter-group-inputs div {
+  flex: 5;
+}
+.parameter-group-inputs button {
+  flex: 1;
+}
+
+.parameter-group-inputs {
+  align-items: center;
+}
+.parameter-group-inputs span {
+  margin-left: 15px;
+}

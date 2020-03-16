@@ -1,7 +1,6 @@
-import React from "react";
-import { Diagram, DiagramInfo, OntologyEntity, DiagramEntity, DiagramRelation, DiagramAggregate } from "../../models";
+import React, { useEffect } from "react";
+import { DiagramInfo } from "../../models";
 import { mxgraph } from "mxgraph";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { FormControl, MenuItem, Select } from "@material-ui/core";
 import DataService from "../../services/data.service";
 
@@ -17,9 +16,11 @@ export default function DiagramEntityRestrictionEditor(props: RestrictionTypesPr
   const { diagramInfo, element } = props;
   const isClassifier = diagramInfo.type == "INDICATOR" ? false : true;
 
-  DataService.getOntologyEntities().then(res => {
-    setState(res);
-    //error
+  useEffect(() => {
+    DataService.getOntologyEntities().then(res => {
+      setState(res);
+      //error
+    });
   });
 
   const [selected, setSelected] = React.useState("");

@@ -29,7 +29,7 @@ import { SPARQLResultsDocument } from "./sparql";
 import SPARQLService from "./sparql";
 
 interface DiagramInfoClass {
-  new (): DiagramInfo;
+  new (props: any): DiagramInfo;
 }
 
 class DataService {
@@ -295,7 +295,7 @@ class DataService {
   createDiagram(type: VisualQueryType, label: string, description?: string, projectId?: string): Promise<DiagramInfo> {
     const libraryDiagram = projectId == null;
     return this.diagramInfoDB
-      .save(new DiagramInfo({ type, label, description, projectId, libraryDiagram }))
+      .save(new DiagramInfo(type, label, description, projectId, libraryDiagram))
       .then(diagramInfo => {
         switch (type) {
           case VisualQueryType.INDICATOR:
@@ -411,20 +411,16 @@ class DataService {
   //     );
   //   }
 
-  //   getVisualQueries<T extends VisualQuery>(ids: string[]): Promise<T[]> {
-  //     return this.diagramDB
-  //       .findOnlyDocs({
-  //         selector: {
-  //           _id: { $in: ids }
-  //         }
-  //       })
-  //       .pipe(
-  //         map(docs =>
-  //           docs.map((doc: T) => VisualQuery.convertToSubClass<T>(doc))
-  //         ),
-  //         catchError(err => this._onError(err))
-  //       );
-  //   }
+  getVisualQueries<T extends VisualQuery>(ids: string[]): Promise<T[]> {
+    return this.diagramDB
+      .findOnlyDocs({
+        selector: {
+          _id: { $in: ids }
+        }
+      })
+      .then(docs => docs.map((doc: T) => VisualQuery.convertToSubClass<T>(doc)))
+      .catch(this.onError);
+  }
 
   //   getVisualQuery<T extends VisualQuery>(id: string): Promise<T> {
   //     return this.diagramDB.get(id).pipe(
@@ -480,35 +476,22 @@ class DataService {
   //       );
   //   }
 
-  //   private getClassifierRestrictions(
-  //     classifierInfos: DiagramInfo[]
-  //   ): Promise<ClassifierRestriction[]> {
-  //     return this.getVisualQueries(classifierInfos.map(i => i._id)).pipe(
-  //       map(classifiers => {
-  //         let classifiersMap = {};
-  //         classifiers.forEach(d => (classifiersMap[d._id] = d));
-  //         return classifierInfos.map(info => {
-  //           let diagram = classifiersMap[info._id] as VisualQuery;
-  //           let inputParameters = null;
-  //           if (diagram != null) {
-  //             inputParameters = diagram.inputParameters.map(
-  //               v =>
-  //                 new ClassifierRestrictionParameter(
-  //                   v.name,
-  //                   v.datatype,
-  //                   v.defaultValue
-  //                 )
-  //             );
-  //           }
-  //           return new ClassifierRestriction(
-  //             info._id,
-  //             info.label,
-  //             inputParameters
-  //           );
-  //         });
-  //       })
-  //     );
-  //   }
+  private getClassifierRestrictions(classifierInfos: DiagramInfo[]): Promise<ClassifierRestriction[]> {
+    return this.getVisualQueries(classifierInfos.map(i => i._id)).then(classifiers => {
+      let classifiersMap = {};
+      classifiers.forEach(d => (classifiersMap[d._id] = d));
+      return classifierInfos.map(info => {
+        let diagram = classifiersMap[info._id] as VisualQuery;
+        let inputParameters = null;
+        if (diagram != null) {
+          inputParameters = diagram.inputParameters.map(
+            v => new ClassifierRestrictionParameter(v.name, v.datatype, v.defaultValue)
+          );
+        }
+        return new ClassifierRestriction(info._id, info.label, inputParameters);
+      });
+    });
+  }
 
   //   getValueClassifiers(
   //     projectId: string,
@@ -792,7 +775,10 @@ class DataService {
           type: { $in: types }
         }
       })
-      .then(docs => this.j2tService.converter().deserializeArray(docs, DiagramInfo));
+      .then(docs => {
+        debugger;
+        return this.j2tService.converter().deserializeArray(docs, DiagramInfo as DiagramInfoClass);
+      });
   }
 
   //   getLibraryDiagramInfos(): Promise<DiagramInfo[]> {

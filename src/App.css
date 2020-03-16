@@ -7,7 +7,8 @@ a {
   text-decoration: none;
   color: inherit;
 }
-.MuiContainer-root {
-  display: flex;
-  justify-content: center;
+@media (min-width: 1280px) {
+  .MuiContainer-maxWidthLg {
+    max-width: unset !important;
+  }
 }

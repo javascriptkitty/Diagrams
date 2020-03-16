@@ -169,7 +169,6 @@ export function configureGraph(
   };
 
   graph.connectionHandler.addListener(mx.mxEvent.CONNECT, function(sender, evt) {
-    debugger;
     const props = evt.properties.cell;
 
     if (props.target.value.type === "title-entity" && props.target.parent.value.type === "border-relation") {

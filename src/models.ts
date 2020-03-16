@@ -504,18 +504,12 @@ export class DiagramInfo {
   @JsonProperty("libraryDiagram", Boolean, true)
   libraryDiagram?: boolean = false;
 
-  constructor(diagramInfo: {
-    type?: string;
-    label?: string;
-    description?: string;
-    projectId?: string;
-    libraryDiagram?: boolean;
-  }) {
-    this.type = diagramInfo.type || null;
-    this.label = diagramInfo.label || null;
-    this.description = diagramInfo.description || null;
-    this.projectId = diagramInfo.projectId || null;
-    this.libraryDiagram = diagramInfo.libraryDiagram || false;
+  constructor(type?: string, label?: string, description?: string, projectId?: string, libraryDiagram?: boolean) {
+    this.type = type || null;
+    this.label = label || null;
+    this.description = description || null;
+    this.projectId = projectId || null;
+    this.libraryDiagram = libraryDiagram || false;
   }
 }
 

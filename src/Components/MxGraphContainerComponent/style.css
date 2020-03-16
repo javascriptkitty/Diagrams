@@ -14,12 +14,8 @@
   width: 100px;
   height: 100px;
   max-height: 140px;
-  margin: 15px;
   padding: 20px 10px;
 }
 .mxgraph-toolbar img {
   margin: 5px;
-}
-
-.mxgraph-editor {
 }

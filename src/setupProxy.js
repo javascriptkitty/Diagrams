@@ -1,15 +1,18 @@
-const proxy = require("http-proxy-middleware");
-const bodyParser = require("body-parser");
+const { createProxyMiddleware } = require("http-proxy-middleware");
+const proxy = createProxyMiddleware;
+//const bodyParser = require("body-parser");
+
+//const proxy = createProxyMiddleware();
 
 module.exports = function(app) {
-  // app.use(
-  //   bodyParser.urlencoded({
-  //     extended: false
-  //   })
-  // );
-  //  app.use(bodyParser.json());
-  var parseJSON = bodyParser.json({ limit: "900kb" });
-  app.use((req, res, next) => (false ? parseJSON(req, res, next) : next()));
+  /* app.use(
+    bodyParser.urlencoded({
+      extended: false
+    })
+  );
+  app.use(bodyParser.json()); */
+  //////  var parseJSON = bodyParser.json({ limit: "900kb" });
+  // app.use((req, res, next) => (false ? parseJSON(req, res, next) : next()));
 
   // // var bodyParser = express.bodyParser;
 
@@ -37,8 +40,20 @@ module.exports = function(app) {
   app.use(
     "/couchdb",
     proxy({
+      logLevel: "debug",
       target: "http://130.211.58.252:5984/",
-      changeOrigin: true
+
+      pathRewrite: {
+        "^/couchdb": "/" // rewrite path
+      }
+      /*   onProxyReq: (proxyReq, req) => {
+        if (req.body) {
+          const bodyData = JSON.stringify(req.body);
+          proxyReq.setHeader("Content-Type", "application/json");
+          proxyReq.setHeader("Content-Length", Buffer.byteLength(bodyData));
+          proxyReq.write(bodyData);
+        }
+      } */
     })
   );
 

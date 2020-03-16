@@ -50,6 +50,7 @@
   "devDependencies": {
     "@types/mxgraph": "lgleim/mxgraph-typings",
     "body-parser": "^1.19.0",
+    "http-proxy-middleware": "^1.0.1",
     "prettier": "^1.19.1"
   }
 }

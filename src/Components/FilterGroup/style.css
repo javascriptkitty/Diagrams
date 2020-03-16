@@ -1,0 +1,12 @@
+.filterGroup {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-group-add {
+  display: flex;
+  align-items: center;
+}
+.filter-group-add button {
+  height: 40px;
+  margin-left: 10px;
+}

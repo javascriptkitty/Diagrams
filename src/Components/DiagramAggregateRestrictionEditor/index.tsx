@@ -4,7 +4,7 @@ import { mxgraph } from "mxgraph";
 
 interface RestrictionTypesProps {
   diagramInfo: DiagramInfo;
-
+  restriction: string;
   element: mxgraph.mxCell;
 }
 
