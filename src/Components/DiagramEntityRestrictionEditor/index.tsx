@@ -10,23 +10,27 @@ interface RestrictionTypesProps {
   element: mxgraph.mxCell;
 }
 
+let ontologyPromise;
 export default function DiagramEntityRestrictionEditor(props: RestrictionTypesProps) {
   const [state, setState] = React.useState([]);
 
-  const { diagramInfo, element } = props;
-  const isClassifier = diagramInfo.type == "INDICATOR" ? false : true;
+  const { diagramInfo } = props;
+  const isClassifier = diagramInfo.type === "INDICATOR" ? false : true;
 
   useEffect(() => {
-    DataService.getOntologyEntities().then(res => {
-      setState(res);
-      //error
-    });
+    if (ontologyPromise == null) {
+      ontologyPromise = DataService.getOntologyEntities().then(res => {
+        setState(res);
+        console.log(res);
+      });
+    }
   });
 
   const [selected, setSelected] = React.useState("");
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setSelected(event.target.value as string);
+  const handleChange = (event: React.ChangeEvent<{ value: string }>) => {
+    debugger;
+    setSelected(event.target.value);
   };
 
   return (

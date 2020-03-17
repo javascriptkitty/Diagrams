@@ -17,6 +17,7 @@ interface RestrictionProps {
 
 interface RestrictionState {
   restriction: string;
+  selected: mxgraph.mxCell;
 }
 export default class Restriction extends React.Component<RestrictionProps, RestrictionState> {
   isClassifier: boolean;
@@ -25,10 +26,12 @@ export default class Restriction extends React.Component<RestrictionProps, Restr
   constructor(props: RestrictionProps) {
     super(props);
     this.state = {
-      restriction: null
+      restriction: null,
+      selected: this.props.element
     };
   }
   onSelect = (selected: string) => {
+    debugger;
     this.restriction = selected;
     console.log(this.restriction);
   };

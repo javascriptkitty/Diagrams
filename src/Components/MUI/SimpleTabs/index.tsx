@@ -9,7 +9,8 @@ import Paper from "@material-ui/core/Paper";
 import DataModel from "../../DataModel";
 import SimpleMenu from "../Menu/index";
 import DataService from "../../../services/data.service";
-import { VisualQueryType } from "../../../models";
+import { VisualQueryType, DiagramInfo } from "../../../models";
+import { Link } from "react-router-dom";
 import "./style.css";
 
 interface TabPanelProps {
@@ -67,9 +68,9 @@ export default function SimpleTabs(props: TabPanelProps) {
         VisualQueryType.RELATION_CLASSIFIER,
         VisualQueryType.VALUE_CLASSIFIER
       ])
-    ]).then(res => {
-      //list.indicators= getList(res);
-      console.log(res);
+    ]).then(([res1, res2]) => {
+      getList({ indicators: res1, classifiers: res2 });
+      //error
     });
   });
 
@@ -87,10 +88,32 @@ export default function SimpleTabs(props: TabPanelProps) {
       </div>
       <Paper className={classes.root}>
         <TabPanel value={value} index={0}>
-          Item One
+          {list.indicators.map((el, index) => {
+            return (
+              <Link to={{ pathname: `/diagrams/${el._id}`, state: { info: el } }} key={index}>
+                <div className="elName">
+                  <div className="elName-top">
+                    <h3>{el.label}</h3> <span>{el.modifiedAt.substr(0, 10)}</span>
+                  </div>
+                  <p>{el.description}</p>
+                </div>
+              </Link>
+            );
+          })}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          Item Two
+          {list.classifiers.map((el, index) => {
+            return (
+              <Link to={{ pathname: `/diagrams/${el._id}`, state: { info: el } }} key={index}>
+                <div className="elName">
+                  <div className="elName-top">
+                    <h3>{el.label}</h3> <span>{el.modifiedAt.substr(0, 10)}</span>
+                  </div>
+                  <p>{el.description}</p>
+                </div>
+              </Link>
+            );
+          })}
         </TabPanel>
         <TabPanel value={value} index={2}>
           <div className="uploadModel">

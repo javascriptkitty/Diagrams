@@ -21,11 +21,10 @@
 .closeBtn a {
   color: gray;
 }
-
-.MuiGrid-root .createNew {
-  margin: auto !important;
+.createNew form button {
+  margin-top: 20px;
 }
-.createNew,
-.createNew .MuiCard-container {
-  width: 100%;
+.createNew form p {
+  margin-bottom: 8px;
+  margin-top: 0;
 }

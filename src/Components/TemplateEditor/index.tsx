@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./style.css";
 import MxGraphContainerComponent from "../MxGraphContainerComponent/index";
 import { Grid } from "@material-ui/core";
@@ -9,6 +9,7 @@ import diagramJson from "../../data/diagram.json";
 import Info from "../Info/index";
 import Restriction from "../Restriction/index";
 import ClassifierValue from "../ClassifierValue";
+
 import Json2TypescriptService from "../../services/json2typescript";
 
 const diagram: Diagram = Json2TypescriptService.deserializeObject(diagramJson, Diagram) as Diagram;
@@ -20,6 +21,7 @@ interface TemplateProps {
 
 interface InteractionState {
   diagramInfo: DiagramInfo;
+
   element: mxgraph.mxCell;
 }
 
@@ -30,7 +32,7 @@ const DEFAULT_INTERACTION_STATE = {
 
 export default function TemplateEditor(props: TemplateProps) {
   const [interactionState, setInteractionState] = useState(DEFAULT_INTERACTION_STATE);
-
+  //  const [diagram, getDiagram] = useState({});
   function onVertexSelected(diagramInfo: DiagramInfo, element: mxgraph.mxCell): void {
     setInteractionState({ diagramInfo, element });
   }

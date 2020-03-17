@@ -13,8 +13,8 @@ interface RestrictionTypesProps {
 export default function DiagramRelationRestrictionEditor(props: RestrictionTypesProps) {
   const [state, setState] = React.useState([]);
 
-  const { diagramInfo, element, restriction } = props;
-  const isClassifier = diagramInfo.type == "INDICATOR" ? false : true;
+  const { diagramInfo, restriction } = props;
+  const isClassifier = diagramInfo.type === "INDICATOR" ? false : true;
 
   useEffect(() => {
     DataService.getOntologyRelations().then(res => {
@@ -32,7 +32,7 @@ export default function DiagramRelationRestrictionEditor(props: RestrictionTypes
   console.log(props);
   return (
     <div>
-      {restriction == "relation" ? (
+      {restriction === "relation" ? (
         <div className="entityRestrictions">
           <h3>Тип связи</h3>
           <FormControl variant="outlined">

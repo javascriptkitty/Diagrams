@@ -12,7 +12,7 @@ function App() {
       <Router>
         <Switch>
           <Route path="/:type/new" component={CreateNew} />
-
+          <Route path="/diagrams/:id" component={TemplateEditor} />
           <Route path="/indicators/:id" component={TemplateEditor} />
           <Route path="/classifiers/:id" component={TemplateEditor} />
           <Route path="/" component={SimpleTabs} />

@@ -32,6 +32,6 @@
 .restrictionContainer .MuiButton-root {
   margin-top: 20px;
 }
-.MuiOutlinedInput-input {
+.editorContainer .MuiOutlinedInput-input {
   padding: 10px !important;
 }

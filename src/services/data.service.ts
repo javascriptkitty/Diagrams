@@ -33,7 +33,7 @@ interface DiagramInfoClass {
 }
 
 class DataService {
-  private static COUCHDB_URL = "couchdb/";
+  private static COUCHDB_URL = "/couchdb/";
 
   //   private static COUCHDB_DB_PROJECTS = "pwc-projects";
   private static COUCHDB_DB_DIAGRAM_INFOS = "pwc-diagraminfos";
@@ -294,14 +294,17 @@ class DataService {
   //    */
   createDiagram(type: VisualQueryType, label: string, description?: string, projectId?: string): Promise<DiagramInfo> {
     const libraryDiagram = projectId == null;
+
     return this.diagramInfoDB
       .save(new DiagramInfo(type, label, description, projectId, libraryDiagram))
       .then(diagramInfo => {
         switch (type) {
           case VisualQueryType.INDICATOR:
-            return this.diagramDB
-              .save(new Diagram(diagramInfo._id))
-              .then(res => this.j2tService.deserializeObject(res, DiagramInfo as DiagramInfoClass));
+            return this.diagramDB.save(new Diagram(diagramInfo._id)).then((res: any) => {
+              res.type = type;
+              res.label = "label";
+              this.j2tService.deserializeObject(res, DiagramInfo as DiagramInfoClass);
+            });
           case VisualQueryType.ENTITY_CLASSIFIER:
             return this.diagramDB
               .save(new ClassifierEntityQuery(diagramInfo._id))

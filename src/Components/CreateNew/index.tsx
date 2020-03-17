@@ -1,10 +1,11 @@
 import React from "react";
-import { TextField, Button } from "@material-ui/core";
+import { TextField, Button, Container } from "@material-ui/core";
 import { Card, CardContent } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import "./style.css";
-import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
+import { DiagramInfo, VisualQueryType } from "../../models";
+import DataService from "../../services/data.service";
 
 interface CreateProps {
   match: any;
@@ -54,25 +55,19 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
   onSubmit(e: any) {
     debugger;
     e.preventDefault();
-    // const info = {
-    //   label: this.state.label,
-    //   description: this.state.description,
-    //   type: this.type
-    // };
 
     console.log(this.state);
-
-    // });
-    //   axios.post("/api/", info).then(res => {
-    //     // debugger;;
-    //     this.setState({ _id: res.data._id, _rev:res.data._rev });
-    //   });
+    DataService.createDiagram(VisualQueryType[this.state.type], this.state.label, this.state.description).then(res => {
+      console.log(res);
+    });
   }
   componentDidMount() {
-    this.setState({ type: this.type });
+    this.setState({
+      type: this.type
+    });
   }
-
   render() {
+    debugger;
     let name: string;
 
     if (this.props.match.params.type === "classifiers-entity") {
@@ -94,7 +89,7 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
     }
 
     return (
-      <Grid container item sm={10} lg={8}>
+      <Container maxWidth="sm">
         <div className="createNew">
           <Card>
             <CardContent>
@@ -123,16 +118,17 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
                     rows="4"
                     variant="outlined"
                   />
+                  {/* <Link to={{ pathname: `/${this.url}/1`, state: { info: this.state } }}> */}
                   <Button variant="contained" type="submit" color="primary">
-                    {" "}
-                    <Link to={{ pathname: `/${this.url}/1`, state: { info: this.state } }}> Создать</Link>
+                    Создать
                   </Button>
+                  {/* </Link> */}
                 </form>
               </div>
             </CardContent>
           </Card>
         </div>
-      </Grid>
+      </Container>
     );
   }
 }
