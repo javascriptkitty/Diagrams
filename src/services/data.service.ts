@@ -293,13 +293,13 @@ class DataService {
   //    */
   createDiagram(type: VisualQueryType, label: string, description?: string, projectId?: string): Promise<DiagramInfo> {
     const libraryDiagram = projectId == null;
-
+    debugger;
     return this.diagramInfoDB
       .save(new DiagramInfo(type, label, description, projectId, libraryDiagram))
       .then(diagramInfo => {
         switch (type) {
           case VisualQueryType.INDICATOR:
-            return this.diagramDB.save(new Diagram(diagramInfo._id)).then((res: any) => {
+            return this.diagramDB.save(new Diagram(diagramInfo._id)).then((res: DiagramInfo) => {
               res.type = type;
               res.label = "label";
               this.j2tService.deserializeObject(res, DiagramInfo as DiagramInfoClass);

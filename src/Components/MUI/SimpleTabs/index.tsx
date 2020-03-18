@@ -50,6 +50,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
+let listPromise;
+
 export default function SimpleTabs(props: TabPanelProps) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
@@ -61,17 +63,18 @@ export default function SimpleTabs(props: TabPanelProps) {
   };
 
   useEffect(() => {
-    Promise.all([
-      DataService.getProjectDiagramInfos("2030cd40e03dc5b7d2aef75c39008142", [VisualQueryType.INDICATOR]),
-      DataService.getProjectDiagramInfos("2030cd40e03dc5b7d2aef75c39008142", [
-        VisualQueryType.ENTITY_CLASSIFIER,
-        VisualQueryType.RELATION_CLASSIFIER,
-        VisualQueryType.VALUE_CLASSIFIER
-      ])
-    ]).then(([res1, res2]) => {
-      getList({ indicators: res1, classifiers: res2 });
-      //error
-    });
+    if (listPromise == null) {
+      listPromise = Promise.all([
+        DataService.getProjectDiagramInfos("2030cd40e03dc5b7d2aef75c39008142", [VisualQueryType.INDICATOR]),
+        DataService.getProjectDiagramInfos("2030cd40e03dc5b7d2aef75c39008142", [
+          VisualQueryType.ENTITY_CLASSIFIER,
+          VisualQueryType.RELATION_CLASSIFIER,
+          VisualQueryType.VALUE_CLASSIFIER
+        ])
+      ]).then(([res1, res2]) => {
+        getList({ indicators: res1, classifiers: res2 });
+      });
+    }
   });
 
   return (
