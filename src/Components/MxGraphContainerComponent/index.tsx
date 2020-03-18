@@ -3,7 +3,7 @@ import React, { createRef } from "react";
 import { mxgraph } from "mxgraph";
 import { configureGraph, renderDiagram, DiagramElementListener, createTitleBlock } from "../../mxgraph/editor";
 import { configureToolbar } from "../../mxgraph/toolbar";
-import { Diagram, DiagramInfo, DiagramValue } from "../../models";
+import { Diagram, DiagramInfo } from "../../models";
 import "./style.css";
 
 declare var require: any;
@@ -28,7 +28,7 @@ export default class MxGraphContainerComponent extends React.Component<MxGraphCo
     const { diagram, diagramInfo, listener } = this.props;
     this.graph = new mx.mxGraph(this.editorRef.current);
 
-    const isClassifier = diagramInfo.type == "INDICATOR" ? false : true;
+    const isClassifier = diagramInfo.type === "INDICATOR" ? false : true;
 
     configureToolbar(this.graph, this.toolbarRef.current, diagramInfo);
     configureGraph(this.graph, isClassifier, diagramInfo, listener);

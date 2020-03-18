@@ -22,7 +22,7 @@ import {
 
 // import { AppToastService } from "./app-toast.service";
 
-import { CouchDB, CouchDBAllDocumentsResponse, CouchDBDocument } from "./couchdb";
+import { CouchDB } from "./couchdb";
 import CouchDBService from "./couchdb";
 import Json2TypescriptService from "./json2typescript";
 import { SPARQLResultsDocument } from "./sparql";
@@ -152,11 +152,10 @@ class DataService {
   }
 
   onError(err: any) {
-    console.log(err);
     return err;
   }
 
-  uploadDataModel(dataModel: File): Promise<any> {
+  uploadDataModel(dataModel: any): Promise<any> {
     return this.sparqlService
       .postGraph(DataService.TRIPLESTORE_URL, DataService.DATAMODEL_GRAPH_URI, dataModel)
       .catch(err => this.onError(err));
@@ -779,7 +778,6 @@ class DataService {
         }
       })
       .then(docs => {
-        debugger;
         return this.j2tService.converter().deserializeArray(docs, DiagramInfo as DiagramInfoClass);
       });
   }

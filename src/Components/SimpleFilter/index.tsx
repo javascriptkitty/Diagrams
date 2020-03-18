@@ -1,18 +1,17 @@
 import React from "react";
 
-import { Card, CardContent, Radio, FormControl, RadioGroup, FormControlLabel, IconButton } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SimpleSelect from "../MUI/SimpleSelect";
 
 export default function SimpleFilter() {
-  const [selectedValue, setSelectedValue] = React.useState("a");
+  // const [selectedValue, setSelectedValue] = React.useState("a");
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedValue(event.target.value);
-  };
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setSelectedValue(event.target.value);
+  // };
   const onSelect = (selected: string) => {
     this.restriction = selected;
-    console.log(this.restriction);
   };
   const filters = [
     { value: "EQUAL", label: "=" },

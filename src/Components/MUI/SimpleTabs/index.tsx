@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -9,7 +9,7 @@ import Paper from "@material-ui/core/Paper";
 import DataModel from "../../DataModel";
 import SimpleMenu from "../Menu/index";
 import DataService from "../../../services/data.service";
-import { VisualQueryType, DiagramInfo } from "../../../models";
+import { VisualQueryType } from "../../../models";
 import { Link } from "react-router-dom";
 import "./style.css";
 

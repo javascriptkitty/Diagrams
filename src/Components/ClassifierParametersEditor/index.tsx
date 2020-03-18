@@ -2,14 +2,13 @@ import React from "react";
 import { Button, TextField, CardContent, Card, IconButton } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
-import SimpleSelect from "../MUI/SimpleSelect";
+//import SimpleSelect from '../MUI/SimpleSelect';
 import "./style.css";
 
 export function parameterGroup() {
-  const onSelect = (selected: string) => {
-    this.restriction = selected;
-    console.log(this.restriction);
-  };
+  // const onSelect = (selected: string) => {
+  //     this.restriction = selected;
+  // };
 
   return (
     <div className="parameter-group">
@@ -36,7 +35,7 @@ interface ClassifierParametersProps {
   dataTypes: any[];
 }
 export default function ClassifierParametersEditor(props: ClassifierParametersProps) {
-  const { dataTypes } = props;
+  //  const { dataTypes } = props;
   return (
     <Card>
       <CardContent>

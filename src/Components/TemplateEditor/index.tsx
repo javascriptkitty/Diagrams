@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./style.css";
 import MxGraphContainerComponent from "../MxGraphContainerComponent/index";
 import { Grid } from "@material-ui/core";

@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Card, CardContent, Radio, FormControl, RadioGroup, FormControlLabel, Button } from "@material-ui/core";
-import SimpleFilter from "../SimpleFilter";
+//import SimpleFilter from '../SimpleFilter';
 import AddIcon from "@material-ui/icons/Add";
 import "./style.css";
 
@@ -11,7 +11,7 @@ export default function FilterGroup() {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedValue(event.target.value);
   };
-  debugger;
+
   return (
     <Card>
       <CardContent className="filterGroup">

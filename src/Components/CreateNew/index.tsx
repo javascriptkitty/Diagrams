@@ -4,7 +4,7 @@ import { Card, CardContent } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import "./style.css";
 import { Link } from "react-router-dom";
-import { DiagramInfo, VisualQueryType } from "../../models";
+import { VisualQueryType } from "../../models";
 import DataService from "../../services/data.service";
 
 interface CreateProps {
@@ -53,13 +53,13 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
   }
 
   onSubmit(e: any) {
-    debugger;
     e.preventDefault();
 
-    console.log(this.state);
-    DataService.createDiagram(VisualQueryType[this.state.type], this.state.label, this.state.description).then(res => {
-      console.log(res);
-    });
+    DataService.createDiagram(
+      VisualQueryType[this.state.type],
+      this.state.label,
+      this.state.description
+    ).then(res => {});
   }
   componentDidMount() {
     this.setState({
@@ -67,7 +67,6 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
     });
   }
   render() {
-    debugger;
     let name: string;
 
     if (this.props.match.params.type === "classifiers-entity") {

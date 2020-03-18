@@ -33,14 +33,16 @@ module.exports = function(app) {
     "/sparql",
     proxy({
       target: "http://130.211.58.252:3030/ds/",
-      changeOrigin: true
+      changeOrigin: true,
+      pathRewrite: {
+        "^/sqarql": "/"
+      }
     })
   );
 
   app.use(
     "/couchdb",
     proxy({
-      logLevel: "debug",
       target: "http://130.211.58.252:5984/",
 
       pathRewrite: {

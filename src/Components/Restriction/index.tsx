@@ -31,13 +31,11 @@ export default class Restriction extends React.Component<RestrictionProps, Restr
     };
   }
   onSelect = (selected: string) => {
-    debugger;
     this.restriction = selected;
-    console.log(this.restriction);
   };
 
   render() {
-    const { diagramInfo, diagram, element } = this.props;
+    const { diagramInfo, element } = this.props;
 
     if (diagramInfo.type !== "INDICATOR") {
       this.isClassifier = true;
@@ -58,7 +56,7 @@ export default class Restriction extends React.Component<RestrictionProps, Restr
             { value: "relation", label: "Связь" }
           ];
         } else {
-          if (element.source.value.type == "Aggregate") {
+          if (element.source.value.type === "Aggregate") {
             this.restrictionTypes = [
               { value: "aggregate", label: "Агрегирующая функция" },
               { value: "relation", label: "Связь" }
@@ -75,7 +73,7 @@ export default class Restriction extends React.Component<RestrictionProps, Restr
         <h2>Restrictions</h2>
         <Card>
           <CardContent>
-            {element === null || (element.vertex && element.value.type == "title-entity") ? (
+            {element === null || (element.vertex && element.value.type === "title-entity") ? (
               <div>Выделите один из элементов, чтобы установить или отредактировать его ограничения</div>
             ) : (
               <div className="restrictionType">

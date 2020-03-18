@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Card, CardContent, Button, Grid } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import DataService from "../../services/data.service";
-import { ToastContainer, toast } from "react-toastify";
+//import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./style.css";
 
@@ -33,23 +33,21 @@ enum UploadState {
 export default function DataModel(props: ModelProps) {
   const classes = useStyles();
   const [uploadState, setUploadState] = React.useState({ uploadState: UploadState.SELECT });
-  const [dataModelExists, setDataModelExists] = React.useState(false);
+  //  const [dataModelExists, setDataModelExists] = React.useState(false);
 
   useEffect(() => {
     DataService.dataModelExists().then(exists => {
-      setDataModelExists(exists);
+      //  setDataModelExists(exists);
     });
   });
 
-  const notify = () => toast("Модель данных обновлена', 'Модель данных была успешно обновлена!");
+  //  const notify = () => toast("Модель данных обновлена', 'Модель данных была успешно обновлена!");
 
   function fileInputChange(file: any) {
     setUploadState({ uploadState: UploadState.UPLOADING });
 
-    DataService.uploadDataModel(file).then(() => {
-      debugger;
-
-      setDataModelExists(true);
+    DataService.uploadDataModel({}).then(() => {
+      // setDataModelExists(true);
       // TODO: SAVE FILES
     });
   }
