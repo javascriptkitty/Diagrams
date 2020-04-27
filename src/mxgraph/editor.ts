@@ -197,7 +197,7 @@ export function configureGraph(
 
 export function renderDiagram(graph: mxgraph.mxGraph, diagram: Diagram): void {
   const layout = new mx.mxCircleLayout(graph, 150);
-
+  debugger;
   // Adds cells to the model in a single step
   graph.getModel().beginUpdate();
   try {

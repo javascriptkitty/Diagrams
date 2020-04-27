@@ -302,7 +302,7 @@ class DataService {
             return this.diagramDB.save(new Diagram(diagramInfo._id)).then((res: DiagramInfo) => {
               res.type = type;
               res.label = "label";
-              this.j2tService.deserializeObject(res, DiagramInfo as DiagramInfoClass);
+              return this.j2tService.deserializeObject(res, DiagramInfo as DiagramInfoClass);
             });
           case VisualQueryType.ENTITY_CLASSIFIER:
             return this.diagramDB
@@ -406,12 +406,14 @@ class DataService {
   //       );
   //   }
 
-  //   getDiagram(id: string): Promise<Diagram> {
-  //     return this.diagramDB.get(id).pipe(
-  //       map(doc => this.j2tService.deserializeObject(doc, Diagram)),
-  //       catchError(err => this._onError(err))
-  //     );
-  //   }
+  getDiagram(id: string): Promise<Diagram> {
+    return this.diagramDB
+      .get(id)
+      .then(doc => {
+        return this.j2tService.deserializeObject(doc, Diagram);
+      })
+      .catch(err => this.onError(err));
+  }
 
   getVisualQueries<T extends VisualQuery>(ids: string[]): Promise<T[]> {
     return this.diagramDB
@@ -552,14 +554,12 @@ class DataService {
   //     );
   //   }
 
-  //   getDiagramInfo(id: string): Promise<DiagramInfo> {
-  //     return this.diagramInfoDB.get(id).pipe(
-  //       map(doc =>
-  //         this.j2tService.converter().deserializeObject(doc, DiagramInfo)
-  //       ),
-  //       catchError(err => this._onError(err))
-  //     );
-  //   }
+  getDiagramInfo(id: string): Promise<DiagramInfo> {
+    return this.diagramInfoDB
+      .get(id)
+      .then(doc => this.j2tService.converter().deserializeObject(doc, DiagramInfo))
+      .catch(err => this.onError(err));
+  }
 
   //   saveDiagram<T extends VisualQuery>(diagram: T): Promise<T> {
   //     return this.diagramDB.save(diagram).pipe(

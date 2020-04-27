@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Card, CardContent, Button, Grid } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import DataService from "../../services/data.service";
-//import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./style.css";
 
@@ -92,6 +92,7 @@ export default function DataModel(props: ModelProps) {
               </div>
             </label>
           </form>
+          <ToastContainer position="top-center" autoClose={3000} hideProgressBar={true} />
         </CardContent>
       </Card>
     </Grid>

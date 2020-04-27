@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./style.css";
 import MxGraphContainerComponent from "../MxGraphContainerComponent/index";
 import { Grid } from "@material-ui/core";
@@ -9,14 +9,14 @@ import diagramJson from "../../data/diagram.json";
 import Info from "../Info/index";
 import Restriction from "../Restriction/index";
 import ClassifierValue from "../ClassifierValue";
-
+import DataService from "../../services/data.service";
 import Json2TypescriptService from "../../services/json2typescript";
 
-const diagram: Diagram = Json2TypescriptService.deserializeObject(diagramJson, Diagram) as Diagram;
+// const diagram: Diagram = Json2TypescriptService.deserializeObject(diagramJson, Diagram) as Diagram;
 
 interface TemplateProps {
   location: any;
-  diagramInfo: DiagramInfo;
+  match: any;
 }
 
 interface InteractionState {
@@ -25,14 +25,13 @@ interface InteractionState {
   element: mxgraph.mxCell;
 }
 
-const DEFAULT_INTERACTION_STATE = {
-  element: null,
-  diagramInfo: null
-};
-
+let diagramInfo;
 export default function TemplateEditor(props: TemplateProps) {
-  const [interactionState, setInteractionState] = useState(DEFAULT_INTERACTION_STATE);
-  //  const [diagram, getDiagram] = useState({});
+  const [interactionState, setInteractionState] = useState({
+    element: null,
+    diagramInfo: props.location.state.info
+  });
+  const [diagram, getDiagram] = useState(null);
   function onVertexSelected(diagramInfo: DiagramInfo, element: mxgraph.mxCell): void {
     setInteractionState({ diagramInfo, element });
   }
@@ -42,7 +41,7 @@ export default function TemplateEditor(props: TemplateProps) {
   }
 
   function onCellDeselected() {
-    setInteractionState(DEFAULT_INTERACTION_STATE);
+    setInteractionState({ diagramInfo, element: null });
   }
 
   const listener: DiagramElementListener = {
@@ -51,7 +50,18 @@ export default function TemplateEditor(props: TemplateProps) {
     onCellDeselected
   };
 
-  const diagramInfo = props.location.state.info;
+  useEffect(() => {
+    debugger;
+    if (diagram == null) {
+      DataService.getDiagram(interactionState.diagramInfo._id).then(res => {
+        console.log(res);
+        getDiagram(res);
+      });
+    }
+  });
+
+  const { diagramInfo } = interactionState;
+  if (!diagram) return <span>loading...</span>;
 
   return (
     <div className="editorContainer">
@@ -61,7 +71,7 @@ export default function TemplateEditor(props: TemplateProps) {
         </Grid>
         {diagramInfo.type !== "VALUE_CLASSIFIER" ? (
           <Grid item xs={9} sm={9} md={7} lg={7}>
-            <MxGraphContainerComponent diagram={diagram} diagramInfo={diagramInfo} listener={listener} />
+            <MxGraphContainerComponent diagramInfo={diagramInfo} diagram={diagram} listener={listener} />
           </Grid>
         ) : null}
 

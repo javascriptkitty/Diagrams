@@ -1,4 +1,5 @@
 import React, { createRef } from "react";
+import DataService from "../../services/data.service";
 
 import { mxgraph } from "mxgraph";
 import { configureGraph, renderDiagram, DiagramElementListener, createTitleBlock } from "../../mxgraph/editor";
@@ -25,9 +26,10 @@ export default class MxGraphContainerComponent extends React.Component<MxGraphCo
   private graph: mxgraph.mxGraph;
 
   componentDidMount() {
-    const { diagram, diagramInfo, listener } = this.props;
+    debugger;
+    const { diagramInfo, diagram, listener } = this.props;
     this.graph = new mx.mxGraph(this.editorRef.current);
-
+    console.log(diagram);
     const isClassifier = diagramInfo.type === "INDICATOR" ? false : true;
 
     configureToolbar(this.graph, this.toolbarRef.current, diagramInfo);

@@ -3,7 +3,7 @@ import { TextField, Button, Container } from "@material-ui/core";
 import { Card, CardContent } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import "./style.css";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { VisualQueryType } from "../../models";
 import DataService from "../../services/data.service";
 
@@ -19,6 +19,7 @@ interface CreateState {
   _id: string;
   _rev: string;
   modifiedAt: string;
+  isDiagramCreated: boolean;
 }
 
 export default class CreateNew extends React.Component<CreateProps, CreateState> {
@@ -33,7 +34,8 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
       type: "",
       _id: "",
       _rev: "",
-      modifiedAt: new Date().toISOString()
+      modifiedAt: new Date().toISOString(),
+      isDiagramCreated: false
     };
 
     this.onChangeLabel = this.onChangeLabel.bind(this);
@@ -54,12 +56,11 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
 
   onSubmit(e: any) {
     e.preventDefault();
-
-    DataService.createDiagram(
-      VisualQueryType[this.state.type],
-      this.state.label,
-      this.state.description
-    ).then(res => {});
+    debugger;
+    DataService.createDiagram(VisualQueryType[this.state.type], this.state.label, this.state.description).then(res => {
+      //  console.log(res);
+      this.setState({ _id: res._id, _rev: res._rev, isDiagramCreated: true });
+    });
   }
   componentDidMount() {
     this.setState({
@@ -85,6 +86,10 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
       name = "индикатор";
       this.type = "INDICATOR";
       this.url = "indicators";
+    }
+
+    if (this.state.isDiagramCreated) {
+      return <Redirect to={{ pathname: `/diagrams/${this.state._id}`, state: { info: this.state } }} />;
     }
 
     return (
@@ -117,11 +122,10 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
                     rows="4"
                     variant="outlined"
                   />
-                  {/* <Link to={{ pathname: `/${this.url}/1`, state: { info: this.state } }}> */}
+
                   <Button variant="contained" type="submit" color="primary">
                     Создать
                   </Button>
-                  {/* </Link> */}
                 </form>
               </div>
             </CardContent>
