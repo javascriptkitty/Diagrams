@@ -1,6 +1,14 @@
 import { mxgraph } from "mxgraph";
 
-import { Diagram, DiagramInfo, DiagramValue, DiagramEntity, TitleBlock } from "../models";
+import {
+  Diagram,
+  DiagramInfo,
+  DiagramValue,
+  DiagramEntity,
+  DiagramAggregate,
+  DiagramRelation,
+  TitleBlock
+} from "../models";
 
 declare var require: any;
 
@@ -329,4 +337,63 @@ export function createTitleBlock(graph: mxgraph.mxGraph, diagramInfo: DiagramInf
 
     graph.insertEdge(border, "var", null, shape1, shape2);
   }
+}
+
+export function getDiagramFromGraph(graph: mxgraph.mxGraph, diagram): Diagram {
+  graph.setEnabled(false);
+  debugger;
+  const parent = graph.getDefaultParent();
+
+  if (parent != null && parent.children != null) {
+    const vertexes = parent.children.filter(value => value.isVertex());
+    const edges = parent.children.filter(value => value.isEdge());
+
+    const title = vertexes.find(vertex => vertex.getValue() instanceof TitleBlock);
+    if (title) {
+      for (let i = 0; i < title.children.length; i++) {
+        if (title.children[i].vertex == true) {
+          vertexes.push(title.children[i]);
+        } else if (title.children[i].edge == true) {
+          edges.push(title.children[i]);
+        }
+      }
+    }
+
+    diagram.entities = vertexes
+      .filter(value => value.getValue() instanceof DiagramEntity)
+      .map(value => value.getValue());
+
+    diagram.aggregate = vertexes
+      .filter(value => value.getValue() instanceof DiagramAggregate)
+      .map(value => value.getValue());
+
+    diagram.titleBlock = vertexes
+      .filter(value => value.getValue() instanceof TitleBlock)
+      .map(value => value.getValue());
+    diagram.values = vertexes.filter(value => value.getValue() instanceof DiagramValue).map(value => value.getValue());
+    diagram.relations = edges
+      .map(cell => {
+        let value: DiagramRelation = cell.getValue();
+        if (cell.getValue() == null) {
+          value = new DiagramRelation();
+        }
+        debugger;
+        const sourceV = vertexes.find(v => v.id === cell.source.id);
+        const targetV = vertexes.find(v => v.id === cell.target.id);
+
+        if (sourceV != null && targetV != null) {
+          value.sourceId = sourceV.getValue().id;
+          value.targetId = targetV.getValue().id;
+
+          return value;
+        } else {
+          return null;
+        }
+      })
+      .filter(value => value != null);
+  }
+
+  graph.setEnabled(true);
+
+  return diagram;
 }

@@ -561,22 +561,25 @@ class DataService {
       .catch(err => this.onError(err));
   }
 
-  //   saveDiagram<T extends VisualQuery>(diagram: T): Promise<T> {
-  //     return this.diagramDB.save(diagram).pipe(
-  //       map((doc: T) => VisualQuery.convertToSubClass<T>(doc)),
-  //       catchError(err => this._onError(err))
-  //     );
-  //   }
+  saveDiagram<T extends VisualQuery>(diagram: T): Promise<T> {
+    return this.diagramDB
+      .save(diagram)
+      .then((doc: T) => VisualQuery.convertToSubClass<T>(doc))
+      .catch(err => this.onError(err));
+  }
 
-  //   deleteDiagram(id: string): Promise<string> {
-  //     const a$ = this.diagramDB.delete(id);
-  //     const b$ = this.diagramInfoDB.delete(id);
+  deleteDiagram(id: string) {
+    Promise.all([this.diagramDB.delete(id), this.diagramInfoDB.delete(id)])
+      .then(() => id)
+      .catch(err => this.onError(err));
+    // const a$ = this.diagramDB.delete(id);
+    // const b$ = this.diagramInfoDB.delete(id);
 
-  //     return combineLatest([a$, b$]).pipe(
-  //       mapTo(() => id),
-  //       catchError(err => this._onError(err))
-  //     );
-  //   }
+    // return combineLatest([a$, b$]).pipe(
+    //   mapTo(() => id),
+    //   catchError(err => this._onError(err))
+    // );
+  }
 
   getOntologyEntities(): Promise<OntologyEntity[]> {
     return this.sparqlService

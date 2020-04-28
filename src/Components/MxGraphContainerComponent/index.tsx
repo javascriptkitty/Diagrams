@@ -2,7 +2,13 @@ import React, { createRef } from "react";
 import DataService from "../../services/data.service";
 
 import { mxgraph } from "mxgraph";
-import { configureGraph, renderDiagram, DiagramElementListener, createTitleBlock } from "../../mxgraph/editor";
+import {
+  configureGraph,
+  renderDiagram,
+  DiagramElementListener,
+  createTitleBlock,
+  getDiagramFromGraph
+} from "../../mxgraph/editor";
 import { configureToolbar } from "../../mxgraph/toolbar";
 import { Diagram, DiagramInfo } from "../../models";
 import "./style.css";
@@ -17,6 +23,7 @@ interface MxGraphContainerComponentProps {
   listener: DiagramElementListener;
   diagramInfo: DiagramInfo;
   diagram: Diagram;
+  save: boolean;
 }
 
 export default class MxGraphContainerComponent extends React.Component<MxGraphContainerComponentProps> {
@@ -25,11 +32,15 @@ export default class MxGraphContainerComponent extends React.Component<MxGraphCo
 
   private graph: mxgraph.mxGraph;
 
-  componentDidMount() {
+  saved() {
     debugger;
+    const newDiagram = getDiagramFromGraph(this.graph, this.props.diagram);
+    DataService.saveDiagram(newDiagram);
+  }
+  componentDidMount() {
     const { diagramInfo, diagram, listener } = this.props;
     this.graph = new mx.mxGraph(this.editorRef.current);
-    console.log(diagram);
+
     const isClassifier = diagramInfo.type === "INDICATOR" ? false : true;
 
     configureToolbar(this.graph, this.toolbarRef.current, diagramInfo);
@@ -55,6 +66,10 @@ export default class MxGraphContainerComponent extends React.Component<MxGraphCo
     const toolbarStyle = {
       height: this.props.diagramInfo.type === "ENTITY_CLASSIFIER" ? 140 : 90
     };
+    if (this.props.save) {
+      debugger;
+      this.saved();
+    }
     return (
       <div className="mxgraph-container">
         <div ref={this.toolbarRef} className="mxgraph-toolbar" style={toolbarStyle} />
