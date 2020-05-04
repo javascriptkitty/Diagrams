@@ -63,7 +63,9 @@ export default function SimpleTabs(props: TabPanelProps) {
   };
 
   useEffect(() => {
-    if (listPromise == null) {
+    // debugger;
+    // if (listPromise == null ) {
+    if (list.classifiers.length == 0 || list.indicators.length == 0) {
       listPromise = Promise.all([
         DataService.getProjectDiagramInfos("2030cd40e03dc5b7d2aef75c39008142", [VisualQueryType.INDICATOR]),
         DataService.getProjectDiagramInfos("2030cd40e03dc5b7d2aef75c39008142", [

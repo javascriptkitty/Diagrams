@@ -1,6 +1,17 @@
 import React from "react";
-import { Card, CardContent } from "@material-ui/core";
-import { Diagram, DiagramInfo, DiagramEntity, DiagramAggregate } from "../../models";
+import { Card, CardContent, ThemeProvider } from "@material-ui/core";
+import {
+  Diagram,
+  DiagramInfo,
+  DiagramEntity,
+  DiagramAggregate,
+  OntologyEntity,
+  ClassifierRestriction,
+  OntologyRelation,
+  AggregateRestriction,
+  SimpleFilter,
+  DiagramRelation
+} from "../../models";
 import DiagramEntityRestrictionEditor from "../DiagramEntityRestrictionEditor";
 import DiagramValueRestrictionEditor from "../DiagramValueRestrictionEditor";
 import DiagramRelationRestrictionEditor from "../DiagramRelationRestrictionEditor";
@@ -8,6 +19,7 @@ import DiagramAggregateRestrictionEditor from "../DiagramAggregateRestrictionEdi
 import SimpleSelect from "../MUI/SimpleSelect";
 import { mxgraph } from "mxgraph";
 import { Button } from "@material-ui/core";
+import "./style.css";
 
 interface RestrictionProps {
   diagramInfo: DiagramInfo;
@@ -15,28 +27,69 @@ interface RestrictionProps {
   element: mxgraph.mxCell;
 }
 
+type RestrictionType = OntologyEntity | OntologyRelation | ClassifierRestriction | SimpleFilter | AggregateRestriction;
+
 interface RestrictionState {
-  restriction: string;
-  selected: mxgraph.mxCell;
+  restriction: RestrictionType;
 }
 export default class Restriction extends React.Component<RestrictionProps, RestrictionState> {
   isClassifier: boolean;
   restrictionTypes: any[];
-  restriction: string;
+
   constructor(props: RestrictionProps) {
     super(props);
+
     this.state = {
-      restriction: null,
-      selected: this.props.element
+      restriction: null
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.element) {
+      this.setState({ restriction: nextProps.element.value.restriction });
+    }
+  }
+
   onSelect = (selected: string) => {
-    this.restriction = selected;
+    debugger;
+
+    let newRestriction;
+    switch (selected) {
+      case "relation":
+        newRestriction = new OntologyRelation();
+        break;
+      case "classifier":
+        newRestriction = new ClassifierRestriction();
+        break;
+      case "aggregate":
+        newRestriction = new AggregateRestriction();
+        break;
+      case "filter":
+        newRestriction = new SimpleFilter();
+        break;
+      default:
+        newRestriction = new OntologyEntity();
+    }
+
+    this.setState({ restriction: newRestriction });
+  };
+
+  onRestrictionChange = (selected: RestrictionType) => {
+    this.setState({
+      restriction: selected
+    });
+  };
+  apply = () => {
+    console.log(this.props.element);
+    debugger;
+    this.props.element.value.restriction = this.state.restriction;
   };
 
   render() {
+    debugger;
     const { diagramInfo, element } = this.props;
 
+    console.log(element);
     if (diagramInfo.type !== "INDICATOR") {
       this.isClassifier = true;
     }
@@ -52,14 +105,14 @@ export default class Restriction extends React.Component<RestrictionProps, Restr
       } else if (element.edge) {
         if (!this.isClassifier) {
           this.restrictionTypes = [
-            { value: "classifier", label: "Классификатор связи" },
-            { value: "relation", label: "Связь" }
+            { value: "relation", label: "Связь" },
+            { value: "classifier", label: "Классификатор связи" }
           ];
         } else {
           if (element.source.value.type === "Aggregate") {
             this.restrictionTypes = [
-              { value: "aggregate", label: "Агрегирующая функция" },
-              { value: "relation", label: "Связь" }
+              { value: "relation", label: "Связь" },
+              { value: "aggregate", label: "Агрегирующая функция" }
             ];
           } else {
             this.restrictionTypes = [{ value: "relation", label: "Связь" }];
@@ -74,7 +127,9 @@ export default class Restriction extends React.Component<RestrictionProps, Restr
         <Card>
           <CardContent>
             {element === null || (element.vertex && element.value.type === "title-entity") ? (
-              <div>Выделите один из элементов, чтобы установить или отредактировать его ограничения</div>
+              <div className="selected-description ">
+                Выделите один из элементов, чтобы установить или отредактировать его ограничения
+              </div>
             ) : (
               <div className="restrictionType">
                 {element.edge || element.value.type !== "Entity" ? (
@@ -92,7 +147,8 @@ export default class Restriction extends React.Component<RestrictionProps, Restr
                       <DiagramValueRestrictionEditor
                         element={element}
                         diagramInfo={diagramInfo}
-                        restriction={this.restriction}
+                        restriction={this.state.restriction}
+                        onRestrictionChange={this.onRestrictionChange}
                       />{" "}
                     </div>
                   ) : null}
@@ -102,17 +158,19 @@ export default class Restriction extends React.Component<RestrictionProps, Restr
                       <DiagramRelationRestrictionEditor
                         element={element}
                         diagramInfo={diagramInfo}
-                        restriction={this.restriction}
+                        restriction={this.state.restriction}
+                        onRestrictionChange={this.onRestrictionChange}
                       />
                       <DiagramAggregateRestrictionEditor
                         element={element}
                         diagramInfo={diagramInfo}
-                        restriction={this.restriction}
+                        restriction={this.state.restriction}
+                        onRestrictionChange={this.onRestrictionChange}
                       />
                     </div>
                   ) : null}
                 </div>{" "}
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="primary" onClick={this.apply}>
                   Применить
                 </Button>
               </div>

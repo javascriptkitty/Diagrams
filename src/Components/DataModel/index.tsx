@@ -37,6 +37,7 @@ export default function DataModel(props: ModelProps) {
 
   useEffect(() => {
     DataService.dataModelExists().then(exists => {
+      debugger;
       //  setDataModelExists(exists);
     });
   });
@@ -45,8 +46,8 @@ export default function DataModel(props: ModelProps) {
 
   function fileInputChange(file: any) {
     setUploadState({ uploadState: UploadState.UPLOADING });
-
-    DataService.uploadDataModel({}).then(() => {
+    debugger;
+    DataService.uploadDataModel("{}").then(() => {
       // setDataModelExists(true);
       // TODO: SAVE FILES
     });

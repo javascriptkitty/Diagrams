@@ -9,7 +9,7 @@ interface SelectProps {
 }
 
 export default function SimpleSelect(props: SelectProps) {
-  const [type, setType] = React.useState(props.restrictionTypes[0]);
+  const [type, setType] = React.useState(props.restrictionTypes[0].value);
 
   const handleChange = (event: React.ChangeEvent<{ value: Object }>) => {
     setType(event.target.value);
@@ -19,12 +19,7 @@ export default function SimpleSelect(props: SelectProps) {
 
   return (
     <FormControl variant="outlined">
-      <Select
-        labelId="demo-simple-select-outlined-label"
-        id="demo-simple-select-outlined"
-        value={type}
-        onChange={handleChange}
-      >
+      <Select labelId="restriction-select-label" id="restriction-select" value={type} onChange={handleChange}>
         {props.restrictionTypes.map((type, index) => {
           return (
             <MenuItem value={type.value} key={index}>

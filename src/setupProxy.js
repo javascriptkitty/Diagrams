@@ -32,7 +32,7 @@ module.exports = function(app) {
   app.use(
     "/sparql",
     proxy({
-      target: "http://130.211.58.252:3030/ds/",
+      target: "http://130.211.58.252:3030/ds",
       changeOrigin: true,
       pathRewrite: {
         "^/sqarql": "/"

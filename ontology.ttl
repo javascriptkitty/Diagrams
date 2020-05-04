@@ -1,0 +1,483 @@
+# baseURI: http://mkk.datafabric.cc/CreditOntology
+# imports: http://www.w3.org/2004/02/skos/core#
+# imports: http://www.w3.org/ns/shacl#
+
+@prefix : <http://mkk.datafabric.cc/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:Address
+  rdf:type rdfs:Class ;
+  rdf:type sh:NodeShape ;
+  rdfs:label "Адрес" ;
+  rdfs:subClassOf owl:Thing ;
+  sh:property [
+      sh:path :id ;
+      sh:datatype xsd:string ;
+      sh:maxCount 1 ;
+      sh:minCount 1 ;
+    ] ;
+  sh:property [
+      sh:path :region ;
+      sh:class :Region ;
+      sh:maxCount 1 ;
+    ] ;
+  sh:property [
+      sh:path :type ;
+      sh:datatype xsd:string ;
+      sh:maxCount 1 ;
+      sh:minCount 1 ;
+    ] ;
+.
+:Citizenship
+  rdf:type rdfs:Class ;
+  rdf:type skos:ConceptScheme ;
+  rdfs:label "Гражданство" ;
+.
+<http://mkk.datafabric.cc/Citizenship/RU>
+  rdf:type skos:Concept ;
+  rdfs:label "Российская Федерация" ;
+  skos:inScheme :Citizenship ;
+  skos:notation "RU" ;
+.
+:Credit
+  rdf:type rdfs:Class ;
+  rdf:type sh:NodeShape ;
+  rdfs:label "Кредит" ;
+  rdfs:subClassOf owl:Thing ;
+  sh:property [
+      sh:path :id ;
+      sh:datatype xsd:string ;
+      sh:maxCount 1 ;
+      sh:minCount 1 ;
+    ] ;
+  sh:property [
+      sh:path :isover ;
+      sh:datatype xsd:boolean ;
+      sh:maxCount 1 ;
+      sh:minCount 1 ;
+    ] ;
+  sh:property [
+      sh:path :maxDelay ;
+      sh:datatype xsd:integer ;
+      sh:maxCount 1 ;
+    ] ;
+.
+:CreditOntology
+  rdf:type owl:Ontology ;
+  owl:imports skos: ;
+  owl:imports sh: ;
+  owl:versionInfo "1.0.10" ;
+.
+:CreditRequest
+  rdf:type rdfs:Class ;
+  rdf:type sh:NodeShape ;
+  rdfs:label "Заявка на кредит" ;
+  rdfs:subClassOf owl:Thing ;
+  sh:property [
+      sh:path :amount ;
+      sh:datatype xsd:double ;
+      sh:maxCount 1 ;
+      sh:minCount 1 ;
+    ] ;
+  sh:property [
+      sh:path :borrower ;
+      sh:class :Person ;
+      sh:maxCount 1 ;
+      sh:minCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :id ;
+      sh:datatype xsd:string ;
+      sh:maxCount 1 ;
+      sh:minCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :interestRate ;
+      sh:datatype xsd:double ;
+      sh:maxCount 1 ;
+      sh:minCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :region ;
+      sh:class :Region ;
+      sh:maxCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :pledgedEstate ;
+      sh:class :Realty ;
+  ] ;
+  sh:property [
+      sh:path :term ;
+      sh:datatype xsd:integer ;
+      sh:maxCount 1 ;
+      sh:minCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :creditProduct ;
+      sh:class :CreditProduct ;
+      sh:maxCount 1 ;
+  ] ;
+.
+:CreditProduct
+  rdf:type rdfs:Class ;
+  rdf:type skos:ConceptScheme ;
+  rdfs:label "Кредитный продукт" ;
+.
+<http://mkk.datafabric.cc/CreditProduct/Annuity>
+  rdf:type skos:Concept ;
+  rdfs:label "Аннуитетный" ;
+  skos:inScheme :CreditProduct ;
+  skos:notation "ANNUITY" ;
+.
+<http://mkk.datafabric.cc/CreditProduct/Balloon>
+  rdf:type skos:Concept ;
+  rdfs:label "Шаровый" ;
+  skos:inScheme :CreditProduct ;
+  skos:notation "BALLOON" ;
+.
+:Person
+  rdf:type rdfs:Class ;
+  rdf:type sh:NodeShape ;
+  rdfs:label "Физическое лицо" ;
+  rdfs:subClassOf owl:Thing ;
+  sh:property [
+      sh:path :address ;
+      sh:class :Address ;
+  ] ;
+  sh:property [
+      sh:path :citizenship ;
+      sh:class :Citizenship ;
+      sh:maxCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :credit ;
+      sh:class :Credit ;
+    ] ;
+  sh:property [
+      sh:path :hasBusinessReputation ;
+      sh:class :BusinessReputation ;
+      sh:maxCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :hasPayChildSupportDebs ;
+      sh:datatype xsd:boolean ;
+      sh:maxCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :id ;
+      sh:datatype xsd:string ;
+      sh:maxCount 1 ;
+      sh:minCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :totalIncome ;
+      sh:datatype xsd:double ;
+      sh:maxCount 1 ;
+  ] ;
+  sh:property [
+      sh:path vcard:bday ;
+      sh:datatype xsd:date ;
+      sh:maxCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :employedBy ;
+      sh:class :Employment ;
+  ] ;
+  sh:property [
+      sh:path :hasSpouse ;
+      sh:class :Spouse ;
+      sh:maxCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :hasParent ;
+      sh:class :Parent ;
+      sh:maxCount 2 ;
+  ] ;
+  sh:property [
+      sh:path :hasDependents ;
+      sh:datatype xsd:boolean ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+  ] ;
+.
+:Parent
+  rdf:type rdfs:Class ;
+  rdf:type sh:NodeShape ;
+  rdfs:label "Родитель" ;
+  rdfs:subClassOf owl:Thing ;
+  sh:property [
+      sh:path :hasActive ;
+      sh:datatype xsd:boolean ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :isRetiree ;
+      sh:datatype xsd:boolean ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+  ] ;
+.
+:Spouse
+  rdf:type rdfs:Class ;
+  rdf:type sh:NodeShape ;
+  rdfs:label "Супруг" ;
+  rdfs:subClassOf owl:Thing ;
+  sh:property [
+      sh:path :hasNegativeCreditHistory ;
+      sh:datatype xsd:boolean ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :isWorking ;
+      sh:datatype xsd:boolean ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+  ] ;
+.
+:BusinessReputation
+  rdf:type rdfs:Class ;
+  rdf:type sh:NodeShape ;
+  rdfs:label "Деловая репутация" ;
+  rdfs:subClassOf owl:Thing ;
+  sh:property [
+      sh:path :tarnishedByWritOfExecution ;
+      sh:class :WritOfExecution ;
+  ] ;
+  sh:property [
+      sh:path :tarnishedByLegalCase ;
+      sh:class :LegalCase ;
+  ] ;
+  sh:property [
+      sh:path :tarnishedByNegativeRelations ;
+      sh:datatype xsd:boolean ;
+      sh:maxCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :tarnishedByMisinformation ;
+      sh:datatype xsd:boolean ;
+      sh:maxCount 1 ;
+  ] ;
+.
+:WritOfExecution
+  rdf:type rdfs:Class ;
+  rdf:type sh:NodeShape ;
+  rdfs:label "Исполнительный лист" ;
+  rdfs:subClassOf owl:Thing ;
+  sh:property [
+      sh:path :isOpened ;
+      sh:datatype xsd:boolean ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+  ] ;
+.
+:LegalCase
+  rdf:type rdfs:Class ;
+  rdf:type sh:NodeShape ;
+  rdfs:label "Судебное дело" ;
+  rdfs:subClassOf owl:Thing ;
+  sh:property [
+      sh:path :hasJudicialJurisdiction ;
+      sh:class  :JudicialJurisdiction ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :isOpened ;
+      sh:datatype xsd:boolean ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+  ] ;
+.
+:JudicialJurisdiction
+  rdf:type rdfs:Class ;
+  rdf:type skos:ConceptScheme ;
+  rdfs:label "Судебная юрисдикция" ;
+.
+<http://mkk.datafabric.cc/JudicialJurisdiction/Criminal>
+  rdf:type skos:Concept ;
+  rdfs:label "Уголовная юрисдикция" ;
+  skos:inScheme :JudicialJurisdiction ;
+  skos:notation "CRIMINAL" ;
+.
+<http://mkk.datafabric.cc/JudicialJurisdiction/Administrative>
+  rdf:type skos:Concept ;
+  rdfs:label "Административная юрисдикция" ;
+  skos:inScheme :JudicialJurisdiction ;
+  skos:notation "ADMINISTRATIVE" ;
+.
+<http://mkk.datafabric.cc/JudicialJurisdiction/Other>
+  rdf:type skos:Concept ;
+  rdfs:label "Иная юрисдикция" ;
+  skos:inScheme :JudicialJurisdiction ;
+  skos:notation "OTHER" ;
+.
+:Employment
+  rdf:type rdfs:Class ;
+  rdf:type sh:NodeShape ;
+  rdfs:label "Занятость" ;
+  rdfs:subClassOf owl:Thing ;
+  sh:property [
+      sh:path :isCurrentJob ;
+      sh:datatype xsd:boolean ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :dateStartJob ;
+      sh:datatype xsd:date ;
+      sh:maxCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :providedBy ;
+      sh:class :Employer ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+  ]
+.
+:Employer
+    rdf:type rdfs:Class ;
+    rdf:type sh:NodeShape ;
+    rdfs:label "Работодатель" ;
+    rdfs:subClassOf owl:Thing ;
+    sh:property [
+      sh:path :hasInsufficientFlowFor51Account ;
+      sh:datatype xsd:boolean ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+    ] ;
+    sh:property [
+      sh:path :isTransitOrNonReal ;
+      sh:datatype xsd:boolean ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+    ] ;
+    sh:property [
+      sh:path :hasSomethingNegativeInCreditHistory ;
+      sh:datatype xsd:boolean ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+    ] ;
+.
+:Realty
+  rdf:type rdfs:Class ;
+  rdf:type sh:NodeShape ;
+  rdfs:label "Недвижимость" ;
+  rdfs:subClassOf owl:Thing ;
+  sh:property [
+      sh:path :hasRegisteredDependents ;
+      sh:datatype xsd:boolean ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :hasEncumbrances ;
+      sh:datatype xsd:boolean ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :realtyType ;
+      sh:class :RealtyType ;
+      sh:maxCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :address ;
+      sh:class :Address ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+  ] ;
+  sh:property [
+      sh:path :isLastEstate ;
+      sh:datatype xsd:boolean ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+  ] ;
+.
+:RealtyType
+  rdf:type skos:ConceptScheme ;
+  rdfs:label "Тип недвижимости" ;
+.
+<http://mkk.datafabric.cc/RealtyType/1114>
+  rdf:type skos:Concept ;
+  rdfs:label "Коммерческая недвижимость" ;
+  skos:inScheme :RealtyType ;
+  skos:notation "Commercial_Real_Estate" ;
+.
+<http://mkk.datafabric.cc/RealtyType/1115>
+  rdf:type skos:Concept ;
+  rdfs:label "Земельный участок" ;
+  skos:inScheme :RealtyType ;
+  skos:notation "Land" ;
+.
+:Region
+  rdf:type skos:ConceptScheme ;
+  rdfs:label "Регион" ;
+.
+<http://mkk.datafabric.cc/Region/40>
+  rdf:type skos:Concept ;
+  rdfs:label "Санкт-Петербург" ;
+  skos:inScheme :Region ;
+  skos:notation "RU_SPE" ;
+.
+<http://mkk.datafabric.cc/Region/45>
+  rdf:type skos:Concept ;
+  rdfs:label "Москва" ;
+  skos:inScheme :Region ;
+  skos:notation "RU_MOW" ;
+.
+:amount
+  rdfs:label "размер кредита" ;
+  rdfs:range xsd:double ;
+.
+:citizenship
+  rdfs:domain :Person ;
+  rdfs:range :Citizenship ;
+.
+:employedBy
+  rdfs:domain :Person ;
+  rdfs:range :Employment ;
+.
+:isCurrentJob
+  rdfs:domain :Employment ;
+  rdfs:range xsd:boolean ;
+.
+:dateStartJob
+  rdfs:domain :Employment ;
+  rdfs:range xsd:date ;
+.
+:credit
+  rdfs:range :Credit ;
+.
+:interestRate
+  rdfs:label "проценты по кредиту в день" ;
+  rdfs:range xsd:double ;
+.
+:isover
+  rdfs:domain :Credit ;
+  rdfs:range xsd:boolean ;
+.
+:maxDelay
+  rdfs:domain :Credit ;
+  rdfs:range xsd:integer ;
+.
+:region
+  rdfs:range :Region ;
+.
+:realtyType
+  rdfs:domain :CreditRequest ;
+  rdfs:range :RealtyType ;
+.
+:term
+  rdfs:label "скок кредита" ;
+  rdfs:range xsd:integer ;
+.

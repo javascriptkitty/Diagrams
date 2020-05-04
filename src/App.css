@@ -2,7 +2,18 @@
   text-align: center;
   margin: auto;
 }
+header {
+  margin-bottom: 5px;
+  background-color: #607d8b !important;
+}
+.MuiToolbar-regular,
+.MuiButton-containedPrimary {
+  background-color: #78909c !important;
+}
 
+.MuiButton-containedSecondary {
+  background-color: #ff5252 !important;
+}
 a {
   text-decoration: none;
   color: inherit;

@@ -38,7 +38,7 @@ export default class Info extends React.Component<InfoProps, InfoState> {
   };
 
   componentDidMount() {
-    debugger;
+    // debugger;
   }
 
   render() {

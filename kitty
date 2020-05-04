@@ -1,0 +1,23 @@
+
+Access-Control-Allow-Origin: *
+connection: close
+content-type: application/json;charset=utf-8
+date: Sun, 03 May 2020 10:17:41 GMT
+fuseki-request-id: 116688
+Transfer-Encoding: chunked
+X-Powered-By: Express
+Accept: application/json, text/plain, */*
+Accept-Encoding: gzip, deflate, br
+Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7
+Connection: keep-alive
+Content-Length: 2561
+Content-Type: text/turtle
+Cookie: username=undefined; user_id=undefined
+Host: localhost:4200
+Origin: http://localhost:4200
+Referer: http://localhost:4200/datamodel
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: cors
+Sec-Fetch-Site: same-origin
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36
+graph: urn:pwc:datamodel

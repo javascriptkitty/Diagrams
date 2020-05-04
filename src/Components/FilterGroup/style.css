@@ -1,12 +1,28 @@
 .filterGroup {
   display: flex;
-  justify-content: space-between;
 }
 .filter-group-add {
   display: flex;
   align-items: center;
+  flex-direction: column;
+}
+
+.filter-group-add button,
+.filter-group-toggle button {
+  padding: 4px;
+  font-size: 0.8rem;
+  margin-top: 10px !important;
+}
+
+.filter-group-toggle ul {
+  padding: 0;
 }
 .filter-group-add button {
-  height: 40px;
-  margin-left: 10px;
+  margin-left: 30px;
+}
+.MuiButtonGroup-contained {
+  box-shadow: unset !important;
+}
+.valueRestrictions .MuiCardContent-root.filterGroup {
+  padding-top: 5px !important;
 }

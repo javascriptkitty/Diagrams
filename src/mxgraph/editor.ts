@@ -205,7 +205,7 @@ export function configureGraph(
 
 export function renderDiagram(graph: mxgraph.mxGraph, diagram: Diagram): void {
   const layout = new mx.mxCircleLayout(graph, 150);
-  debugger;
+
   // Adds cells to the model in a single step
   graph.getModel().beginUpdate();
   try {
@@ -267,7 +267,7 @@ export function createTitleBlock(graph: mxgraph.mxGraph, diagramInfo: DiagramInf
   const parent = graph.getDefaultParent();
   let border;
   let shape1;
-  const borderWidth = diagramInfo.type === "RELATION_CLASSIFIER" ? 390 : 300;
+  const borderWidth = diagramInfo.type === "RELATION_CLASSIFIER" ? 370 : 300;
 
   border =
     diagramInfo.type !== "INDICATOR"
@@ -341,7 +341,7 @@ export function createTitleBlock(graph: mxgraph.mxGraph, diagramInfo: DiagramInf
 
 export function getDiagramFromGraph(graph: mxgraph.mxGraph, diagram): Diagram {
   graph.setEnabled(false);
-  debugger;
+
   const parent = graph.getDefaultParent();
 
   if (parent != null && parent.children != null) {

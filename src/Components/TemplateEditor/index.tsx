@@ -3,17 +3,13 @@ import "./style.css";
 import MxGraphContainerComponent from "../MxGraphContainerComponent/index";
 import { Grid } from "@material-ui/core";
 import { mxgraph } from "mxgraph";
-
-import { DiagramElementListener, getDiagramFromGraph } from "../../mxgraph/editor";
-import { Diagram, DiagramInfo } from "../../models";
-import diagramJson from "../../data/diagram.json";
-import { Link, Redirect } from "react-router-dom";
+import { DiagramElementListener } from "../../mxgraph/editor";
+import { DiagramInfo, DiagramRelation } from "../../models";
 import Info from "../Info/index";
 import Restriction from "../Restriction/index";
 import ClassifierValue from "../ClassifierValue";
 import DataService from "../../services/data.service";
 import Json2TypescriptService from "../../services/json2typescript";
-
 import { ToastContainer, toast } from "react-toastify";
 
 // const diagram: Diagram = Json2TypescriptService.deserializeObject(diagramJson, Diagram) as Diagram;
@@ -36,6 +32,9 @@ export default function TemplateEditor(props: TemplateProps) {
   }
 
   function onEdgeSelected(diagramInfo: DiagramInfo, element: mxgraph.mxCell): void {
+    if (element.value == null) {
+      element.value = new DiagramRelation();
+    }
     setInteractionState({ diagramInfo, element });
   }
 
@@ -51,16 +50,11 @@ export default function TemplateEditor(props: TemplateProps) {
 
   const saveDiagram = () => {
     onSave(true);
-
-    // DataService.saveDiagram(diagram);
-    // doesn't update diagram!
     toast.success("saved");
   };
-  const deleteDiagram = () => {
-    DataService.deleteDiagram(diagramInfo._id);
-    // doesn't upload simpleTabs!
-  };
+  const deleteDiagram = () => {};
   useEffect(() => {
+    onSave(false);
     if (diagram == null) {
       DataService.getDiagram(interactionState.diagramInfo._id).then(res => {
         // console.log(res);
@@ -85,7 +79,7 @@ export default function TemplateEditor(props: TemplateProps) {
         ) : null}
 
         {diagramInfo.type !== "VALUE_CLASSIFIER" ? (
-          <Grid item sm={3} md={3} lg={3}>
+          <Grid item xs={3} sm={3} md={3} lg={3}>
             <Restriction diagram={diagram} diagramInfo={diagramInfo} element={interactionState.element} />
           </Grid>
         ) : null}

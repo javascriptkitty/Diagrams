@@ -57,7 +57,12 @@ export default class CreateNew extends React.Component<CreateProps, CreateState>
   onSubmit(e: any) {
     e.preventDefault();
     debugger;
-    DataService.createDiagram(VisualQueryType[this.state.type], this.state.label, this.state.description).then(res => {
+    DataService.createDiagram(
+      VisualQueryType[this.state.type],
+      this.state.label,
+      this.state.description,
+      "2030cd40e03dc5b7d2aef75c39008142"
+    ).then(res => {
       //  console.log(res);
       this.setState({ _id: res._id, _rev: res._rev, isDiagramCreated: true });
     });

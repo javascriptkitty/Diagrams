@@ -649,7 +649,7 @@ export class ClassifierRelationQuery extends VisualQuery {
   values: DiagramValue[] = [];
   @JsonProperty("relations", [DiagramRelation], true)
   relations: DiagramRelation[] = [];
-  @JsonProperty("titleBlock", [TitleBlock])
+  @JsonProperty("titleBlock", [TitleBlock], true)
   titleBlock?: TitleBlock[] = [];
   @JsonProperty("expression", String, true)
   expression?: string = null;

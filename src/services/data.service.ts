@@ -426,12 +426,12 @@ class DataService {
       .catch(this.onError);
   }
 
-  //   getVisualQuery<T extends VisualQuery>(id: string): Promise<T> {
-  //     return this.diagramDB.get(id).pipe(
-  //       map((doc: T) => VisualQuery.convertToSubClass<T>(doc)),
-  //       catchError(err => this._onError(err))
-  //     );
-  //   }
+  getVisualQuery<T extends VisualQuery>(id: string): Promise<T> {
+    return this.diagramDB
+      .get(id)
+      .then((doc: T) => VisualQuery.convertToSubClass<T>(doc))
+      .catch(err => this.onError(err));
+  }
 
   //   getDiagramClassifierRelationQuery(
   //     diagram: Diagram
@@ -497,62 +497,38 @@ class DataService {
     });
   }
 
-  //   getValueClassifiers(
-  //     projectId: string,
-  //     datatype: string
-  //   ): Promise<ClassifierRestriction[]> {
-  //     return this.getProjectDiagramInfos(projectId, [
-  //       VisualQueryType.VALUE_CLASSIFIER
-  //     ]).pipe(
-  //       mergeMap((infos: DiagramInfo[]) => this.getClassifierRestrictions(infos)),
-  //       catchError(err => this._onError(err))
-  //     );
-  //   }
+  getValueClassifiers(projectId: string, datatype: string): Promise<ClassifierRestriction[]> {
+    return this.getProjectDiagramInfos(projectId, [VisualQueryType.VALUE_CLASSIFIER])
+      .then((infos: DiagramInfo[]) => this.getClassifierRestrictions(infos))
+      .catch(err => this.onError(err));
+  }
 
-  //   getRelationClassifiers(
-  //     projectId: string
-  //   ): Promise<ClassifierRestriction[]> {
-  //     return this.getProjectDiagramInfos(projectId, [
-  //       VisualQueryType.RELATION_CLASSIFIER
-  //     ]).pipe(
-  //       mergeMap((infos: DiagramInfo[]) => this.getClassifierRestrictions(infos)),
-  //       catchError(err => this._onError(err))
-  //     );
-  //   }
+  getRelationClassifiers(projectId: string): Promise<ClassifierRestriction[]> {
+    return this.getProjectDiagramInfos(projectId, [VisualQueryType.RELATION_CLASSIFIER])
+      .then((infos: DiagramInfo[]) => this.getClassifierRestrictions(infos))
+      .catch(err => this.onError(err));
+  }
 
-  //   getEntityClassifiers(projectId: string): Promise<ClassifierRestriction[]> {
-  //     return this.getProjectDiagramInfos(projectId, [
-  //       VisualQueryType.ENTITY_CLASSIFIER
-  //     ]).pipe(
-  //       mergeMap((infos: DiagramInfo[]) => this.getClassifierRestrictions(infos)),
-  //       catchError(err => this._onError(err))
-  //     );
-  //   }
+  getEntityClassifiers(projectId: string): Promise<ClassifierRestriction[]> {
+    return this.getProjectDiagramInfos(projectId, [VisualQueryType.ENTITY_CLASSIFIER])
+      .then((infos: DiagramInfo[]) => this.getClassifierRestrictions(infos))
+      .catch(err => this.onError(err));
+  }
 
-  //   getClassifierRestriction(id: string): Promise<ClassifierRestriction> {
-  //     return this.getDiagramInfo(id).pipe(
-  //       mergeMap((info: DiagramInfo) =>
-  //         this.getVisualQuery(id).pipe(
-  //           map(
-  //             (diagram: Diagram) =>
-  //               new ClassifierRestriction(
-  //                 info._id,
-  //                 info.label,
-  //                 diagram.inputParameters.map(
-  //                   v =>
-  //                     new ClassifierRestrictionParameter(
-  //                       v.name,
-  //                       v.datatype,
-  //                       v.defaultValue
-  //                     )
-  //                 )
-  //               )
-  //           )
-  //         )
-  //       ),
-  //       catchError(err => this._onError(err))
-  //     );
-  //   }
+  getClassifierRestriction(id: string): Promise<ClassifierRestriction> {
+    return this.getDiagramInfo(id)
+      .then((info: DiagramInfo) =>
+        this.getVisualQuery(id).then(
+          (diagram: Diagram) =>
+            new ClassifierRestriction(
+              info._id,
+              info.label,
+              diagram.inputParameters.map(v => new ClassifierRestrictionParameter(v.name, v.datatype, v.defaultValue))
+            )
+        )
+      )
+      .catch(err => this.onError(err));
+  }
 
   getDiagramInfo(id: string): Promise<DiagramInfo> {
     return this.diagramInfoDB

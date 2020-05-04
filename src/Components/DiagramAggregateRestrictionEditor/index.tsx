@@ -1,13 +1,15 @@
 import React from "react";
-import { DiagramInfo } from "../../models";
+import { DiagramInfo, AggregateRestriction, OntologyRelation } from "../../models";
 import { mxgraph } from "mxgraph";
 
 interface RestrictionTypesProps {
   diagramInfo: DiagramInfo;
-  restriction: string;
+  restriction: {};
+
+  onRestrictionChange: Function;
   element: mxgraph.mxCell;
 }
 
-export default function DiagramEAggregateRestrictionEditor(props: RestrictionTypesProps) {
+export default function DiagramAggregateRestrictionEditor(props: RestrictionTypesProps) {
   return <div></div>;
 }

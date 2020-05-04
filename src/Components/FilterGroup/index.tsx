@@ -4,24 +4,19 @@ import { Card, CardContent, Radio, FormControl, RadioGroup, FormControlLabel, Bu
 //import SimpleFilter from '../SimpleFilter';
 import AddIcon from "@material-ui/icons/Add";
 import "./style.css";
+import SplitButton from "../MUI/ButtonGroup";
 
 export default function FilterGroup() {
-  const [selectedValue, setSelectedValue] = React.useState("a");
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedValue(event.target.value);
+  const [selected, setSelected] = React.useState(0);
+  const selectOption = index => {
+    setSelected(index);
   };
 
   return (
     <Card>
       <CardContent className="filterGroup">
         <div className="filter-group-toggle">
-          <FormControl component="fieldset">
-            <RadioGroup aria-label="gender" name="gender1" value={selectedValue} onChange={handleChange}>
-              <FormControlLabel value="and" control={<Radio />} label="и" />
-              <FormControlLabel value="or" control={<Radio />} label="или" />
-            </RadioGroup>
-          </FormControl>
+          <SplitButton selectOption={selectOption} />
         </div>
         <div className="filter-group-add">
           <Button variant="contained" color="primary" startIcon={<AddIcon />}>
