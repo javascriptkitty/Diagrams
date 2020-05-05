@@ -36,7 +36,7 @@ export default function DiagramRelationRestrictionEditor(props: RestrictionTypes
     }
   });
 
-  const [selected, setSelected] = React.useState({});
+  const [selected, setSelected] = React.useState("");
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSelected(event.target.value as string);
@@ -48,7 +48,7 @@ export default function DiagramRelationRestrictionEditor(props: RestrictionTypes
   return (
     <div>
       {restriction == null || restriction instanceof OntologyRelation ? (
-        <div className="entityRestrictions">
+        <div className="relRestrictions">
           <h3>Тип связи</h3>
           <FormControl variant="outlined">
             <Select

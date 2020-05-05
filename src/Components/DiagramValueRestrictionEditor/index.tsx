@@ -35,7 +35,7 @@ export default function DiagramValueRestrictionEditor(props: RestrictionTypesPro
   debugger;
   const handleClassifierChange = event => {
     debugger;
-    // setSelected(event);
+    setSelected(event);
     props.onRestrictionChange(event);
   };
 
@@ -43,7 +43,7 @@ export default function DiagramValueRestrictionEditor(props: RestrictionTypesPro
     <div>
       {restriction == null || restriction instanceof SimpleFilter ? (
         <div className="valueRestrictions">
-          <FilterGroup />
+          <FilterGroup groupClassName="filterGroup" key={0} />
         </div>
       ) : null}
       {restriction instanceof ClassifierRestriction ? (

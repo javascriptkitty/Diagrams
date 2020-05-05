@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent, ThemeProvider } from "@material-ui/core";
+import { Card, CardContent } from "@material-ui/core";
 import {
   Diagram,
   DiagramInfo,
@@ -9,9 +9,9 @@ import {
   ClassifierRestriction,
   OntologyRelation,
   AggregateRestriction,
-  SimpleFilter,
-  DiagramRelation
+  SimpleFilter
 } from "../../models";
+
 import DiagramEntityRestrictionEditor from "../DiagramEntityRestrictionEditor";
 import DiagramValueRestrictionEditor from "../DiagramValueRestrictionEditor";
 import DiagramRelationRestrictionEditor from "../DiagramRelationRestrictionEditor";
@@ -25,6 +25,7 @@ interface RestrictionProps {
   diagramInfo: DiagramInfo;
   diagram: Diagram;
   element: mxgraph.mxCell;
+  onRestrictionChange: Function;
 }
 
 type RestrictionType = OntologyEntity | OntologyRelation | ClassifierRestriction | SimpleFilter | AggregateRestriction;
@@ -40,7 +41,7 @@ export default class Restriction extends React.Component<RestrictionProps, Restr
     super(props);
 
     this.state = {
-      restriction: null
+      restriction: props.element && props.element.value.restriction
     };
   }
 
@@ -74,19 +75,17 @@ export default class Restriction extends React.Component<RestrictionProps, Restr
     this.setState({ restriction: newRestriction });
   };
 
-  onRestrictionChange = (selected: RestrictionType) => {
-    this.setState({
-      restriction: selected
-    });
+  onRestrictionChange = (restriction: RestrictionType) => {
+    this.props.onRestrictionChange(restriction);
   };
+
   apply = () => {
     console.log(this.props.element);
     debugger;
-    this.props.element.value.restriction = this.state.restriction;
+    this.props.onRestrictionChange(this.state.restriction);
   };
 
   render() {
-    debugger;
     const { diagramInfo, element } = this.props;
 
     console.log(element);
@@ -139,7 +138,12 @@ export default class Restriction extends React.Component<RestrictionProps, Restr
                   {element.value instanceof DiagramEntity || element.value instanceof DiagramAggregate ? (
                     <div>
                       {" "}
-                      <DiagramEntityRestrictionEditor element={element} diagramInfo={diagramInfo} />{" "}
+                      <DiagramEntityRestrictionEditor
+                        element={element}
+                        diagramInfo={diagramInfo}
+                        restriction={this.state.restriction}
+                        onRestrictionChange={this.onRestrictionChange}
+                      />{" "}
                     </div>
                   ) : null}
                   {element.vertex && element.value.type === "Value" ? (

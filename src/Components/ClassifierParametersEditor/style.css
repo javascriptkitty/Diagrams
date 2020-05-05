@@ -5,32 +5,47 @@
 }
 .parameter-group-titles {
   text-align: center;
-}
-.input-parameters p,
-.input-parameters button,
-.parameter-group-titles span {
-  flex: 1;
-}
-.input-parameters {
-  margin-bottom: 15px;
-}
-.input-parameters button {
-  height: 40px;
+  padding: 0 10px;
 }
 
-.classifier-value .MuiCardContent-root {
-  margin-bottom: 10px;
+.input-parameters {
+  justify-content: space-between;
+  /* margin-bottom: 15px; */
+}
+.input-parameters button {
+  height: 30px;
+  padding: 0;
+  width: 200px !important;
+}
+
+.classifier-value .MuiPaper-root,
+.parameter-group {
+  margin-bottom: 15px;
 }
 .parameter-group-inputs div {
-  flex: 5;
+  width: 95%;
+  display: flex;
+  align-items: center;
 }
-.parameter-group-inputs button {
-  flex: 1;
+
+.parameter-group-titles span {
+  width: 31%;
 }
 
 .parameter-group-inputs {
-  align-items: center;
+  display: flex;
+  padding: 10px 10px 10px 20px;
+  border: 1px solid #eee;
+  border-radius: 20px;
+  margin: 0 20px 20px 20px;
+}
+.parameter-group-inputs .MuiFormControl-root {
+  justify-content: center;
 }
 .parameter-group-inputs span {
-  margin-left: 15px;
+  align-self: center;
+}
+.parameter-group-inputs button,
+.simpleFilter button {
+  width: 48px !important;
 }

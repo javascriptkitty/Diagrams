@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
-import { DiagramInfo } from "../../models";
+import { DiagramInfo, OntologyEntity } from "../../models";
 import { mxgraph } from "mxgraph";
 import { FormControl, MenuItem, Select } from "@material-ui/core";
 import DataService from "../../services/data.service";
-import ClassifierRestriction from "../ClassifierRestriction";
 import ClassifierRestrictionComponent from "../ClassifierRestriction";
 
 interface RestrictionTypesProps {
   diagramInfo: DiagramInfo;
-
+  restriction: {};
   element: mxgraph.mxCell;
+  onRestrictionChange: Function;
 }
 
 let ontologyPromise;
@@ -22,6 +22,15 @@ export default function DiagramEntityRestrictionEditor(props: RestrictionTypesPr
   const isClassifier = diagramInfo.type === "INDICATOR" ? false : true;
 
   useEffect(() => {
+    debugger;
+    console.log(props.restriction);
+    if (props.restriction) {
+      setEntitySelected(props.restriction);
+    }
+    if (props.element.value.classifierRestriction) {
+      setClassifierSelected(props.element.value.classifierRestriction);
+    }
+
     if (ontologyPromise == null) {
       ontologyPromise = DataService.getOntologyEntities().then(res => {
         getEntityList(res);
@@ -34,18 +43,23 @@ export default function DiagramEntityRestrictionEditor(props: RestrictionTypesPr
     }
   });
 
-  const [selected, setSelected] = React.useState("");
-  const handleEntityChange = (event: React.ChangeEvent<{ value: string }>) => {
+  const [entitySelected, setEntitySelected] = React.useState({});
+  const [classifierSelected, setClassifierSelected] = React.useState({});
+
+  const handleEntityChange = (event: React.ChangeEvent<{ value: OntologyEntity }>) => {
     debugger;
-    setSelected(event.target.value);
+    setEntitySelected(event.target.value);
+    props.onRestrictionChange(event.target.value);
   };
   const handleClassifierChange = event => {
     debugger;
-    setSelected(event);
+    setClassifierSelected(event);
+    //  props.onRestrictionChange(event);
+    props.element.value.classifierRestriction = event;
   };
   let description;
   for (let i = 0; i < entityList.length; i++) {
-    if (entityList[i].uri == selected) {
+    if (entityList[i].uri === classifierSelected) {
       description = entityList[i].description;
       break;
     }
@@ -53,25 +67,28 @@ export default function DiagramEntityRestrictionEditor(props: RestrictionTypesPr
 
   return (
     <div className="entityRestrictions">
-      <h3>Тип сущности</h3>
-      <FormControl variant="outlined">
-        <Select labelId="select-1-label" id="select-1" value={selected} onChange={handleEntityChange}>
-          {entityList.map((type, index) => {
-            return (
-              <MenuItem value={type.uri} key={index}>
-                {type.label}
-              </MenuItem>
-            );
-          })}
-        </Select>
-      </FormControl>
-      {selected ? <p className="selected-description">{description}</p> : null}
+      <div>
+        <h3>Тип сущности</h3>
+        <FormControl variant="outlined">
+          <Select labelId="select-1-label" id="select-1" value={entitySelected} onChange={handleEntityChange}>
+            {entityList.map((type, index) => {
+              return (
+                <MenuItem value={type} key={index}>
+                  {type.label}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+
+        {entitySelected ? <p className="selected-description">{description}</p> : null}
+      </div>
 
       {!isClassifier ? (
         <ClassifierRestrictionComponent
           title="Классификатор сущности"
           classifierList={classifierList}
-          selected={selected}
+          selected={classifierSelected}
           handleClassifierChange={handleClassifierChange}
         />
       ) : null}

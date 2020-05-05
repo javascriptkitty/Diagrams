@@ -1,0 +1,12 @@
+.classifier-value-selectType {
+  padding: 15px 0;
+
+  display: flex;
+  width: 100%;
+}
+.classifier-value-selectType p {
+  width: 120px;
+}
+.classifier-value-selectType .MuiFormControl-root {
+  width: 90%;
+}

@@ -14,13 +14,18 @@
 .infoContainer button {
   margin: 5px;
 }
-.restrictionContainer {
-  min-width: 200px;
+.infoContainer {
+  min-width: 180px;
+}
+.restrictionContainer,
+.infoContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-
+.restrictionContainer {
+  min-width: 280px;
+}
 .restrictionContainer h3 {
   font-weight: 400;
 }

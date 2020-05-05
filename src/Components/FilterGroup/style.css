@@ -1,16 +1,32 @@
-.filterGroup {
-  display: flex;
-}
+.filterGroup,
+.MuiCardContent-root.newFilterGroup,
+.MuiCardContent-root.newFilterGroup .filter-group-add,
 .filter-group-add {
   display: flex;
+}
+
+.filter-group-add {
   align-items: center;
   flex-direction: column;
 }
 
+.MuiCardContent-root.newFilterGroup {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: space-between;
+}
+.MuiCardContent-root.newFilterGroup .filter-group-add {
+  flex-direction: row;
+}
+.MuiCardContent-root.newFilterGroup .filter-group-add button {
+  width: 100px !important;
+  margin-left: 10px;
+}
+
 .filter-group-add button,
 .filter-group-toggle button {
-  padding: 4px;
-  font-size: 0.8rem;
+  padding: 4px 0px;
+  font-size: 0.75rem;
   margin-top: 10px !important;
 }
 
@@ -25,4 +41,15 @@
 }
 .valueRestrictions .MuiCardContent-root.filterGroup {
   padding-top: 5px !important;
+}
+.simpleFilter {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+.simpleFilter .MuiFormControl-root {
+  width: 65px;
+}
+.simpleFilters {
+  margin-bottom: 10px;
 }

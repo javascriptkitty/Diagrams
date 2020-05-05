@@ -205,7 +205,7 @@ export function configureGraph(
 
 export function renderDiagram(graph: mxgraph.mxGraph, diagram: Diagram): void {
   const layout = new mx.mxCircleLayout(graph, 150);
-
+  debugger;
   // Adds cells to the model in a single step
   graph.getModel().beginUpdate();
   try {
@@ -236,6 +236,7 @@ export function renderDiagram(graph: mxgraph.mxGraph, diagram: Diagram): void {
     const vertexes: { [key: string]: any } = {};
 
     diagram.entities.forEach(entity => {
+      debugger;
       vertexes[entity.id] = graph.insertVertex(parent, null, entity, null, null, 100, 100, "shape=ellipse;");
     });
 
@@ -351,9 +352,9 @@ export function getDiagramFromGraph(graph: mxgraph.mxGraph, diagram): Diagram {
     const title = vertexes.find(vertex => vertex.getValue() instanceof TitleBlock);
     if (title) {
       for (let i = 0; i < title.children.length; i++) {
-        if (title.children[i].vertex == true) {
+        if (title.children[i].vertex === true) {
           vertexes.push(title.children[i]);
-        } else if (title.children[i].edge == true) {
+        } else if (title.children[i].edge === true) {
           edges.push(title.children[i]);
         }
       }
@@ -396,4 +397,23 @@ export function getDiagramFromGraph(graph: mxgraph.mxGraph, diagram): Diagram {
   graph.setEnabled(true);
 
   return diagram;
+}
+
+export function onCellValueChanged(event: { cell: mxgraph.mxCell; value: any }, graph: mxgraph.mxGraph): void {
+  const model = graph.getModel();
+  model.beginUpdate();
+  //cell must have mxCell type
+  model.setValue(event.cell, event.value);
+  debugger;
+  if (event.cell.edges) {
+    for (let i = 0; i < event.cell.edges.length; i++) {
+      const cell = event.cell.edges[i].target;
+      if (cell.value.type === "title-entity" && cell.parent.value.type === "border-relation") {
+        event.cell.edges[i].target.value.restriction = event.value.restriction;
+        model.setValue(event.cell.edges[i].target, event.cell.edges[i].target.value);
+      }
+    }
+  }
+
+  model.endUpdate();
 }

@@ -1,11 +1,10 @@
 import React from "react";
 import { Card, CardContent, Button } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { Diagram, DiagramInfo } from "../../models";
+import { DiagramInfo } from "../../models";
 import SaveIcon from "@material-ui/icons/Save";
 import RemoveRedEyeIcon from "@material-ui/icons/RemoveRedEye";
-import DataService from "../../services/data.service";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 interface InfoProps {
   diagramInfo: DiagramInfo;

@@ -1,5 +1,4 @@
 import React, { createRef } from "react";
-import DataService from "../../services/data.service";
 
 import { mxgraph } from "mxgraph";
 import {
@@ -7,7 +6,8 @@ import {
   renderDiagram,
   DiagramElementListener,
   createTitleBlock,
-  getDiagramFromGraph
+  getDiagramFromGraph,
+  onCellValueChanged
 } from "../../mxgraph/editor";
 import { configureToolbar } from "../../mxgraph/toolbar";
 import { Diagram, DiagramInfo } from "../../models";
@@ -23,7 +23,9 @@ interface MxGraphContainerComponentProps {
   listener: DiagramElementListener;
   diagramInfo: DiagramInfo;
   diagram: Diagram;
-  save: boolean;
+  cellValueChanged: { cell: mxgraph.mxCell; value: any };
+  updateDiagram: Function;
+  diagramFromGraph: boolean;
 }
 
 export default class MxGraphContainerComponent extends React.Component<MxGraphContainerComponentProps> {
@@ -32,10 +34,10 @@ export default class MxGraphContainerComponent extends React.Component<MxGraphCo
 
   private graph: mxgraph.mxGraph;
 
-  saved() {
+  updateDiagram() {
     debugger;
     const newDiagram = getDiagramFromGraph(this.graph, this.props.diagram);
-    DataService.saveDiagram(newDiagram);
+    this.props.updateDiagram(newDiagram);
   }
   componentDidMount() {
     const { diagramInfo, diagram, listener } = this.props;
@@ -62,13 +64,22 @@ export default class MxGraphContainerComponent extends React.Component<MxGraphCo
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    debugger;
+    if (nextProps.cellValueChanged && nextProps.cellValueChanged.cell != null) {
+      // this.updateDiagram();
+      onCellValueChanged(nextProps.cellValueChanged, this.graph);
+    }
+  }
+
   render() {
+    console.log(this.props.listener);
     const toolbarStyle = {
       height: this.props.diagramInfo.type === "ENTITY_CLASSIFIER" ? 140 : 90
     };
-    if (this.props.save) {
+    if (this.props.diagramFromGraph) {
       debugger;
-      this.saved();
+      this.updateDiagram();
     }
     return (
       <div className="mxgraph-container">
